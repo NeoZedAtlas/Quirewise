@@ -1,122 +1,231 @@
 # Quirewise application
 
-The root repository is the application and composition repository. Format
-implementations live in independent, sibling Git repositories:
+Quirewise is a pure-C11 document conversion toolchain with no third-party
+runtime. The `app` repository is the CLI and composition layer; every format
+reader lives in an independent, installable library repository.
 
-- `quirewise-runtime`
-- `quirewise-charset`
-- `quirewise-compression`
-- `quirewise-crypto`
-- `quirewise-image`
-- `quirewise-archive`
-- `quirewise-page`
-- `quirewise-pdg`
-- `quirewise-document`
-- `quirewise-ebook`
-- `quirewise-text`
-- `quirewise-data`
-- `quirewise-spreadsheet`
-- `quirewise-audio`
-- `quirewise-subtitle`
-- `quirewise-vector`
-- `quirewise-comic`
-- `quirewise-pipeline`
+The typical workflow is:
 
-The application never compiles a nested copy of those repositories. Install the
-libraries, add their install prefixes to `CMAKE_PREFIX_PATH`, and select the
-libraries to compose with `QUIREWISE_LINK_*` options.
-
-> Every `QUIREWISE_LINK_*` option defaults to `OFF`. A plain
-> `cmake -S . -B build` builds a shell that only prints `--version`,
-> `--libraries` and `--help`; conversions require `QUIREWISE_LINK_PIPELINE`
-> (which brings the document routes and the page/comic/subtitle/data/CAD/SVG/
-> audio fallbacks through its CMake package). The individual link options can
-> still be enabled when a build wants to report or use those libraries
-> directly.
-
-```powershell
-cmake -S . -B .tmp/build-app -G Ninja `
-  -DCMAKE_PREFIX_PATH=<install-prefix> `
-  -DQUIREWISE_LINK_RUNTIME=ON -DQUIREWISE_LINK_IMAGE=ON `
-  -DQUIREWISE_LINK_ARCHIVE=ON -DQUIREWISE_LINK_PAGE=ON `
-  -DQUIREWISE_LINK_PDG=ON -DQUIREWISE_LINK_DOCUMENT=ON `
-  -DQUIREWISE_LINK_EBOOK=ON -DQUIREWISE_LINK_TEXT=ON `
-  -DQUIREWISE_LINK_DATA=ON -DQUIREWISE_LINK_SPREADSHEET=ON `
-  -DQUIREWISE_LINK_AUDIO=ON -DQUIREWISE_LINK_SUBTITLE=ON `
-  -DQUIREWISE_LINK_VECTOR=ON -DQUIREWISE_LINK_COMIC=ON `
-  -DQUIREWISE_LINK_PIPELINE=ON
-cmake --build .tmp/build-app
-.\.tmp\build-app\quirewise.exe --libraries
+```text
+documents / ebooks / pages / spreadsheets / subtitles / CAD / images
+                              -> PDF
+PDF                           -> TXT (text extraction) or PNG (first page)
 ```
 
-## CLI scope
+## What it can convert
 
-`quirewise INPUT [INPUT ...] [--to pdf|txt|png] [-o FILE] [--out-dir DIR]
-[--check] [--quiet] [--page image|a4] [--pages RULE]
-[--archive-password TEXT] [--audio-track N]`
+| Family | Inputs (CLI-reachable) |
+|---|---|
+| Office documents | DOCX/DOCM/DOTX/DOTM, ODT/OTT/FODT, PPTX/PPTM/POTX/POTM/PPSX/PPSM, ODP/OTP/FODP, HWPX, EML |
+| Ebooks | EPUB/KEPUB, MOBI 7, AZW3/MOBI 8/AZW, FB2, PMLZ, TXTZ, HTMLZ |
+| Text/web | TXT, Markdown, HTML, RTF |
+| Pages/scans | PDF, DjVu, PDG/PDZ, UVZ, CAJ, CEB |
+| Comics | CBZ, CBT |
+| Spreadsheets | XLSX/XLSM/XLTX, BIFF8 XLS/XLT, ODS/OTS/FODS, CSV/TSV |
+| Structured data | JSON, JSONL, YAML, TOML, XML, vCard, OPML, iPynb |
+| Subtitles | SRT, WebVTT, LRC, MicroDVD, TTML, ASS/SSA, SAMI, SCC |
+| CAD/vector | DXF, DWG (R13–R2018), SVG/SVGZ (supported subset) |
+| Images | JPEG, PNG, GIF, BMP, TIFF, WebP, JP2/J2K, PSD, TGA, PNM, QOI, ICO, DICOM and more |
+| Audio | container/packet **check only** (`--check`), no decode or transcode |
 
-- PDF, DOCX/ODT/HTML/EPUB/FB2, PPTX/ODP, HWPX, EML, MOBI/AZW3, HTMLZ/TXTZ/PMLZ, RTF,
-  spreadsheets, subtitles, structured data, images, DjVu/PDZ/UVZ/CAJ/CEB,
-  CBZ/CBT, DXF/DWG and SVG/SVGZ (supported subset) convert to PDF.
-- PDF also converts to TXT (text extraction, no OCR) and PNG (first page).
-- `--check` verifies inputs without writing; audio inputs are parsed as
-  container/packet streams.
-- Outputs are never overwritten and the `-o` extension must match `--to`.
-- DXF/DWG `--to txt` emits the drawing text inventory.
-- Unreachable routes (XPS, RAW, CBR/CB7, image folders, legacy Office)
-  return a stable `unsupported`; see
-  [the support matrix](docs/formats/support-matrix.md).
-- Options that are not wired (`--key`, scan preprocessing, `--pdfa`,
-  `--optimize`, directory batches) are documented in
-  [the command line reference](docs/usage/command-line.md).
+PDF, DOCX/ODT/HTML/EPUB/FB2, PPTX/ODP, HWPX, EML, MOBI/AZW3, HTMLZ/TXTZ/PMLZ,
+RTF, spreadsheets, subtitles, structured data, images, DjVu/PDZ/UVZ/CAJ/CEB,
+CBZ/CBT, DXF/DWG and SVG/SVGZ convert to PDF. PDF also converts to TXT (no OCR)
+and PNG (first page). DXF/DWG `--to txt` emits the drawing text inventory.
 
-The CAD routing (DXF/DWG) landed after the `v0.2.1-rc1` tag; it is covered by
-the repository tests and app smoke, not by the tagged acceptance matrices.
+See the [format capability matrix](docs/formats/support-matrix.md) for the
+three-state (supported / partial / unsupported) detail.
+
+## Requirements
+
+- C11 compiler (MinGW-w64 or MSVC on Windows; GCC/Clang on Unix).
+- CMake 3.21 or newer.
+- Ninja is recommended but not required.
+- No third-party runtime or codec libraries.
+
+## Build and install
+
+The application consumes installed Quirewise packages. A minimal conversion
+build only needs the `pipeline` package, which brings the document, page,
+comic, subtitle, data, CAD/SVG, audio and PDG routes through its CMake config:
+
+```sh
+cmake -S . -B build -G Ninja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_PREFIX_PATH=/path/to/quirewise/install \
+  -DQUIREWISE_LINK_PIPELINE=ON
+cmake --build build
+cmake --install build --prefix /path/to/quirewise/install
+```
+
+A full composition that also reports the individual libraries:
+
+```sh
+cmake -S . -B build -G Ninja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_PREFIX_PATH=/path/to/quirewise/install \
+  -DQUIREWISE_LINK_RUNTIME=ON \
+  -DQUIREWISE_LINK_IMAGE=ON \
+  -DQUIREWISE_LINK_ARCHIVE=ON \
+  -DQUIREWISE_LINK_PAGE=ON \
+  -DQUIREWISE_LINK_PDG=ON \
+  -DQUIREWISE_LINK_DOCUMENT=ON \
+  -DQUIREWISE_LINK_EBOOK=ON \
+  -DQUIREWISE_LINK_TEXT=ON \
+  -DQUIREWISE_LINK_DATA=ON \
+  -DQUIREWISE_LINK_SPREADSHEET=ON \
+  -DQUIREWISE_LINK_AUDIO=ON \
+  -DQUIREWISE_LINK_SUBTITLE=ON \
+  -DQUIREWISE_LINK_VECTOR=ON \
+  -DQUIREWISE_LINK_COMIC=ON \
+  -DQUIREWISE_LINK_PIPELINE=ON
+```
+
+Every `QUIREWISE_LINK_*` option defaults to `OFF`. A plain
+`cmake -S . -B build` builds a shell that supports `--help`, `--version` and
+`--libraries` only.
+
+## Command line
+
+```text
+quirewise INPUT [INPUT ...] [options]
+
+  -o, --out FILE            write the result to FILE
+      --out-dir DIR         put default output names under DIR
+      --to FORMAT           pdf (default), txt or png
+      --check               verify inputs can be read; write nothing
+      --quiet               suppress success output
+      --page MODE           raster page box: image (default) or a4
+      --pages RULE          PDG page rule: auto, body, body+att, all
+      --archive-password T  CBZ/CBT/7z archive password
+      --audio-track N       one-based audio track for --check
+      --help                show help
+      --version             show the application version
+      --libraries           list libraries selected at configure time
+```
+
+Behavior:
+
+- Outputs are **never overwritten**. A failed write removes the partial file.
+- The `-o` extension must match `--to` (`\.pdf`, `.txt` or `.png`).
+- `--to` cannot be combined with `--check`; `-o` cannot be used with multiple
+  inputs or with `--check`.
+- Exit code `0` is success, `1` is a conversion/read failure, `2` is a usage
+  error.
+- Errors distinguish `format error`, `unsupported`, `decode error`,
+  `resource limit`, `I/O error`, `empty input` and related statuses.
+- A partially readable page container warns and keeps the readable pages; with
+  `--check` it fails instead.
+- Audio inputs are accepted only by `--check` (container/packet parse).
+
+## Examples
+
+Convert a document or ebook:
+
+```sh
+quirewise report.docx
+quirewise book.epub --out-dir out
+quirewise book.epub --page a4 -o book-a4.pdf
+```
+
+Batch conversion:
+
+```sh
+quirewise *.pdf *.png *.jpg --out-dir converted
+```
+
+Verify without writing:
+
+```sh
+quirewise scan.pdz book.cbz sample.ttml --check
+quirewise track.wav --check --audio-track 1
+```
+
+PDF outputs:
+
+```sh
+quirewise manual.pdf --to txt -o manual.txt
+quirewise manual.pdf --to png -o cover.png
+```
+
+CAD text inventory:
+
+```sh
+quirewise drawing.dwg --to txt -o drawing.txt
+```
+
+Page containers:
+
+```sh
+quirewise book.pdz --pages auto
+quirewise book.pdz --pages all -o book-all.pdf
+quirewise encrypted.cbz --archive-password secret
+```
+
+## Composition model
+
+There are 18 independent library repositories plus the application and the
+external consumer template:
+
+`runtime`, `charset`, `compression`, `crypto`, `image`, `archive`, `page`,
+`pdg`, `document`, `ebook`, `text`, `data`, `spreadsheet`, `audio`, `subtitle`,
+`vector`, `comic`, `pipeline`.
+
+`pipeline` is a composition package: it depends on the installed readers and
+provides the document-first fallback chain used by the CLI. The application
+does not compile a nested copy of any library. See
+[the application shell source](src/main.c) and the pipeline repository for the
+public composition API.
 
 ## Validate the workspace
 
-Build and test every library, the external consumer and the application shell,
-then run the static boundary gates:
+Build/test all libraries, the external consumer and the application, then run
+the boundary gates:
 
-```powershell
+```sh
 python tools/run_acceptance.py --workspace ..
 ```
 
-The same runner accepts `--shared` for shared-library builds and
-`--skip-consumer`/`--skip-app` for narrower loops. It is used by the GitHub
-Actions workflow.
+Useful narrower loops:
 
-Validate the independent-library dependency graph alone:
+```sh
+python tools/run_acceptance.py --workspace .. --shared
+python tools/run_acceptance.py --workspace .. --skip-consumer --skip-app
+```
 
-```powershell
-$env:PYTHONUTF8 = '1'
-$env:PYTHONIOENCODING = 'utf-8'
+Validate the dependency graph alone:
+
+```sh
 python tools/validate_dependency_graph.py --workspace ..
 ```
 
-The same check is available as a CMake target when configuring with
-`-DQUIREWISE_VALIDATE_DEPENDENCIES=ON`:
-
-```powershell
-cmake --build .tmp/build-app --target quirewise_validate_dependencies
-```
+The same check is available as a CMake target with
+`-DQUIREWISE_VALIDATE_DEPENDENCIES=ON`.
 
 ## Release checks
 
 - `tools/audit_release_boundaries.py` — third-party header/symbol/CMake denylist
-- `tools/audit_mupdf_removal.py` — legacy MuPDF boundary removal gate
-- `tools/verify_public_headers.py` / `tools/verify_header_isolation.py` — public
-  header independence
+- `tools/audit_mupdf_removal.py` — legacy MuPDF boundary removal
+- `tools/verify_public_headers.py` / `tools/verify_header_isolation.py` —
+  public-header independence
 - `tools/verify_header_ownership.py` — no two packages install different bytes
-  at the same public-header path (shared vendored headers must stay identical)
+  at the same public-header path
 - `tools/check_consumer_coverage.py` — exported API to consumer call mapping
 - `tools/generate_sbom.py` — CycloneDX SBOM, license inventory and installed
   prefix manifest
-- `tools/verify_pdf_pages.c` — render-based PDF check (blank or solid pages,
-  unknown image filters); built with `QUIREWISE_BUILD_PDF_VERIFIER=ON`
-- `tools/audit_vendored_sources.py` — vendored-source gate: every remaining
-  third-party implementation file is pinned in `vendored-allowlist.json`, and
-  the list may only shrink
+- `tools/verify_pdf_pages.c` — render-based PDF check (blank/solid pages,
+  unknown image filters)
+- `tools/audit_vendored_sources.py` — vendored-source allowlist gate
 
-The workspace is licensed under the MIT License; see [LICENSE](LICENSE). Every
-library and the external consumer template carry the same MIT grant.
+## Documentation
+
+- [Command line reference](docs/usage/command-line.md)
+- [Format capability matrix](docs/formats/support-matrix.md)
+- [Documents and text](docs/formats/documents-and-text.md)
+- [PDF and pages](docs/formats/pdf-and-pages.md)
+- [Spreadsheets, data and subtitles](docs/formats/spreadsheets-data-subtitles.md)
+
+## License
+
+MIT. See [LICENSE](LICENSE). Every library and the external consumer template
+carry the same MIT grant.
