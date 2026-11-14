@@ -13,7 +13,7 @@
 - DjVu：`quirewise-page` 内部解码 BZZ、JB2、IW44、DJVM/DIRM bundled 多页与文本层。
 - PDG/PDZ：由 `quirewise-pdg` 解码、解密和渲染。页载荷本身是 PDF 的成员由
   `quirewise-pdg` 返回 `PDG_ERR_EXTERNAL_DECODER_REQUIRED`（库不依赖文档 PDF 引擎）；
-  组合层（app 的 page_routes）调用 Document 引擎按 300 dpi 栅格化，并按成员顺序合并
+  组合层（`quirewise-pipeline` 的 page_routes）调用 Document 引擎按 300 dpi 栅格化，并按成员顺序合并
   `pdg_type 0x1A` 发行版 PDF。加密的 0x1A 成员仍会显式失败。
 
 ## 输出

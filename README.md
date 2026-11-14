@@ -20,6 +20,7 @@ implementations live in independent, sibling Git repositories:
 - `quirewise-subtitle`
 - `quirewise-vector`
 - `quirewise-comic`
+- `quirewise-pipeline`
 
 The application never compiles a nested copy of those repositories. Install the
 libraries, add their install prefixes to `CMAKE_PREFIX_PATH`, and select the
@@ -27,8 +28,11 @@ libraries to compose with `QUIREWISE_LINK_*` options.
 
 > Every `QUIREWISE_LINK_*` option defaults to `OFF`. A plain
 > `cmake -S . -B build` builds a shell that only prints `--version`,
-> `--libraries` and `--help`; conversions require at least
-> `QUIREWISE_LINK_DOCUMENT` plus the packages its routes use.
+> `--libraries` and `--help`; conversions require `QUIREWISE_LINK_PIPELINE`
+> (which brings the document routes and the page/comic/subtitle/data/CAD/SVG/
+> audio fallbacks through its CMake package). The individual link options can
+> still be enabled when a build wants to report or use those libraries
+> directly.
 
 ```powershell
 cmake -S . -B .tmp/build-app -G Ninja `
@@ -39,7 +43,8 @@ cmake -S . -B .tmp/build-app -G Ninja `
   -DQUIREWISE_LINK_EBOOK=ON -DQUIREWISE_LINK_TEXT=ON `
   -DQUIREWISE_LINK_DATA=ON -DQUIREWISE_LINK_SPREADSHEET=ON `
   -DQUIREWISE_LINK_AUDIO=ON -DQUIREWISE_LINK_SUBTITLE=ON `
-  -DQUIREWISE_LINK_VECTOR=ON -DQUIREWISE_LINK_COMIC=ON
+  -DQUIREWISE_LINK_VECTOR=ON -DQUIREWISE_LINK_COMIC=ON `
+  -DQUIREWISE_LINK_PIPELINE=ON
 cmake --build .tmp/build-app
 .\.tmp\build-app\quirewise.exe --libraries
 ```

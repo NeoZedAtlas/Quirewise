@@ -39,6 +39,7 @@ PACKAGE_TARGETS: dict[str, str] = {
     "quirewise-image": "libquirewise_image_decode",
     "quirewise-page": "libquirewise_page",
     "quirewise-pdg": "libquirewise_pdg",
+    "quirewise-pipeline": "libquirewise_pipeline",
     "quirewise-runtime": "libquirewise_runtime",
     "quirewise-spreadsheet": "libquirewise_spreadsheet",
     "quirewise-subtitle": "libquirewise_subtitle",

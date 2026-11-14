@@ -19,7 +19,7 @@ STATE = ROOT / ".tmp" / "quirewise-agent-goal-state.json"
 EVIDENCE = ROOT / ".tmp" / "quirewise-agent-evidence"
 
 # Keep in sync with release_self_audit.EXPECTED_STEPS and run_acceptance.py.
-EXPECTED_ACCEPTANCE_STEPS = 81
+EXPECTED_ACCEPTANCE_STEPS = 85
 
 
 def git(repo: Path, *args: str) -> str:

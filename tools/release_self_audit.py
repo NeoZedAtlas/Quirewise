@@ -9,7 +9,7 @@ import os
 import subprocess
 from pathlib import Path
 
-EXPECTED_STEPS = 81
+EXPECTED_STEPS = 85
 
 
 def git(repo: Path, *args: str) -> str:

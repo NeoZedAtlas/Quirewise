@@ -23,6 +23,7 @@ option(QUIREWISE_LINK_AUDIO "Link quirewise-audio" OFF)
 option(QUIREWISE_LINK_SUBTITLE "Link quirewise-subtitle" OFF)
 option(QUIREWISE_LINK_VECTOR "Link quirewise-vector" OFF)
 option(QUIREWISE_LINK_COMIC "Link quirewise-comic" OFF)
+option(QUIREWISE_LINK_PIPELINE "Link quirewise-pipeline route composition" OFF)
 
 add_executable(quirewise src/main.c)
 target_compile_features(quirewise PRIVATE c_std_11)
@@ -57,43 +58,9 @@ quirewise_find_library(QUIREWISE_LINK_AUDIO QuirewiseAudio Quirewise::Audio QUIR
 quirewise_find_library(QUIREWISE_LINK_SUBTITLE QuirewiseSubtitle Quirewise::Subtitle QUIREWISE_LINK_SUBTITLE)
 quirewise_find_library(QUIREWISE_LINK_VECTOR QuirewiseVector Quirewise::Vector QUIREWISE_LINK_VECTOR)
 quirewise_find_library(QUIREWISE_LINK_COMIC QuirewiseComic Quirewise::Comic QUIREWISE_LINK_COMIC)
+quirewise_find_library(QUIREWISE_LINK_PIPELINE QuirewisePipeline Quirewise::Pipeline QUIREWISE_LINK_PIPELINE)
 
 target_link_libraries(quirewise PRIVATE ${QW_LINK_TARGETS})
-
-if(QUIREWISE_LINK_DOCUMENT AND QUIREWISE_LINK_PAGE AND QUIREWISE_LINK_PDG AND QUIREWISE_LINK_IMAGE)
-    target_sources(quirewise PRIVATE src/page_routes.c)
-    target_compile_definitions(quirewise PRIVATE QUIREWISE_APP_PAGE_ROUTES)
-endif()
-
-if(QUIREWISE_LINK_DOCUMENT AND QUIREWISE_LINK_SUBTITLE)
-    target_sources(quirewise PRIVATE src/subtitle_routes.c)
-    target_compile_definitions(quirewise PRIVATE QUIREWISE_APP_SUBTITLE_ROUTES)
-endif()
-
-if(QUIREWISE_LINK_DOCUMENT AND QUIREWISE_LINK_AUDIO)
-    target_sources(quirewise PRIVATE src/audio_check.c)
-    target_compile_definitions(quirewise PRIVATE QUIREWISE_APP_AUDIO_CHECK)
-endif()
-
-if(QUIREWISE_LINK_DOCUMENT AND QUIREWISE_LINK_DATA)
-    target_sources(quirewise PRIVATE src/data_routes.c)
-    target_compile_definitions(quirewise PRIVATE QUIREWISE_APP_DATA_ROUTES)
-endif()
-
-if(QUIREWISE_LINK_DOCUMENT AND QUIREWISE_LINK_COMIC AND QUIREWISE_LINK_IMAGE)
-    target_sources(quirewise PRIVATE src/comic_routes.c)
-    target_compile_definitions(quirewise PRIVATE QUIREWISE_APP_COMIC_ROUTES)
-endif()
-
-if(QUIREWISE_LINK_DOCUMENT AND QUIREWISE_LINK_VECTOR)
-    target_sources(quirewise PRIVATE src/cad_routes.c)
-    target_compile_definitions(quirewise PRIVATE QUIREWISE_APP_CAD_ROUTES)
-endif()
-
-if(QUIREWISE_LINK_DOCUMENT AND QUIREWISE_LINK_VECTOR)
-    target_sources(quirewise PRIVATE src/svg_routes.c)
-    target_compile_definitions(quirewise PRIVATE QUIREWISE_APP_SVG_ROUTES)
-endif()
 
 if(QUIREWISE_VALIDATE_DEPENDENCIES)
     find_package(Python3 COMPONENTS Interpreter REQUIRED)

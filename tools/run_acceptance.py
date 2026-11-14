@@ -40,6 +40,7 @@ LIBRARIES = [
     ("quirewise-pdg", "QuirewisePDG"),
     ("quirewise-document", "QuirewiseDocument"),
     ("quirewise-subtitle", "QuirewiseSubtitle"),
+    ("quirewise-pipeline", "QuirewisePipeline"),
 ]
 
 APP_LINK_OPTIONS = [
@@ -57,6 +58,7 @@ APP_LINK_OPTIONS = [
     "QUIREWISE_LINK_SUBTITLE",
     "QUIREWISE_LINK_VECTOR",
     "QUIREWISE_LINK_COMIC",
+    "QUIREWISE_LINK_PIPELINE",
 ]
 
 
