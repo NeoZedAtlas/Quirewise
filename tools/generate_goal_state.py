@@ -18,6 +18,9 @@ ROOT = Path.cwd()
 STATE = ROOT / ".tmp" / "quirewise-agent-goal-state.json"
 EVIDENCE = ROOT / ".tmp" / "quirewise-agent-evidence"
 
+# Keep in sync with release_self_audit.EXPECTED_STEPS and run_acceptance.py.
+EXPECTED_ACCEPTANCE_STEPS = 81
+
 
 def git(repo: Path, *args: str) -> str:
     completed = subprocess.run(["git", "-C", str(repo), *args],
@@ -60,7 +63,7 @@ def _summary_ok(path: Path) -> bool:
         data = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return False
-    return len(data.get("steps", [])) == 80 and not data.get("failed")
+    return len(data.get("steps", [])) == EXPECTED_ACCEPTANCE_STEPS and not data.get("failed")
 
 
 def work_items() -> dict:

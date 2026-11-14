@@ -131,6 +131,8 @@ def main() -> int:
     total_declared = 0
     total_covered = 0
     total_missing = 0
+    total_uncovered = 0
+    missing_archives = 0
     for package, target in PACKAGE_TARGETS.items():
         include_dir = workspace / "libraries" / package / "include"
         declared = header_declarations(include_dir) if include_dir.is_dir() else set()
@@ -139,6 +141,7 @@ def main() -> int:
             if include_dir.is_dir() else set()
         )
         archive = next(library_dir.glob(target + ".*"), None)
+        archive_missing = archive is None
         exported = archive_symbols(archive, args.nm) if archive else set()
         missing = sorted(declared_functions - exported)
         public_api = sorted(declared & exported)
@@ -153,10 +156,14 @@ def main() -> int:
         total_declared += len(public_api)
         total_covered += len(covered)
         total_missing += len(missing)
+        total_uncovered += len(uncovered)
+        if archive_missing:
+            missing_archives += 1
         packages.append(
             {
                 "package": package,
                 "target": target,
+                "archive_missing": archive_missing,
                 "declared_in_headers": len(declared),
                 "declared_functions": len(declared_functions),
                 "exported": len(exported),
@@ -176,6 +183,8 @@ def main() -> int:
         "covered_total": total_covered,
         "coverage": round(total_covered / total_declared, 4) if total_declared else 0.0,
         "declared_not_exported_total": total_missing,
+        "uncovered_total": total_uncovered,
+        "missing_archives": missing_archives,
         "packages": packages,
     }
     if args.mapping_out:
@@ -205,16 +214,34 @@ def main() -> int:
     for item in packages:
         print(f"  {item['package']:32s} api={item['public_api']:4d} "
               f"covered={item['covered']:4d} ({item['coverage'] * 100:5.1f}%) "
-              f"missing={len(item['declared_not_exported']):d}")
+              f"missing={len(item['declared_not_exported']):d} "
+              f"uncovered={len(item['uncovered']):d}")
+    failed = False
+    if missing_archives:
+        print(f"error: {missing_archives} installed archive(s) are missing; "
+              f"coverage cannot be measured", file=sys.stderr)
+        for item in packages:
+            if item["archive_missing"]:
+                print(f"  {item['package']}: no {item['target']} archive",
+                      file=sys.stderr)
+        failed = True
     if total_missing:
         print(f"error: {total_missing} declared function(s) are not exported",
               file=sys.stderr)
         for item in packages:
             for function in item["declared_not_exported"]:
                 print(f"  {item['package']}: {function}", file=sys.stderr)
-        if args.strict:
-            return 1
-    return 0
+        failed = True
+    if total_uncovered:
+        print(f"error: {total_uncovered} exported function(s) are not called by "
+              f"the consumer", file=sys.stderr)
+        for item in packages:
+            for function in item["uncovered"]:
+                print(f"  {item['package']}: {function}", file=sys.stderr)
+        failed = True
+    if args.strict:
+        return 1 if failed else 0
+    return 1 if missing_archives else 0
 
 
 if __name__ == "__main__":

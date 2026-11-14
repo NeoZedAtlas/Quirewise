@@ -20,9 +20,9 @@
 | HWPX | HWPX | →PDF（段落/简单表格） | 版式 HTML | 旧版 HWP、样式、图片、加密部件 |
 | 邮件 | EML | →PDF（正文；附件只列名称） | MIME 解析、附件数据 | MSG、签名语义、RFC 2231 文件名 |
 | XPS | XPS/OpenXPS | — | 页面 XML 读取 | →PDF（缺少 XPS→版式/PDF 适配层） |
-| 电子书 | EPUB/KEPUB、MOBI/AZW3/AZW、FB2、PMLZ、TXTZ、HTMLZ | →PDF | 段落/章节模型 | DRM、HUFF/CDIC 压缩的 MOBI、CHM/LIT/LRF/PDB/RB/SNB/TCR |
+| 电子书 | EPUB/KEPUB、MOBI/AZW3/AZW、FB2、PMLZ、TXTZ、HTMLZ | →PDF | 段落/章节模型 | DRM、HUFF/CDIC 压缩的 MOBI、CHM/LIT/LRF/PDB/RB/SNB/TCR；EPUB 中表格/列表/图片等结构章节会被跳过（全部跳过时返回 `unsupported`） |
 | 轻量标记 | TXT、Markdown、HTML、RTF | →PDF | 读取后转 HTML/Markdown | AsciiDoc、LaTeX、Org、RST、Textile、Typst、DocBook、Man、MediaWiki 的统一转换入口（库里有读取器，CLI 未接线） |
-| 工作簿 | XLSX/XLSM/XLTX、BIFF8 XLS/XLT、ODS/OTS/FODS、CSV/TSV | →PDF（按工作表渲染表格） | 单元格/公式缓存读取 | **任何工作簿写出**（库是只读解析器）、公式重算、图表/图片/合并区域样式 |
+| 工作簿 | XLSX/XLSM/XLTX、BIFF8 XLS/XLT、ODS/OTS/FODS、CSV/TSV | →PDF（按工作表渲染表格） | 单元格/公式缓存读取 | **任何工作簿写出**（库是只读解析器）、公式重算、图表/图片/合并区域样式；BIFF8 的 SST 跨记录续接仍受限 |
 | 结构化数据 | JSON、JSONL、YAML、TOML、XML、OPML、IPYNB、vCard | →PDF（值树渲染为表格/列表） | 类型化值树、XML 序列化 | 其它格式的写出器、YAML anchor/tag、XML DTD 之外的校验 |
 | 字幕 | SRT、WebVTT、LRC、MicroDVD、TTML、ASS/SSA、SAMI、SCC | →PDF（时间轴文本页） | cue 模型、格式互转 | 样式/定位/说话人/特效保留、字幕封装 |
 | 单页图像 | JPEG、PNG、BMP、GIF、TIFF、WebP、JP2/J2K、QOI、Netpbm、PSD/PSB、EXR、HDR、TGA、PCX、ICO/ICNS、DDS、XPM/XBM、SGI、RAS、MIFF、DCM 等 | →PDF（单页） | 解码、动画/多页展开、图像写出（PNG/JPEG/BMP/TIFF/WebP/…） | AVIF/HEIC/JXL/PCD 解码、RAW 去马赛克 |
@@ -49,4 +49,6 @@
 - 非 PDF 输出目前只有 PDF→TXT、PDF→PNG 和 CAD→TXT；其余输入只支持转 PDF。
 - `--page image|a4` 作用于 DjVu/PDZ/UVZ/CBZ/CBT 和直接图片输入的页面框（默认 image = 像素尺寸）；CAD 输出固定 A4。
 - `--pages auto|body|body+att|all` 只作用于 PDG/PDZ 容器；`--archive-password` 传给 CBZ/CBT 与库的 ZIP 路线；`--audio-track` 只用于音频 `--check`。
+- TTML（`.ttml`/`.dfxp`）由 subtitle 路由解析；document 层不再把 TTML 误报为 FODT。
+- EPUB 的 `class`/`style`/样式表链接按样式忽略，表格/列表/图片等结构章节整章跳过；若所有章节都不可读，返回 `unsupported`。
 - 徽标/密钥/扫描预处理/PDF-A/目录批量仍未接线；`--pdfa` 等未识别选项返回退出码 2。

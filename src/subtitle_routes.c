@@ -47,6 +47,8 @@ static int subtitle_extension_format(const char *path,
         *out = QW_SUBTITLE_INPUT_SAMI;
     else if (subtitle_iequals(dot, "sub")) *out = QW_SUBTITLE_INPUT_MICRODVD;
     else if (subtitle_iequals(dot, "scc")) *out = QW_SUBTITLE_INPUT_SCC;
+    else if (subtitle_iequals(dot, "ttml") || subtitle_iequals(dot, "dfxp"))
+        *out = QW_SUBTITLE_INPUT_TTML;
     else return 0;
     return 1;
 }

@@ -309,6 +309,83 @@ def run(exe: pathlib.Path, args: list[str], cwd: pathlib.Path,
     return completed
 
 
+# Real-fixture format matrix: every "CLI reachable" claim in the support
+# matrix should have a case here. "token" checks the PDF text layer; "check"
+# only parses/renders (used for inputs that would emit very large PDFs).
+FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
+    ("epub", "app/testfile/ebook/epub/lorem-ipsum.epub", "convert", "Lorem ipsum"),
+    ("kepub", "app/testfile/ebook/kepub/sample.kepub.epub", "convert", None),
+    ("ttml", "app/testfile/subtitle/ttml/sample.ttml", "convert", "Quirewise sample"),
+    ("vtt", "app/testfile/subtitle/vtt/example.vtt", "convert", None),
+    ("ass", "app/testfile/subtitle/ass/example.ass", "convert", None),
+    ("scc", "app/testfile/subtitle/scc/sample.scc", "convert", None),
+    ("mobi", "app/testfile/ebook/mobi/lorem-ipsum.mobi", "convert", "Lorem"),
+    ("azw3", "app/testfile/ebook/azw3/lorem-ipsum.azw3", "convert", "Lorem"),
+    ("fb2", "app/testfile/ebook/fb2/lorem-ipsum.fb2", "convert", "Lorem"),
+    ("htmlz", "app/testfile/ebook/htmlz/lorem-ipsum.htmlz", "convert", "Lorem"),
+    ("txtz", "app/testfile/ebook/txtz/lorem-ipsum.txtz", "convert", "Lorem"),
+    ("pmlz", "app/testfile/ebook/pmlz/lorem-ipsum.pmlz", "convert", None),
+    ("rtf", "app/testfile/document/rtf/lorem-ipsum.rtf", "convert", "Lorem"),
+    ("fodt", "app/testfile/document/fodt/sample.fodt", "convert", "Quirewise ODF sample"),
+    ("hwpx", "app/testfile/hwp/hwpx/blank.hwpx", "convert", None),
+    ("pptx", "app/testfile/_license-review/openoffice/pptx/ms_powerpoint_xml.pptx",
+     "convert", "Slide 1"),
+    ("odp", "app/testfile/presentation/odp/sample.odp", "convert", None),
+    ("ods", "app/testfile/spreadsheet/ods/sample.ods", "convert", None),
+    ("xls", "libraries/quirewise-spreadsheet/tests/data/valid.xls", "convert", "Enash:"),
+    ("xls-montecarlo", "libraries/quirewise-spreadsheet/tests/data/MonteCarlo.xls",
+     "convert", "Monte Carlo"),
+    ("cbz", "app/testfile/ebook/cbz/sample.cbz", "convert", None),
+    ("cbt", "app/testfile/ebook/cbt/sample.cbt", "convert", None),
+    ("json", "app/testfile/_license-review/xberg/data/json/simple.json", "convert", None),
+    ("vcf", "app/testfile/data/vcf/sample.vcf", "convert", None),
+    ("dxf", "app/testfile/cad/dxf/robot.dxf", "check", None),
+    ("dwg", "app/testfile/cad/line_2007.dwg", "check", None),
+    ("pdf-txt", "app/testfile/pdf/basic/lorem-ipsum.pdf", "totxt", "Lorem"),
+    ("pdf-png", "app/testfile/pdf/basic/lorem-ipsum.pdf", "topng", None),
+]
+
+
+def check_format_matrix(exe: pathlib.Path, workspace: pathlib.Path,
+                        root: pathlib.Path) -> None:
+    for index, (label, relative, mode, token) in enumerate(FORMAT_MATRIX):
+        source = workspace / relative
+        if not source.is_file():
+            return fail(f"format matrix is missing fixture: {relative}")
+        case_dir = root / f"matrix-{index:02d}-{label}"
+        case_dir.mkdir()
+        if mode == "check":
+            completed = run(exe, [str(source), "--check"], case_dir)
+            if completed.stdout.strip() != "OK":
+                return fail(f"{label} --check printed {completed.stdout!r}")
+            continue
+        if mode == "totxt":
+            target = case_dir / "out.txt"
+            run(exe, [str(source), "--to", "txt", "-o", str(target)], case_dir)
+            if (not target.is_file() or
+                    token.encode("utf-8") not in target.read_bytes()):
+                return fail(f"{label} text output lost {token!r}")
+            continue
+        if mode == "topng":
+            target = case_dir / "out.png"
+            run(exe, [str(source), "--to", "png", "-o", str(target)], case_dir)
+            if (not target.is_file() or
+                    target.read_bytes()[:8] != b"\x89PNG\r\n\x1a\n"):
+                return fail(f"{label} did not produce a PNG")
+            continue
+        run(exe, [str(source), "--out-dir", str(case_dir)], case_dir)
+        pdf = case_dir / (source.stem + ".pdf")
+        if not pdf.is_file() or pdf.read_bytes()[:5] != b"%PDF-":
+            return fail(f"{label} did not produce a PDF")
+        if token:
+            text = case_dir / "extracted.txt"
+            run(exe, [str(pdf), "--to", "txt", "-o", str(text)], case_dir)
+            if (not text.is_file() or
+                    token.encode("utf-8") not in text.read_bytes()):
+                return fail(f"{label} PDF text lost {token!r}")
+    print(f"format matrix OK ({len(FORMAT_MATRIX)} cases)")
+
+
 def main() -> int:
     if len(sys.argv) != 2:
         return fail("usage: smoke_app.py <quirewise executable>")
@@ -376,6 +453,25 @@ def main() -> int:
             return fail("CSV to PDF produced no PDF")
 
         workspace = pathlib.Path(__file__).resolve().parents[2]
+        # These were silently skipped when absent; a missing fixture now fails
+        # the smoke instead of reducing coverage without a trace.
+        required_fixtures = [
+            workspace / "libraries/quirewise-page/tests/data/djvu/multipage.djvu",
+            workspace / "app/testfile/subtitle/srt/example.srt",
+            workspace / "app/testfile/audio/wav/Sine440Hz_S16.wav",
+            workspace / "app/testfile/cad/sample.dxf",
+            workspace / "app/testfile/cad/hatch.dxf",
+            workspace / "app/testfile/cad/line_2000.dwg",
+            workspace / "app/testfile/cad/lw_entities-2d.dwg",
+            workspace / "app/testfile/cad/line_2004.dwg",
+            workspace / "app/testfile/cad/line_2007.dwg",
+            workspace / "app/testfile/cad/lw_example2007.dwg",
+            workspace / "app/testfile/cad/line_2010.dwg",
+        ]
+        for fixture in required_fixtures:
+            if not fixture.is_file():
+                return fail(f"missing required fixture: {fixture}")
+        check_format_matrix(exe, workspace, root)
         djvu = workspace / "libraries/quirewise-page/tests/data/djvu/multipage.djvu"
         if djvu.is_file():
             (root / "book.djvu").write_bytes(djvu.read_bytes())

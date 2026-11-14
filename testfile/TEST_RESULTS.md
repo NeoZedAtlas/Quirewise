@@ -2,6 +2,8 @@
 > “需要静态 FFmpeg/pkg-config”等描述属于迁移前状态，不代表当前发布包。当前能力与验收以
 > [格式能力总览](app/docs/formats/support-matrix.md)、[2026-11-12 验收报告](RELEASE_ACCEPTANCE_REPORT_2026-11-12.md)
 > 和 [2026-11-14 缺陷修补报告](MAINTENANCE_REPORT_2026-11-14.md) 为准。
+> 同目录的 `SAMPLE_SMOKE_RESULTS.csv` 也是同一轮的原始记录（含 MuPDF/FFmpeg 时代的结果），
+> 仅作历史证据保留，不应作为当前格式能力或失败清单使用。
 # Conversion Smoke Results
 
 Date: 2026-10-18 (Asia/Singapore).

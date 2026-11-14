@@ -255,7 +255,8 @@ class Runner:
         dependency = [python, "app/tools/validate_dependency_graph.py",
                       "--workspace", "."]
         nm = shutil.which("nm")
-        if nm and not self.shared:
+        link_closure = bool(nm) and not self.shared
+        if link_closure:
             # The actual link closure is reconstructed from static archives;
             # shared installs expose import libraries/SONAMEs instead.
             dependency += ["--actual-prefix", str(self.install_root), "--nm", nm]
@@ -278,6 +279,13 @@ class Runner:
         for name, command in gates:
             if not self.run(name, command):
                 all_ok = False
+            if name == "gate.dependency-graph" and not link_closure:
+                # Make the reduced check visible instead of recording a plain
+                # pass that hides the missing nm link-closure audit.
+                self.results[-1]["skipped"] = (
+                    "link-closure audit (needs nm and a static build)")
+                print("[skip] gate.dependency-graph link-closure "
+                      "(needs nm and a static build)")
         return all_ok
 
     def summary(self) -> dict:
