@@ -1,0 +1,3 @@
+﻿= MediaWiki Sample =
+
+'''bold''' text.
