@@ -365,6 +365,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "qoif"),
     ("png-ppm", "external-consumer-template/fixtures/tiny.png", "to:ppm",
      "P6"),
+    ("png-gif", "external-consumer-template/fixtures/tiny.png", "to:gif",
+     "GIF89a"),
     ("png-webp", "external-consumer-template/fixtures/tiny.png", "to:webp",
      "WEBP"),
     ("bmp-webp", "external-consumer-template/fixtures/pixel.bmp", "to:webp",
