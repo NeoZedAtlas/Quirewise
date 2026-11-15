@@ -343,6 +343,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "application/epub+zip"),
     ("pdf-docx", "external-consumer-template/fixtures/one-page.pdf",
      "to:docx", "PK"),
+    ("pdf-epub", "external-consumer-template/fixtures/one-page.pdf",
+     "to:epub", "application/epub+zip"),
     ("png-bmp", "external-consumer-template/fixtures/tiny.png", "to:bmp",
      "BM"),
     ("bmp-png", "external-consumer-template/fixtures/pixel.bmp", "to:png",

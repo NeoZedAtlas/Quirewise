@@ -47,7 +47,7 @@
 ## 3. 命令行注记（2026-11-15）
 
 - `quirewise INPUT [--to pdf|txt|png|json|jsonl|yaml|toml|xml|vcf|srt|vtt|lrc|sub|ass|ssa|sami|scc|csv|tsv|html|md|docx|epub|bmp|tiff|jpg|webp|htmlz|txtz|hwpx]` 覆盖上表"CLI 可达"列；`-o` 的扩展名必须与 `--to` 一致（否则退出码 2）。
-- 非 PDF 输出分四类：PDF→TXT/PNG/HTML/Markdown/DOCX/EPUB（DOCX/EPUB 只重建文本层）、CAD→TXT、MDX→TXT（源格式专用路线）；数据/字幕/表格家族的互转（JSON↔YAML 等、SRT↔VTT 等、表格→CSV/TSV）；布局类输入→HTML/Markdown/DOCX/EPUB/HTMLZ/TXTZ/HWPX（HTML 是公开的版式中间表示）；图像→PNG/BMP/TIFF/JPEG/WebP（解码后重编码，不做缩放；WebP 为无损）。DOCX 为最小 WordprocessingML 包（段落/标题/强调/列表文本，链接与表格扁平化），EPUB 为最小 EPUB 2 包（单章 XHTML + OPF + NCX）。字幕输入没有版式路线，返回 `unsupported`。
+- 非 PDF 输出分四类：PDF→TXT/PNG/HTML/Markdown/DOCX/EPUB（DOCX/EPUB 现在把每页按 120 dpi 栅格化后嵌入，保留视觉版式，最多 24 页，文本不可编辑）、CAD→TXT、MDX→TXT（源格式专用路线）；数据/字幕/表格家族的互转（JSON↔YAML 等、SRT↔VTT 等、表格→CSV/TSV）；布局类输入→HTML/Markdown/DOCX/EPUB/HTMLZ/TXTZ/HWPX（HTML 是公开的版式中间表示）；图像→PNG/BMP/TIFF/JPEG/WebP（解码后重编码，不做缩放；WebP 为无损）。DOCX 为最小 WordprocessingML 包（段落/标题/强调/列表文本，链接与表格扁平化；PDF 源改为每页图片 + inline drawing），EPUB 为最小 EPUB 2 包（单章 XHTML + OPF + NCX；PDF 源为页面图片章 + 提取文本章）。字幕输入没有版式路线，返回 `unsupported`。
 - `--page image|a4` 作用于 DjVu/PDZ/UVZ/CBZ/CBT 和直接图片输入的页面框（默认 image = 像素尺寸）；CAD 输出固定 A4。
 - `--pages auto|body|body+att|all` 只作用于 PDG/PDZ 容器；`--archive-password` 传给 CBZ/CBT 与库的 ZIP 路线；`--audio-track` 只用于音频 `--check`。
 - TTML（`.ttml`/`.dfxp`）由 subtitle 路由解析；document 层不再把 TTML 误报为 FODT。
