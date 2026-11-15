@@ -367,6 +367,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "P6"),
     ("png-gif", "external-consumer-template/fixtures/tiny.png", "to:gif",
      "GIF89a"),
+    ("png-hdr", "external-consumer-template/fixtures/tiny.png", "to:hdr",
+     "#?RADIANCE"),
     ("png-webp", "external-consumer-template/fixtures/tiny.png", "to:webp",
      "WEBP"),
     ("bmp-webp", "external-consumer-template/fixtures/pixel.bmp", "to:webp",
