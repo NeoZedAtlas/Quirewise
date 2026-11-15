@@ -381,6 +381,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "odt-header"),
     ("eml-attach", "libraries/quirewise-document/tests/data/attachments.eml",
      "to:html", "data:image/png;base64"),
+    ("xps-pdf", "libraries/quirewise-document/tests/data/sample.xps",
+     "to:pdf", "%PDF-1.4"),
     ("png-webp", "external-consumer-template/fixtures/tiny.png", "to:webp",
      "WEBP"),
     ("bmp-webp", "external-consumer-template/fixtures/pixel.bmp", "to:webp",
