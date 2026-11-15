@@ -43,6 +43,6 @@ PPTX/PPTM/POTX/POTM/PPSX/PPSM 与 ODP/OTP/FODP 可按演示顺序读取页面文
 
 文档包内部有一个共享版式模型（标题、段落、列表、表格、链接、图片），DOCX/ODT/PPTX/ODP/HWPX/EML/XPS/EPUB/FB2 的读取器都会产出它，再由 HTML→PDF 写出器生成 PDF。
 
-需要明确的是：版式模型的公开输出是 **HTML、Markdown、DOCX 与 EPUB**。每个版式读取器都公开自己的 `*_document_html`（共享版式模型最终都落成 HTML），`document` 的 `qw_convert_*` 增加 `QW_FORMAT_HTML`、`QW_FORMAT_MARKDOWN`、`QW_FORMAT_DOCX`、`QW_FORMAT_EPUB` 目标：HTML 直接返回中间表示；Markdown 由 `quirewise-text` 的 `qw_markdown_from_html` 生成；DOCX 是最小 WordprocessingML 包（段落、标题、强调、列表文本，链接与表格扁平化，图片降为 alt 文本）；EPUB 是最小 EPUB 2 包（单章 XHTML + OPF + NCX）。PDF 输入这四个目标时只重建文本层，版式/图片/表格不还原。`text`、`ebook` 包本身不直接写二进制包，**HWPX/TXTZ/HTMLZ 仍只有读取路线**；数据/字幕/表格目标转交给各自包的公开写出器。历史文档中"可写出 Org、DocBook、AsciiDoc、Typst、LaTeX、RST、Textile、MediaWiki、Man、OPML、IPYNB、HWPX"的列表仍不成立；HTML/Markdown/DOCX/EPUB 现在成立。
+需要明确的是：版式模型的公开输出是 **HTML、Markdown、DOCX、EPUB、HTMLZ、TXTZ 与 HWPX**。每个版式读取器都公开自己的 `*_document_html`（共享版式模型最终都落成 HTML），`document` 的 `qw_convert_*` 增加对应目标：HTML 直接返回中间表示；Markdown 由 `quirewise-text` 的 `qw_markdown_from_html` 生成；DOCX 是最小 WordprocessingML 包（段落、标题、强调、列表文本，链接与表格扁平化，图片降为 alt 文本）；EPUB 是最小 EPUB 2 包（单章 XHTML + OPF + NCX）；HTMLZ 是含 index.html 的 ZIP，TXTZ 是含 index.txt 的 ZIP（由 `quirewise-ebook` 的 `qw_htmlz_create`/`qw_text_archive_create` 写出）；HWPX 是最小 OWPML 包（`qw_hwpx_create`，段落/文本，表格扁平化）。PDF 输入这些目标时只重建文本层，版式/图片/表格不还原。PMLZ 仍只有读取/PDF 路线；数据/字幕/表格目标转交给各自包的公开写出器。历史文档中"可写出 Org、DocBook、AsciiDoc、Typst、LaTeX、RST、Textile、MediaWiki、Man、OPML、IPYNB"的列表仍不成立；HTML/Markdown/DOCX/EPUB/HTMLZ/TXTZ/HWPX 现在成立。
 
 转换到 PDF 时，源文件中未映射的高级样式、布局、附件、封面和元数据不会保留。
