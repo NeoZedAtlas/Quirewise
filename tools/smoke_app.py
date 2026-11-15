@@ -375,6 +375,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "data:image/png;base64"),
     ("docx-header", "libraries/quirewise-document/tests/data/header-footer.docx",
      "to:html", "docx-header"),
+    ("pptx-notes", "libraries/quirewise-document/tests/data/notes-slide.pptx",
+     "to:html", "Speaker notes"),
     ("png-webp", "external-consumer-template/fixtures/tiny.png", "to:webp",
      "WEBP"),
     ("bmp-webp", "external-consumer-template/fixtures/pixel.bmp", "to:webp",
