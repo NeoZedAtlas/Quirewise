@@ -29,7 +29,7 @@ static void print_help(const char *name)
     printf("      --to FORMAT      target: pdf (default), txt, png, json, jsonl,\n");
     printf("                       yaml, toml, xml, vcf, srt, vtt, lrc, sub,\n");
     printf("                       ass, ssa, sami, scc, csv, tsv, html, md, docx,\n");
-    printf("                       epub, bmp, tiff\n");
+    printf("                       epub, bmp, tiff, jpg\n");
     printf("      --check          verify inputs can be read; writes nothing\n");
     printf("      --quiet          suppress success output\n");
     printf("      --page MODE      raster page box: image (default) or a4\n");
@@ -137,7 +137,9 @@ static const CliTarget cli_targets[] = {
     /* Raster re-encoding (quirewise-image writers). */
     { "bmp", QW_FORMAT_BMP, "bmp" },
     { "tiff", QW_FORMAT_TIFF, "tiff" },
-    { "tif", QW_FORMAT_TIFF, "tif" }
+    { "tif", QW_FORMAT_TIFF, "tif" },
+    { "jpg", QW_FORMAT_JPG, "jpg" },
+    { "jpeg", QW_FORMAT_JPG, "jpeg" }
 };
 
 static int cli_name_equals(const char *left, const char *right)
@@ -272,7 +274,7 @@ static int cli_run(const char *input, const char *output,
         if (!target) {
             fprintf(stderr, "error: unsupported target format '%s'\n",
                     target_name ? target_name : "");
-            fprintf(stderr, "supported targets: pdf, txt, png, json, jsonl, yaml, toml, xml, vcf, srt, vtt, lrc, sub, ass, ssa, sami, scc, csv, tsv, html, md, docx, epub, bmp, tiff\n");
+            fprintf(stderr, "supported targets: pdf, txt, png, json, jsonl, yaml, toml, xml, vcf, srt, vtt, lrc, sub, ass, ssa, sami, scc, csv, tsv, html, md, docx, epub, bmp, tiff, jpg\n");
             return 2;
         }
         if (!final_output) {

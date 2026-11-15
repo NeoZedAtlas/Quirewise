@@ -109,7 +109,7 @@ quirewise INPUT [INPUT ...] [options]
       --out-dir DIR         put default output names under DIR
       --to FORMAT           pdf (default), txt, png, json, jsonl, yaml, toml,
                             xml, vcf, srt, vtt, lrc, sub, ass, ssa, sami, scc,
-                            csv, tsv, html, md, docx, epub, bmp, tiff
+                            csv, tsv, html, md, docx, epub, bmp, tiff, jpg
       --check               verify inputs can be read; write nothing
       --quiet               suppress success output
       --page MODE           raster page box: image (default) or a4
@@ -125,7 +125,7 @@ Behavior:
 
 - Outputs are **never overwritten**. A failed write removes the partial file.
 - The `-o` extension must match `--to` (`\.pdf`, `\.txt`, `\.png`, `\.json`,
-  `\.yaml`, `\.srt`, `\.vtt`, `\.csv`, `\.html`, `\.md`, `\.docx`, `\.epub`, `\.bmp`, `\.tiff`, …).
+  `\.yaml`, `\.srt`, `\.vtt`, `\.csv`, `\.html`, `\.md`, `\.docx`, `\.epub`, `\.bmp`, `\.tiff`, `\.jpg`, …).
 - `--to` cannot be combined with `--check`; `-o` cannot be used with multiple
   inputs or with `--check`.
 - Exit code `0` is success, `1` is a conversion/read failure, `2` is a usage
@@ -178,6 +178,7 @@ quirewise report.docx --to docx -o copy.docx
 quirewise report.docx --to epub -o book.epub
 quirewise cover.png --to bmp -o cover.bmp
 quirewise scan.tiff --to png -o scan.png
+quirewise photo.bmp --to jpg -o photo.jpg
 ```
 
 CAD text inventory:

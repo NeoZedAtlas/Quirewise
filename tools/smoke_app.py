@@ -349,6 +349,10 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "PNG"),
     ("png-tiff", "external-consumer-template/fixtures/tiny.png", "to:tiff",
      "II"),
+    ("png-jpg", "external-consumer-template/fixtures/tiny.png", "to:jpg",
+     "JFIF"),
+    ("bmp-jpg", "external-consumer-template/fixtures/pixel.bmp", "to:jpeg",
+     "JFIF"),
     ("htmlz", "app/testfile/ebook/htmlz/lorem-ipsum.htmlz", "convert", "Lorem"),
     ("txtz", "app/testfile/ebook/txtz/lorem-ipsum.txtz", "convert", "Lorem"),
     ("pmlz", "app/testfile/ebook/pmlz/lorem-ipsum.pmlz", "convert", None),
@@ -462,7 +466,7 @@ def main() -> int:
         if pdf.read_bytes() != before:
             return fail("existing output was overwritten")
 
-        run(exe, ["sample.pdf", "--to", "jpg"], root, expect=2)
+        run(exe, ["sample.pdf", "--to", "webp"], root, expect=2)
 
         (root / "image.png").write_bytes(PNG_1X1)
         run(exe, ["image.png"], root)
