@@ -373,6 +373,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "data:image/png;base64"),
     ("odp-html", "libraries/quirewise-document/tests/data/image-slide.odp",
      "to:html", "data:image/png;base64"),
+    ("docx-header", "libraries/quirewise-document/tests/data/header-footer.docx",
+     "to:html", "docx-header"),
     ("png-webp", "external-consumer-template/fixtures/tiny.png", "to:webp",
      "WEBP"),
     ("bmp-webp", "external-consumer-template/fixtures/pixel.bmp", "to:webp",
