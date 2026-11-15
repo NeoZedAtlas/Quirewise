@@ -369,6 +369,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "GIF89a"),
     ("png-hdr", "external-consumer-template/fixtures/tiny.png", "to:hdr",
      "#?RADIANCE"),
+    ("pptx-html", "libraries/quirewise-document/tests/data/image-slide.pptx",
+     "to:html", "data:image/png;base64"),
     ("png-webp", "external-consumer-template/fixtures/tiny.png", "to:webp",
      "WEBP"),
     ("bmp-webp", "external-consumer-template/fixtures/pixel.bmp", "to:webp",
