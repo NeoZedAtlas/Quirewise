@@ -16,7 +16,7 @@
 |---|---|---|---|---|
 | PDF | PDF 1.x–1.7 | PDF→PDF（透传/合并书签页）、PDF→TXT（无 OCR）、PDF→PNG/JPEG/BMP/TIFF/WebP（首页 144 dpi 栅格化）、PDF→HTML/Markdown（文本层）、PDF→DOCX/EPUB（每页 120 dpi 页面图，保留版式）；加密 PDF 支持用户口令（`--pdf-password`） | 逐页栅格化、文本抽取、多文档合并 | PDF/A（需外部 veraPDF）、OCR、可编辑的版式/表格重建（页面为图片） |
 | Office 文本 | DOCX/DOCM/DOTX/DOTM、ODT/OTT/FODT | →PDF（data URI 图片会嵌入并绘制）、→HTML、→Markdown、→DOCX、→EPUB；DOCX 页眉/页脚文本按 `docx-header`/`docx-footer` 段落插入；ODT 主页面页眉/页脚文本按 `odt-header`/`odt-footer` 插入 | 版式模型（`qw_docx_parse`、`qw_odt_parse`） | 旧版 .doc、宏语义、页眉页脚版式/页码字段、浮动环绕、VML/EMF/WMF、纵向合并 |
-| 演示文稿 | PPTX/PPTM/POTX/POTM/PPSX/PPSM、ODP/OTP/FODP | →PDF（文字 + PPTX 内嵌图片）、→HTML、→Markdown、→DOCX、→EPUB | 幻灯片文字/版式 HTML；PPTX/ODP 图片解析为 data URI（ODP 含 FODP office:binary-data 内嵌图）；PPTX 备注页文本以 notes 段落追加 | 形状位置、图表、动画、母版；图片裁剪/效果不还原，ODP 图片按 svg:width 缩放 |
+| 演示文稿 | PPTX/PPTM/POTX/POTM/PPSX/PPSM、ODP/OTP/FODP | →PDF（文字 + PPTX 内嵌图片）、→HTML、→Markdown、→DOCX、→EPUB | 幻灯片文字/版式 HTML；PPTX/ODP 图片解析为 data URI（ODP 含 FODP office:binary-data 内嵌图）；PPTX 备注页与 ODP 备注页文本以 notes 段落追加 | 形状位置、图表、动画、母版；图片裁剪/效果不还原，ODP 图片按 svg:width 缩放 |
 | HWPX | HWPX | →PDF（段落/简单表格 + BinData 图片）、→HTML、→Markdown、→DOCX、→EPUB、→HWPX（最小 OWPML 包） | 版式 HTML；`hp:pic`→`hp:img` 引用按 content.hpf 映射为 PNG data URI | 旧版 HWP、样式、加密部件；图片按资源像素宽绘制、位置与裁剪不还原 |
 | 邮件 | EML | →PDF（正文 + 内嵌图片附件）、→HTML、→Markdown、→DOCX、→EPUB | MIME 解析；文本附件内联为 `attachment-text`，图片附件按 PNG data URI 嵌入并绘制 | MSG、签名语义、RFC 2231 文件名；其他二进制附件仍只列元数据 |
 | XPS | XPS/OpenXPS | — | 页面 XML 读取 | →PDF（缺少 XPS→版式/PDF 适配层） |
