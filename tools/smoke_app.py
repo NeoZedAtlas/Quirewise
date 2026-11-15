@@ -383,6 +383,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "data:image/png;base64"),
     ("xps-pdf", "libraries/quirewise-document/tests/data/sample.xps",
      "to:pdf", "%PDF-1.4"),
+    ("xps-image", "libraries/quirewise-document/tests/data/image.xps",
+     "to:pdf", "/Subtype /Image"),
     ("png-webp", "external-consumer-template/fixtures/tiny.png", "to:webp",
      "WEBP"),
     ("bmp-webp", "external-consumer-template/fixtures/pixel.bmp", "to:webp",
