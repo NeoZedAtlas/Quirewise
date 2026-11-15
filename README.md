@@ -18,6 +18,7 @@ PDF                           -> TXT (text extraction) or PNG (first page)
 |---|---|
 | Office documents | DOCX/DOCM/DOTX/DOTM, ODT/OTT/FODT, PPTX/PPTM/POTX/POTM/PPSX/PPSM, ODP/OTP/FODP, HWPX, EML |
 | Ebooks | EPUB/KEPUB, MOBI 7, AZW3/MOBI 8/AZW, FB2, PMLZ, TXTZ, HTMLZ |
+| Dictionaries | MDict MDX entries, with the MDD resource file as check-only input |
 | Text/web | TXT, Markdown, HTML, RTF |
 | Pages/scans | PDF, DjVu, PDG/PDZ, UVZ, CAJ, CEB |
 | Comics | CBZ, CBT |
@@ -29,9 +30,23 @@ PDF                           -> TXT (text extraction) or PNG (first page)
 | Audio | container/packet **check only** (`--check`), no decode or transcode |
 
 PDF, DOCX/ODT/HTML/EPUB/FB2, PPTX/ODP, HWPX, EML, MOBI/AZW3, HTMLZ/TXTZ/PMLZ,
-RTF, spreadsheets, subtitles, structured data, images, DjVu/PDZ/UVZ/CAJ/CEB,
-CBZ/CBT, DXF/DWG and SVG/SVGZ convert to PDF. PDF also converts to TXT (no OCR)
-and PNG (first page). DXF/DWG `--to txt` emits the drawing text inventory.
+MDict MDX, RTF, spreadsheets, subtitles, structured data, images,
+DjVu/PDZ/UVZ/CAJ/CEB, CBZ/CBT, DXF/DWG and SVG/SVGZ convert to PDF. PDF also
+converts to TXT (no OCR) and PNG (first page). DXF/DWG `--to txt` emits the
+drawing text inventory, and MDX `--to txt` emits one key line plus its
+tag-stripped article per entry.
+
+Besides those source-specific routes, the CLI converts inside three text
+families: structured data (JSON, JSON Lines, YAML, TOML, vCard, XML), subtitles
+(SRT, WebVTT, LRC, MicroDVD, ASS, SSA, SAMI, SCC) and worksheets (CSV, TSV, plus
+every spreadsheet reader to CSV/TSV). Data writers cover the six listed
+syntaxes; OPML and iPynb stay read-only, while XML only round-trips the ordered
+XML document shape.
+
+Layout inputs can also be written as HTML, Markdown, DOCX or EPUB. The DOCX and
+EPUB outputs are deliberately minimal packages (WordprocessingML paragraphs;
+one XHTML chapter plus OPF/NCX), and PDF→DOCX/EPUB reconstructs the text layer
+only — layout, images and styles are not rebuilt.
 
 See the [format capability matrix](docs/formats/support-matrix.md) for the
 three-state (supported / partial / unsupported) detail.
@@ -92,7 +107,9 @@ quirewise INPUT [INPUT ...] [options]
 
   -o, --out FILE            write the result to FILE
       --out-dir DIR         put default output names under DIR
-      --to FORMAT           pdf (default), txt or png
+      --to FORMAT           pdf (default), txt, png, json, jsonl, yaml, toml,
+                            xml, vcf, srt, vtt, lrc, sub, ass, ssa, sami, scc,
+                            csv, tsv, html, md, docx, epub
       --check               verify inputs can be read; write nothing
       --quiet               suppress success output
       --page MODE           raster page box: image (default) or a4
@@ -107,7 +124,8 @@ quirewise INPUT [INPUT ...] [options]
 Behavior:
 
 - Outputs are **never overwritten**. A failed write removes the partial file.
-- The `-o` extension must match `--to` (`\.pdf`, `.txt` or `.png`).
+- The `-o` extension must match `--to` (`\.pdf`, `\.txt`, `\.png`, `\.json`,
+  `\.yaml`, `\.srt`, `\.vtt`, `\.csv`, `\.html`, `\.md`, `\.docx`, `\.epub`, …).
 - `--to` cannot be combined with `--check`; `-o` cannot be used with multiple
   inputs or with `--check`.
 - Exit code `0` is success, `1` is a conversion/read failure, `2` is a usage
@@ -146,6 +164,18 @@ PDF outputs:
 ```sh
 quirewise manual.pdf --to txt -o manual.txt
 quirewise manual.pdf --to png -o cover.png
+```
+
+Family conversions:
+
+```sh
+quirewise notes.json --to yaml -o notes.yaml
+quirewise captions.srt --to vtt -o captions.vtt
+quirewise sheet.xlsx --to csv -o sheet.csv
+quirewise report.docx --to html -o report.html
+quirewise report.docx --to md -o report.md
+quirewise report.docx --to docx -o copy.docx
+quirewise report.docx --to epub -o book.epub
 ```
 
 CAD text inventory:

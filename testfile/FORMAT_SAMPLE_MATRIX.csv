@@ -141,6 +141,8 @@ rb,RB,Ebook,rb,sample collected,ebook/rb/lorem-ipsum.rb,CC0 by repository defaul
 snb,SNB,Ebook,snb,sample collected,ebook/snb/lorem-ipsum.snb,CC0 by repository default; item-specific notes take precedence
 tcr,TCR,Ebook,tcr,license review candidate,_license-review/sembiance/tcr/example.tcr,Local-only; source/license details in SAMPLE_PROVENANCE.csv
 oeb,OEB,Ebook,oeb;opf,sample collected,ebook/oeb/lorem-ipsum.opf,CC0 by repository default; item-specific notes take precedence
+mdx,MDX,Ebook,mdx,candidate collected; license review required,_license-review/user-provided/ebook/mdict/中国历代职官别名大辞典(增订本).mdx,"Commercial dictionary (中华书局 2019, ISBN 978-7-101-13825-2); third-party MDict conversion; redistribution not licensed; local-only"
+mdd,MDD,Ebook,mdd,candidate collected; license review required,_license-review/user-provided/ebook/mdict/中国历代职官别名大辞典(增订本).mdd,"Commercial dictionary (中华书局 2019, ISBN 978-7-101-13825-2); third-party MDict conversion; redistribution not licensed; local-only"
 mp4,MP4,Video,mp4,sample collected,video/mp4/bear.mp4;video/mp4/Big_Buck_Bunny_360_10s_1MB.mp4,BSD-3-Clause; CC-BY-3.0
 m4v,M4V,Video,m4v,candidate collected; license review required,_license-review/open-media/video/m4v/filesamples_sample_640x360_h264-High_640x360_29.97fps_no_audio.m4v,not stated by source; local-only; license review required
 mov,MOV,Video,mov;qt,sample collected,video/mov/animation.mov,CC0 by repository default; item-specific notes take precedence

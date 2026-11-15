@@ -26,7 +26,10 @@ static void print_help(const char *name)
     printf("Options:\n");
     printf("  -o, --out FILE       write the conversion result to FILE\n");
     printf("      --out-dir DIR    put default output names under DIR\n");
-    printf("      --to FORMAT      target format: pdf (default), txt, png\n");
+    printf("      --to FORMAT      target: pdf (default), txt, png, json, jsonl,\n");
+    printf("                       yaml, toml, xml, vcf, srt, vtt, lrc, sub,\n");
+    printf("                       ass, ssa, sami, scc, csv, tsv, html, md, docx,\n");
+    printf("                       epub\n");
     printf("      --check          verify inputs can be read; writes nothing\n");
     printf("      --quiet          suppress success output\n");
     printf("      --page MODE      raster page box: image (default) or a4\n");
@@ -102,7 +105,35 @@ static const CliTarget cli_targets[] = {
     { "pdf", QW_FORMAT_PDF, "pdf" },
     { "txt", QW_FORMAT_TXT, "txt" },
     { "text", QW_FORMAT_TXT, "txt" },
-    { "png", QW_FORMAT_PNG, "png" }
+    { "png", QW_FORMAT_PNG, "png" },
+    /* Structured data writers (quirewise-data). */
+    { "json", QW_FORMAT_JSON, "json" },
+    { "jsonl", QW_FORMAT_JSONL, "jsonl" },
+    { "yaml", QW_FORMAT_YAML, "yaml" },
+    { "yml", QW_FORMAT_YAML, "yaml" },
+    { "toml", QW_FORMAT_TOML, "toml" },
+    { "xml", QW_FORMAT_XML, "xml" },
+    { "vcf", QW_FORMAT_VCF, "vcf" },
+    { "vcard", QW_FORMAT_VCF, "vcf" },
+    /* Timed-cue writers (quirewise-subtitle). */
+    { "srt", QW_FORMAT_SRT, "srt" },
+    { "vtt", QW_FORMAT_VTT, "vtt" },
+    { "lrc", QW_FORMAT_LRC, "lrc" },
+    { "sub", QW_FORMAT_SUB, "sub" },
+    { "ass", QW_FORMAT_ASS, "ass" },
+    { "ssa", QW_FORMAT_SSA, "ssa" },
+    { "sami", QW_FORMAT_SAMI, "sami" },
+    { "scc", QW_FORMAT_SCC, "scc" },
+    /* Worksheet text writers (quirewise-spreadsheet). */
+    { "csv", QW_FORMAT_CSV, "csv" },
+    { "tsv", QW_FORMAT_TSV, "tsv" },
+    /* Layout text writers (quirewise/document + quirewise/text). */
+    { "html", QW_FORMAT_HTML, "html" },
+    { "md", QW_FORMAT_MARKDOWN, "md" },
+    { "markdown", QW_FORMAT_MARKDOWN, "md" },
+    /* Binary office writers (minimal DOCX/EPUB packages). */
+    { "docx", QW_FORMAT_DOCX, "docx" },
+    { "epub", QW_FORMAT_EPUB, "epub" }
 };
 
 static int cli_name_equals(const char *left, const char *right)
@@ -237,7 +268,7 @@ static int cli_run(const char *input, const char *output,
         if (!target) {
             fprintf(stderr, "error: unsupported target format '%s'\n",
                     target_name ? target_name : "");
-            fprintf(stderr, "supported targets: pdf, txt, png\n");
+            fprintf(stderr, "supported targets: pdf, txt, png, json, jsonl, yaml, toml, xml, vcf, srt, vtt, lrc, sub, ass, ssa, sami, scc, csv, tsv, html, md, docx, epub\n");
             return 2;
         }
         if (!final_output) {
@@ -265,8 +296,8 @@ static int cli_run(const char *input, const char *output,
     if (check) {
         status = qw_pipeline_check_file(input, &pipeline_options, &report);
     } else {
-        status = qw_pipeline_convert_file(input, final_output, target->format,
-                                          &pipeline_options, &report);
+        status = qw_pipeline_convert_file_to_format(input, final_output, target->format,
+                                                    &pipeline_options, &report);
     }
 
     if (status == QW_STATUS_OK && !check && report.skipped_pages > 0u) {

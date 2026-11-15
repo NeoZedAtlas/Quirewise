@@ -322,6 +322,27 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
     ("mobi", "app/testfile/ebook/mobi/lorem-ipsum.mobi", "convert", "Lorem"),
     ("azw3", "app/testfile/ebook/azw3/lorem-ipsum.azw3", "convert", "Lorem"),
     ("fb2", "app/testfile/ebook/fb2/lorem-ipsum.fb2", "convert", "Lorem"),
+    ("mdx", "libraries/quirewise-ebook/tests/data/tiny.mdx", "convert",
+     "Quirewise sample definition"),
+    ("mdx-txt", "libraries/quirewise-ebook/tests/data/tiny.mdx", "totxt",
+     "Quirewise sample definition"),
+    ("mdd", "libraries/quirewise-ebook/tests/data/tiny.mdd", "check", None),
+    ("srt-vtt", "libraries/quirewise-subtitle/tests/data/sample.srt", "to:vtt",
+     "Quirewise sample subtitle"),
+    ("json-yaml", "libraries/quirewise-data/tests/data/sample.json", "to:yaml",
+     "Quirewise sample"),
+    ("csv-tsv", "libraries/quirewise-spreadsheet/tests/data/sample.csv",
+     "to:tsv", "Quirewise sample"),
+    ("md-html", "libraries/quirewise-text/tests/data/sample.md", "to:html",
+     "<h1>Quirewise sample</h1>"),
+    ("html-md", "libraries/quirewise-document/tests/data/sample.html",
+     "to:md", "# Quirewise sample"),
+    ("md-docx", "libraries/quirewise-text/tests/data/sample.md", "to:docx",
+     "PK"),
+    ("md-epub", "libraries/quirewise-text/tests/data/sample.md", "to:epub",
+     "application/epub+zip"),
+    ("pdf-docx", "external-consumer-template/fixtures/one-page.pdf",
+     "to:docx", "PK"),
     ("htmlz", "app/testfile/ebook/htmlz/lorem-ipsum.htmlz", "convert", "Lorem"),
     ("txtz", "app/testfile/ebook/txtz/lorem-ipsum.txtz", "convert", "Lorem"),
     ("pmlz", "app/testfile/ebook/pmlz/lorem-ipsum.pmlz", "convert", None),
@@ -354,6 +375,15 @@ def check_format_matrix(exe: pathlib.Path, workspace: pathlib.Path,
             return fail(f"format matrix is missing fixture: {relative}")
         case_dir = root / f"matrix-{index:02d}-{label}"
         case_dir.mkdir()
+        if mode.startswith("to:"):
+            target = mode[3:]
+            out = case_dir / f"out.{target}"
+            run(exe, [str(source), "--to", target, "-o", str(out)], case_dir)
+            if not out.is_file() or not out.stat().st_size:
+                return fail(f"{label} produced no {target} output")
+            if token and token.encode("utf-8") not in out.read_bytes():
+                return fail(f"{label} output lost {token!r}")
+            continue
         if mode == "check":
             completed = run(exe, [str(source), "--check"], case_dir)
             if completed.stdout.strip() != "OK":

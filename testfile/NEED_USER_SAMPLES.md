@@ -96,6 +96,8 @@ This list is generated from FORMAT_SAMPLE_MATRIX.csv. Local-only candidates are 
 
 - chm (chm) — _license-review/tika/ebook/chm/testChm.chm
 - tcr (tcr) — _license-review/sembiance/tcr/example.tcr
+- mdx (mdx) — _license-review/user-provided/ebook/mdict/中国历代职官别名大辞典(增订本).mdx
+- mdd (mdd) — _license-review/user-provided/ebook/mdict/中国历代职官别名大辞典(增订本).mdd
 
 ### Video
 

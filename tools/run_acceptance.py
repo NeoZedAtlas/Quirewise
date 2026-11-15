@@ -38,8 +38,8 @@ LIBRARIES = [
     ("quirewise-audio", "QuirewiseAudio"),
     ("quirewise-comic", "QuirewiseComic"),
     ("quirewise-pdg", "QuirewisePDG"),
-    ("quirewise-document", "QuirewiseDocument"),
     ("quirewise-subtitle", "QuirewiseSubtitle"),
+    ("quirewise-document", "QuirewiseDocument"),
     ("quirewise-pipeline", "QuirewisePipeline"),
 ]
 

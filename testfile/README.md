@@ -4,13 +4,13 @@ This directory contains input fixtures mapped to the Filee snapshot format regis
 
 ## Coverage
 
-- Format IDs in reference registry: 244
+- Format IDs in reference registry: 244, plus 2 user-provided MDict candidates catalogued outside the Filee snapshot
 - Format IDs with collected samples: 158
-- Format IDs with local-only candidates awaiting license review: 82
+- Format IDs with local-only candidates awaiting license review: 84
 - Format IDs with no sample found yet: 4
 - Collected sample files: 180
-- License-review sample files: 124
-- Checksums recorded in SHA256SUMS.csv: 304
+- License-review sample files: 126
+- Checksums recorded in SHA256SUMS.csv: 306
 
 ## Files
 
@@ -36,6 +36,7 @@ This directory contains input fixtures mapped to the Filee snapshot format regis
 - Apache Tika SVN fixtures are candidates only because individual fixture licenses are not stated; see `sources/apache-tika-svn-fixtures-note.md`.
 - CC0 RAR/CBR fixtures come from [ssokolow/rar-test-files](https://github.com/ssokolow/rar-test-files), pinned to `16b785c2b1b504e99fc307676e5369a26d3ce060`.
 - CC0 eBook source files come from [openpreserve/format-corpus](https://github.com/openpreserve/format-corpus), pinned to `366f068cec399d0cdfd61fa473de3ab6dc858098`.
+- The user-provided MDict material (`中国历代职官别名大辞典(增订本).mdx/.mdd`) is a third-party conversion of a commercial dictionary (中华书局 2019, ISBN 978-7-101-13825-2). No redistribution license was granted, so the files stay local-only under `_license-review/user-provided/ebook/mdict/` and are excluded from Git. The committed MDX/MDD regression fixtures are the synthetic files produced by `libraries/quirewise-ebook/tests/data/generate_mdict_fixtures.py`.
 - HWPX sample comes from [KnifeLemon/Filee](https://github.com/KnifeLemon/Filee), pinned to `ff56a0cd1e2516516df3737d8d1cfb7ac69738dc`, under the repository MIT license.
 
 ## Main sample layout
