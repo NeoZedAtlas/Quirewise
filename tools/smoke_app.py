@@ -387,6 +387,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:pdf", "%PDF-1.4"),
     ("xps-image", "libraries/quirewise-document/tests/data/image.xps",
      "to:pdf", "/Subtype /Image"),
+    ("epub-list", "libraries/quirewise-document/tests/data/unsupported-layout.epub",
+     "to:html", "<li>"),
     ("epub-table", "libraries/quirewise-document/tests/data/unsupported-layout.epub",
      "to:html", "</td>"),
     ("mdx-links", "libraries/quirewise-ebook/tests/data/links.mdx",
