@@ -15,14 +15,14 @@
 | 输入类别 | 代表格式 | CLI 可达 | 仅库 API | 不支持 |
 |---|---|---|---|---|
 | PDF | PDF 1.x–1.7 | PDF→PDF（透传/合并书签页）、PDF→TXT（无 OCR）、PDF→PNG/JPEG/BMP/TIFF/WebP（首页 144 dpi 栅格化）、PDF→HTML/Markdown（文本层）、PDF→DOCX/EPUB（每页 120 dpi 页面图，保留版式）；加密 PDF 支持用户口令（`--pdf-password`） | 逐页栅格化、文本抽取、多文档合并 | PDF/A（需外部 veraPDF）、OCR、可编辑的版式/表格重建（页面为图片） |
-| Office 文本 | DOCX/DOCM/DOTX/DOTM、ODT/OTT/FODT | →PDF、→HTML、→Markdown、→DOCX、→EPUB | 版式模型（`qw_docx_parse`、`qw_odt_parse`） | 旧版 .doc、宏语义、页眉页脚、浮动环绕、VML/EMF/WMF、纵向合并 |
+| Office 文本 | DOCX/DOCM/DOTX/DOTM、ODT/OTT/FODT | →PDF（data URI 图片会嵌入并绘制）、→HTML、→Markdown、→DOCX、→EPUB | 版式模型（`qw_docx_parse`、`qw_odt_parse`） | 旧版 .doc、宏语义、页眉页脚、浮动环绕、VML/EMF/WMF、纵向合并 |
 | 演示文稿 | PPTX/PPTM/POTX/POTM/PPSX/PPSM、ODP/OTP/FODP | →PDF（仅文字）、→HTML、→Markdown、→DOCX、→EPUB | 幻灯片文字/版式 HTML | 形状位置、图片、图表、备注、动画、母版 |
 | HWPX | HWPX | →PDF（段落/简单表格）、→HTML、→Markdown、→DOCX、→EPUB、→HWPX（最小 OWPML 包） | 版式 HTML | 旧版 HWP、样式、图片、加密部件 |
 | 邮件 | EML | →PDF（正文；附件只列名称）、→HTML、→Markdown、→DOCX、→EPUB | MIME 解析、附件数据 | MSG、签名语义、RFC 2231 文件名 |
 | XPS | XPS/OpenXPS | — | 页面 XML 读取 | →PDF（缺少 XPS→版式/PDF 适配层） |
 | 电子书 | EPUB/KEPUB、MOBI/AZW3/AZW、FB2、PMLZ、TXTZ、HTMLZ | →PDF、→HTML、→Markdown、→DOCX、→EPUB、→HTMLZ、→TXTZ、→PMLZ | 段落/章节模型 | DRM、HUFF/CDIC 压缩的 MOBI、CHM/LIT/LRF/PDB/RB/SNB/TCR；EPUB 中表格按行扁平化为“ | ”分隔文本、列表/预格式化为段落、图片保留 alt 文本，SVG/canvas/媒体等仍整章跳过（全部跳过时返回 `unsupported`） |
 | 词典 | MDict MDX（词条）+ MDD（资源包），引擎 2.0 | MDX→PDF（词条版式）、MDX→TXT（键 + 去标签释义）、MDX→HTML/Markdown/DOCX/EPUB、MDD `--check` 结构校验 | 词条/资源枚举、MDD 资源按名查找、HTML/纯文本整册渲染 | 引擎 1.2（LZO）、注册码加密词典（`Encrypted="1"`/`"3"`）、MDD 图片嵌入、`@@@LINK`/`entry://` 链接解析、StarDict/DSL/KDIC 等其它词典格式 |
-| 轻量标记 | TXT、Markdown、HTML、RTF | →PDF、TXT/Markdown/HTML 互转、→DOCX、→EPUB、→HTMLZ、→TXTZ、→PMLZ、→HWPX | 读取后转 HTML/Markdown | AsciiDoc、LaTeX、Org、RST、Textile、Typst、DocBook、Man、MediaWiki 的统一转换入口（库里有读取器，CLI 未接线） |
+| 轻量标记 | TXT、Markdown、HTML、RTF | →PDF（HTML 中的 data URI 图片会绘制）、TXT/Markdown/HTML 互转、→DOCX、→EPUB、→HTMLZ、→TXTZ、→PMLZ、→HWPX | 读取后转 HTML/Markdown | AsciiDoc、LaTeX、Org、RST、Textile、Typst、DocBook、Man、MediaWiki 的统一转换入口（库里有读取器，CLI 未接线） |
 | 工作簿 | XLSX/XLSM/XLTX、BIFF8 XLS/XLT、ODS/OTS/FODS、CSV/TSV | →PDF（按工作表渲染表格）、表格→CSV/TSV（首个工作表）、表格→HTML | 单元格/公式缓存读取 | 多工作表写出、公式重算、图表/图片/合并区域样式；BIFF8 的 SST 跨记录续接仍受限 |
 | 结构化数据 | JSON、JSONL、YAML、TOML、XML、OPML、IPYNB、vCard | →PDF（值树渲染为表格/列表）、JSON/JSONL/YAML/TOML/vCard/XML 互转 | 类型化值树、XML 序列化 | OPML/IPYNB 写出、YAML anchor/tag、XML DTD 之外的校验 |
 | 字幕 | SRT、WebVTT、LRC、MicroDVD、TTML、ASS/SSA、SAMI、SCC | →PDF（时间轴文本页）、SRT/WebVTT/LRC/MicroDVD/ASS/SSA/SAMI/SCC 互转 | cue 模型 | TTML 写出（TTML 只读）、样式/定位/说话人/特效保留、字幕封装 |
