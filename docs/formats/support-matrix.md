@@ -20,7 +20,7 @@
 | HWPX | HWPX | →PDF（段落/简单表格）、→HTML、→Markdown、→DOCX、→EPUB、→HWPX（最小 OWPML 包） | 版式 HTML | 旧版 HWP、样式、图片、加密部件 |
 | 邮件 | EML | →PDF（正文；附件只列名称）、→HTML、→Markdown、→DOCX、→EPUB | MIME 解析、附件数据 | MSG、签名语义、RFC 2231 文件名 |
 | XPS | XPS/OpenXPS | — | 页面 XML 读取 | →PDF（缺少 XPS→版式/PDF 适配层） |
-| 电子书 | EPUB/KEPUB、MOBI/AZW3/AZW、FB2、PMLZ、TXTZ、HTMLZ | →PDF、→HTML、→Markdown、→DOCX、→EPUB、→HTMLZ、→TXTZ、→PMLZ | 段落/章节模型 | DRM、HUFF/CDIC 压缩的 MOBI、CHM/LIT/LRF/PDB/RB/SNB/TCR；EPUB 中表格/列表/图片等结构章节会被跳过（全部跳过时返回 `unsupported`） |
+| 电子书 | EPUB/KEPUB、MOBI/AZW3/AZW、FB2、PMLZ、TXTZ、HTMLZ | →PDF、→HTML、→Markdown、→DOCX、→EPUB、→HTMLZ、→TXTZ、→PMLZ | 段落/章节模型 | DRM、HUFF/CDIC 压缩的 MOBI、CHM/LIT/LRF/PDB/RB/SNB/TCR；EPUB 中表格按行扁平化为“ | ”分隔文本、列表/预格式化为段落、图片保留 alt 文本，SVG/canvas/媒体等仍整章跳过（全部跳过时返回 `unsupported`） |
 | 词典 | MDict MDX（词条）+ MDD（资源包），引擎 2.0 | MDX→PDF（词条版式）、MDX→TXT（键 + 去标签释义）、MDX→HTML/Markdown/DOCX/EPUB、MDD `--check` 结构校验 | 词条/资源枚举、MDD 资源按名查找、HTML/纯文本整册渲染 | 引擎 1.2（LZO）、注册码加密词典（`Encrypted="1"`/`"3"`）、MDD 图片嵌入、`@@@LINK`/`entry://` 链接解析、StarDict/DSL/KDIC 等其它词典格式 |
 | 轻量标记 | TXT、Markdown、HTML、RTF | →PDF、TXT/Markdown/HTML 互转、→DOCX、→EPUB、→HTMLZ、→TXTZ、→PMLZ、→HWPX | 读取后转 HTML/Markdown | AsciiDoc、LaTeX、Org、RST、Textile、Typst、DocBook、Man、MediaWiki 的统一转换入口（库里有读取器，CLI 未接线） |
 | 工作簿 | XLSX/XLSM/XLTX、BIFF8 XLS/XLT、ODS/OTS/FODS、CSV/TSV | →PDF（按工作表渲染表格）、表格→CSV/TSV（首个工作表）、表格→HTML | 单元格/公式缓存读取 | 多工作表写出、公式重算、图表/图片/合并区域样式；BIFF8 的 SST 跨记录续接仍受限 |
