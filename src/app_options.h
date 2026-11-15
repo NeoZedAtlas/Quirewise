@@ -11,6 +11,7 @@ typedef struct QwAppOptions {
     const char *archive_password;
     const char *pdf_password;
     size_t audio_track;
+    const char *mdd_path;
 } QwAppOptions;
 
 #endif

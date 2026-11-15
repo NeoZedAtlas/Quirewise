@@ -417,6 +417,12 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "</td>"),
     ("mdx-links", "libraries/quirewise-ebook/tests/data/links.mdx",
      "to:html", "Alpha definition"),
+    ("mdx-image", "libraries/quirewise-ebook/tests/data/images.mdx",
+     "to:html", "data:image/gif;base64",
+     ["--mdd", "libraries/quirewise-ebook/tests/data/tiny.mdd"]),
+    ("mdx-image-pdf", "libraries/quirewise-ebook/tests/data/images.mdx",
+     "to:pdf", "/Subtype /Image",
+     ["--mdd", "libraries/quirewise-ebook/tests/data/tiny.mdd"]),
     ("hwpx-image", "libraries/quirewise-document/tests/data/image.hwpx",
      "to:html", "data:image/png;base64"),
     ("png-webp", "external-consumer-template/fixtures/tiny.png", "to:webp",
@@ -455,7 +461,11 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
 
 def check_format_matrix(exe: pathlib.Path, workspace: pathlib.Path,
                         root: pathlib.Path) -> None:
-    for index, (label, relative, mode, token) in enumerate(FORMAT_MATRIX):
+    for index, entry in enumerate(FORMAT_MATRIX):
+        label, relative, mode, token = entry[:4]
+        extra = list(entry[4]) if len(entry) > 4 else []
+        extra = [str(workspace / arg) if (workspace / arg).is_file() else arg
+                 for arg in extra]
         source = workspace / relative
         if not source.is_file():
             return fail(f"format matrix is missing fixture: {relative}")
@@ -464,32 +474,35 @@ def check_format_matrix(exe: pathlib.Path, workspace: pathlib.Path,
         if mode.startswith("to:"):
             target = mode[3:]
             out = case_dir / f"out.{target}"
-            run(exe, [str(source), "--to", target, "-o", str(out)], case_dir)
+            run(exe, [str(source), *extra, "--to", target, "-o", str(out)],
+                case_dir)
             if not out.is_file() or not out.stat().st_size:
                 return fail(f"{label} produced no {target} output")
             if token and token.encode("utf-8") not in out.read_bytes():
                 return fail(f"{label} output lost {token!r}")
             continue
         if mode == "check":
-            completed = run(exe, [str(source), "--check"], case_dir)
+            completed = run(exe, [str(source), *extra, "--check"], case_dir)
             if completed.stdout.strip() != "OK":
                 return fail(f"{label} --check printed {completed.stdout!r}")
             continue
         if mode == "totxt":
             target = case_dir / "out.txt"
-            run(exe, [str(source), "--to", "txt", "-o", str(target)], case_dir)
+            run(exe, [str(source), *extra, "--to", "txt", "-o", str(target)],
+                case_dir)
             if (not target.is_file() or
                     token.encode("utf-8") not in target.read_bytes()):
                 return fail(f"{label} text output lost {token!r}")
             continue
         if mode == "topng":
             target = case_dir / "out.png"
-            run(exe, [str(source), "--to", "png", "-o", str(target)], case_dir)
+            run(exe, [str(source), *extra, "--to", "png", "-o", str(target)],
+                case_dir)
             if (not target.is_file() or
                     target.read_bytes()[:8] != b"\x89PNG\r\n\x1a\n"):
                 return fail(f"{label} did not produce a PNG")
             continue
-        run(exe, [str(source), "--out-dir", str(case_dir)], case_dir)
+        run(exe, [str(source), *extra, "--out-dir", str(case_dir)], case_dir)
         pdf = case_dir / (source.stem + ".pdf")
         if not pdf.is_file() or pdf.read_bytes()[:5] != b"%PDF-":
             return fail(f"{label} did not produce a PDF")

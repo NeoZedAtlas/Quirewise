@@ -39,6 +39,7 @@ static void print_help(const char *name)
     printf("      --archive-password TEXT  CBZ archive password\n");
     printf("      --pdf-password TEXT      user password for encrypted PDF input\n");
     printf("      --audio-track N  one-based audio track for --check\n");
+    printf("      --mdd FILE       companion MDD resources for MDX dictionaries\n");
     printf("      --help           show this help\n");
     printf("      --version        show the application version\n");
     printf("      --libraries      list the libraries selected at configure time\n");
@@ -286,6 +287,7 @@ static int cli_run(const char *input, const char *output,
     pipeline_options.archive_password = app_options->archive_password;
     pipeline_options.pdf_password = app_options->pdf_password;
     pipeline_options.audio_track = app_options->audio_track;
+    pipeline_options.mdd_path = app_options->mdd_path;
 
     if (!check) {
         target = target_name ? cli_find_target(target_name)
@@ -415,7 +417,7 @@ static int quirewise_main(int argc, char **argv)
     const char *output = NULL;
     const char *out_dir = NULL;
     const char *target_name = NULL;
-    QwAppOptions app_options = { 1, 0, NULL, NULL, 0u };
+    QwAppOptions app_options = { 1, 0, NULL, NULL, 0u, NULL };
     int check = 0;
     int quiet = 0;
     int index;
@@ -508,6 +510,14 @@ static int quirewise_main(int argc, char **argv)
                 return 2;
             }
             app_options.pdf_password = argv[++index];
+            continue;
+        }
+        if (strcmp(argument, "--mdd") == 0) {
+            if (index + 1 >= argc) {
+                fprintf(stderr, "error: --mdd requires a file path\n");
+                return 2;
+            }
+            app_options.mdd_path = argv[++index];
             continue;
         }
         if (strcmp(argument, "--audio-track") == 0) {
