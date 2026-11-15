@@ -387,6 +387,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:pdf", "%PDF-1.4"),
     ("xps-image", "libraries/quirewise-document/tests/data/image.xps",
      "to:pdf", "/Subtype /Image"),
+    ("mdx-links", "libraries/quirewise-ebook/tests/data/links.mdx",
+     "to:html", "Alpha definition"),
     ("hwpx-image", "libraries/quirewise-document/tests/data/image.hwpx",
      "to:html", "data:image/png;base64"),
     ("png-webp", "external-consumer-template/fixtures/tiny.png", "to:webp",
