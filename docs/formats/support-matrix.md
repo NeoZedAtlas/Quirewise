@@ -14,7 +14,7 @@
 
 | 输入类别 | 代表格式 | CLI 可达 | 仅库 API | 不支持 |
 |---|---|---|---|---|
-| PDF | PDF 1.x–1.7 | PDF→PDF（透传/合并书签页）、PDF→TXT（无 OCR）、PDF→PNG/JPEG/BMP/TIFF/WebP（首页 144 dpi 栅格化）、PDF→HTML/Markdown（文本层）、PDF→DOCX/EPUB（每页 120 dpi 页面图，保留版式） | 逐页栅格化、文本抽取、多文档合并 | PDF/A（需外部 veraPDF）、有用户口令的加密文档、OCR、可编辑的版式/表格重建（页面为图片） |
+| PDF | PDF 1.x–1.7 | PDF→PDF（透传/合并书签页）、PDF→TXT（无 OCR）、PDF→PNG/JPEG/BMP/TIFF/WebP（首页 144 dpi 栅格化）、PDF→HTML/Markdown（文本层）、PDF→DOCX/EPUB（每页 120 dpi 页面图，保留版式）；加密 PDF 支持用户口令（`--pdf-password`） | 逐页栅格化、文本抽取、多文档合并 | PDF/A（需外部 veraPDF）、OCR、可编辑的版式/表格重建（页面为图片） |
 | Office 文本 | DOCX/DOCM/DOTX/DOTM、ODT/OTT/FODT | →PDF、→HTML、→Markdown、→DOCX、→EPUB | 版式模型（`qw_docx_parse`、`qw_odt_parse`） | 旧版 .doc、宏语义、页眉页脚、浮动环绕、VML/EMF/WMF、纵向合并 |
 | 演示文稿 | PPTX/PPTM/POTX/POTM/PPSX/PPSM、ODP/OTP/FODP | →PDF（仅文字）、→HTML、→Markdown、→DOCX、→EPUB | 幻灯片文字/版式 HTML | 形状位置、图片、图表、备注、动画、母版 |
 | HWPX | HWPX | →PDF（段落/简单表格）、→HTML、→Markdown、→DOCX、→EPUB、→HWPX（最小 OWPML 包） | 版式 HTML | 旧版 HWP、样式、图片、加密部件 |

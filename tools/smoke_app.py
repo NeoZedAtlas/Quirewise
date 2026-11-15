@@ -491,6 +491,15 @@ def main() -> int:
             return fail("existing output was overwritten")
 
         run(exe, ["sample.pdf", "--to", "avif"], root, expect=2)
+        fixture = (
+            pathlib.Path(__file__).resolve().parents[2]
+            / "libraries/quirewise-document/tests/data/"
+            "encrypted-mutool-aes256-userpw.pdf"
+        )
+        run(exe, ["--pdf-password", "secret", str(fixture), "--to", "txt",
+                  "-o", "userpw.txt"], root)
+        run(exe, [str(fixture), "--to", "txt", "-o", "userpw-denied.txt"],
+            root, expect=1)
 
         (root / "image.png").write_bytes(PNG_1X1)
         run(exe, ["image.png"], root)

@@ -9,6 +9,7 @@ typedef struct QwAppOptions {
     /* PDZ_PDF_PAGES_AUTO/BODY/BODY_ATT/ALL for PDG containers. */
     int pdz_page_rule;
     const char *archive_password;
+    const char *pdf_password;
     size_t audio_track;
 } QwAppOptions;
 

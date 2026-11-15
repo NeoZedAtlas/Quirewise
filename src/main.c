@@ -37,6 +37,7 @@ static void print_help(const char *name)
     printf("      --page MODE      raster page box: image (default) or a4\n");
     printf("      --pages RULE     PDG page rule: auto, body, body+att, all\n");
     printf("      --archive-password TEXT  CBZ archive password\n");
+    printf("      --pdf-password TEXT      user password for encrypted PDF input\n");
     printf("      --audio-track N  one-based audio track for --check\n");
     printf("      --help           show this help\n");
     printf("      --version        show the application version\n");
@@ -277,6 +278,7 @@ static int cli_run(const char *input, const char *output,
     pipeline_options.raster_page_mode = app_options->raster_page_mode;
     pipeline_options.pdz_page_rule = app_options->pdz_page_rule;
     pipeline_options.archive_password = app_options->archive_password;
+    pipeline_options.pdf_password = app_options->pdf_password;
     pipeline_options.audio_track = app_options->audio_track;
 
     if (!check) {
@@ -407,7 +409,7 @@ static int quirewise_main(int argc, char **argv)
     const char *output = NULL;
     const char *out_dir = NULL;
     const char *target_name = NULL;
-    QwAppOptions app_options = { 1, 0, NULL, 0u };
+    QwAppOptions app_options = { 1, 0, NULL, NULL, 0u };
     int check = 0;
     int quiet = 0;
     int index;
@@ -492,6 +494,14 @@ static int quirewise_main(int argc, char **argv)
                 return 2;
             }
             app_options.archive_password = argv[++index];
+            continue;
+        }
+        if (strcmp(argument, "--pdf-password") == 0) {
+            if (index + 1 >= argc) {
+                fprintf(stderr, "error: --pdf-password requires text\n");
+                return 2;
+            }
+            app_options.pdf_password = argv[++index];
             continue;
         }
         if (strcmp(argument, "--audio-track") == 0) {
