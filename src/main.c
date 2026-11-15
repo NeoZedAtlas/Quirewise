@@ -29,7 +29,8 @@ static void print_help(const char *name)
     printf("      --to FORMAT      target: pdf (default), txt, png, json, jsonl,\n");
     printf("                       yaml, toml, xml, vcf, srt, vtt, lrc, sub,\n");
     printf("                       ass, ssa, sami, scc, csv, tsv, html, md, docx,\n");
-    printf("                       epub, bmp, tiff, jpg, webp, htmlz, txtz, pmlz,\n");
+    printf("                       epub, bmp, tiff, jpg, webp, tga, qoi, ppm,\n");
+    printf("                       htmlz, txtz, pmlz,\n");
     printf("                       hwpx\n");
     printf("      --check          verify inputs can be read; writes nothing\n");
     printf("      --quiet          suppress success output\n");
@@ -142,6 +143,9 @@ static const CliTarget cli_targets[] = {
     { "jpg", QW_FORMAT_JPG, "jpg" },
     { "jpeg", QW_FORMAT_JPG, "jpeg" },
     { "webp", QW_FORMAT_WEBP, "webp" },
+    { "tga", QW_FORMAT_TGA, "tga" },
+    { "qoi", QW_FORMAT_QOI, "qoi" },
+    { "ppm", QW_FORMAT_PPM, "ppm" },
     { "htmlz", QW_FORMAT_HTMLZ, "htmlz" },
     { "txtz", QW_FORMAT_TXTZ, "txtz" },
     { "pmlz", QW_FORMAT_PMLZ, "pmlz" },
@@ -280,7 +284,7 @@ static int cli_run(const char *input, const char *output,
         if (!target) {
             fprintf(stderr, "error: unsupported target format '%s'\n",
                     target_name ? target_name : "");
-            fprintf(stderr, "supported targets: pdf, txt, png, json, jsonl, yaml, toml, xml, vcf, srt, vtt, lrc, sub, ass, ssa, sami, scc, csv, tsv, html, md, docx, epub, bmp, tiff, jpg, webp, htmlz, txtz, pmlz, hwpx\n");
+            fprintf(stderr, "supported targets: pdf, txt, png, json, jsonl, yaml, toml, xml, vcf, srt, vtt, lrc, sub, ass, ssa, sami, scc, csv, tsv, html, md, docx, epub, bmp, tiff, jpg, webp, tga, qoi, ppm, htmlz, txtz, pmlz, hwpx\n");
             return 2;
         }
         if (!final_output) {

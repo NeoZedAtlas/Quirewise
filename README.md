@@ -110,7 +110,7 @@ quirewise INPUT [INPUT ...] [options]
       --to FORMAT           pdf (default), txt, png, json, jsonl, yaml, toml,
                             xml, vcf, srt, vtt, lrc, sub, ass, ssa, sami, scc,
                             csv, tsv, html, md, docx, epub, bmp, tiff, jpg, webp,
-                            htmlz, txtz, pmlz, hwpx
+                            tga, qoi, ppm, htmlz, txtz, pmlz, hwpx
       --check               verify inputs can be read; write nothing
       --quiet               suppress success output
       --page MODE           raster page box: image (default) or a4
@@ -126,7 +126,7 @@ Behavior:
 
 - Outputs are **never overwritten**. A failed write removes the partial file.
 - The `-o` extension must match `--to` (`\.pdf`, `\.txt`, `\.png`, `\.json`,
-  `\.yaml`, `\.srt`, `\.vtt`, `\.csv`, `\.html`, `\.md`, `\.docx`, `\.epub`, `\.bmp`, `\.tiff`, `\.jpg`, `\.webp`, `\.htmlz`, `\.txtz`, `\.pmlz`, `\.hwpx`, …).
+  `\.yaml`, `\.srt`, `\.vtt`, `\.csv`, `\.html`, `\.md`, `\.docx`, `\.epub`, `\.bmp`, `\.tiff`, `\.jpg`, `\.webp`, `\.tga`, `\.qoi`, `\.ppm`, `\.htmlz`, `\.txtz`, `\.pmlz`, `\.hwpx`, …).
 - `--to` cannot be combined with `--check`; `-o` cannot be used with multiple
   inputs or with `--check`.
 - Exit code `0` is success, `1` is a conversion/read failure, `2` is a usage
@@ -181,6 +181,8 @@ quirewise cover.png --to bmp -o cover.bmp
 quirewise scan.tiff --to png -o scan.png
 quirewise photo.bmp --to jpg -o photo.jpg
 quirewise diagram.png --to webp -o diagram.webp
+quirewise icon.png --to qoi -o icon.qoi
+quirewise scan.png --to ppm -o scan.ppm
 quirewise report.docx --to htmlz -o report.htmlz
 quirewise notes.txt --to txtz -o notes.txtz
 quirewise book.htmlz --to pmlz -o book.pmlz
