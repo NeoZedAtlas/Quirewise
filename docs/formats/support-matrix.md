@@ -25,7 +25,7 @@
 | 轻量标记 | TXT、Markdown、HTML、RTF | →PDF（HTML 中的 data URI 图片会绘制）、TXT/Markdown/HTML 互转、→DOCX、→EPUB、→HTMLZ、→TXTZ、→PMLZ、→HWPX | 读取后转 HTML/Markdown | AsciiDoc、LaTeX、Org、RST、Textile、Typst、DocBook、Man、MediaWiki 的统一转换入口（库里有读取器，CLI 未接线） |
 | 工作簿 | XLSX/XLSM/XLTX、BIFF8 XLS/XLT、ODS/OTS/FODS、CSV/TSV | →PDF（按工作表渲染表格）、表格→CSV/TSV（首个工作表）、表格→HTML | 单元格/公式缓存读取 | 多工作表写出、公式重算、图表/图片/合并区域样式；BIFF8 的 SST 跨记录续接仍受限 |
 | 结构化数据 | JSON、JSONL、YAML、TOML、XML、OPML、IPYNB、vCard | →PDF（值树渲染为表格/列表）、JSON/JSONL/YAML/TOML/vCard/XML 互转 | 类型化值树、XML 序列化 | OPML/IPYNB 写出、YAML anchor/tag、XML DTD 之外的校验 |
-| 字幕 | SRT、WebVTT、LRC、MicroDVD、TTML、ASS/SSA、SAMI、SCC | →PDF（时间轴文本页）、SRT/WebVTT/LRC/MicroDVD/ASS/SSA/SAMI/SCC 互转 | cue 模型 | TTML 写出（TTML 只读）、样式/定位/说话人/特效保留、字幕封装 |
+| 字幕 | SRT、WebVTT、LRC、MicroDVD、TTML、ASS/SSA、SAMI、SCC | →PDF（时间轴文本页）、SRT/WebVTT/LRC/MicroDVD/TTML/ASS/SSA/SAMI/SCC 互转 | cue 模型；TTML 写出（begin/end + 文本，XML 转义、`<br/>` 换行） | 样式/定位/说话人/特效保留、字幕封装 |
 | 单页图像 | JPEG、PNG、BMP、GIF、TIFF、WebP、JP2/J2K、QOI、Netpbm、PSD/PSB、EXR、HDR、TGA、PCX/ICO/ICNS、DDS、XPM/XBM、SGI、RAS、MIFF、DCM 等 | →PDF（单页）、图像重编码 →PNG/BMP/TIFF/JPEG/WebP/TGA/QOI/PPM/GIF/HDR/SGI/PCX（任意可解码输入） | 解码、动画/多页展开 | 缩放/裁剪等图像编辑、AVIF/HEIC/JXL/PCD 解码、RAW 去马赛克 |
 | 相机 RAW | DNG/TIFF-CFA、CR3、RAF、X3F、CRW、MRW | — | 文件签名/结构探测 | **像素解码恒返回 `UNSUPPORTED`**（发布包不含 LibRaw 或自研去马赛克） |
 | 矢量 | SVG/SVGZ | →PDF（自研子集；`<text>` 等未支持特性返回 `unsupported`） | 子集解析 + RGBA 栅格化 | EPS/PS/AI |

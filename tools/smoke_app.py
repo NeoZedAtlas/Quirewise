@@ -329,6 +329,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
     ("mdd", "libraries/quirewise-ebook/tests/data/tiny.mdd", "check", None),
     ("srt-vtt", "libraries/quirewise-subtitle/tests/data/sample.srt", "to:vtt",
      "Quirewise sample subtitle"),
+    ("srt-ttml", "libraries/quirewise-subtitle/tests/data/sample.srt", "to:ttml",
+     "<tt xmlns"),
     ("json-yaml", "libraries/quirewise-data/tests/data/sample.json", "to:yaml",
      "Quirewise sample"),
     ("csv-tsv", "libraries/quirewise-spreadsheet/tests/data/sample.csv",

@@ -28,7 +28,7 @@ static void print_help(const char *name)
     printf("      --out-dir DIR    put default output names under DIR\n");
     printf("      --to FORMAT      target: pdf (default), txt, png, json, jsonl,\n");
     printf("                       yaml, toml, xml, vcf, srt, vtt, lrc, sub,\n");
-    printf("                       ass, ssa, sami, scc, csv, tsv, html, md, docx,\n");
+    printf("                       ass, ssa, sami, scc, ttml, csv, tsv, html, md, docx,\n");
     printf("                       epub, bmp, tiff, jpg, webp, tga, qoi, ppm,\n");
     printf("                       gif, hdr, sgi, pcx, htmlz, txtz, pmlz,\n");
     printf("                       hwpx\n");
@@ -127,6 +127,7 @@ static const CliTarget cli_targets[] = {
     { "ssa", QW_FORMAT_SSA, "ssa" },
     { "sami", QW_FORMAT_SAMI, "sami" },
     { "scc", QW_FORMAT_SCC, "scc" },
+    { "ttml", QW_FORMAT_TTML, "ttml" },
     /* Worksheet text writers (quirewise-spreadsheet). */
     { "csv", QW_FORMAT_CSV, "csv" },
     { "tsv", QW_FORMAT_TSV, "tsv" },
@@ -290,7 +291,7 @@ static int cli_run(const char *input, const char *output,
         if (!target) {
             fprintf(stderr, "error: unsupported target format '%s'\n",
                     target_name ? target_name : "");
-            fprintf(stderr, "supported targets: pdf, txt, png, json, jsonl, yaml, toml, xml, vcf, srt, vtt, lrc, sub, ass, ssa, sami, scc, csv, tsv, html, md, docx, epub, bmp, tiff, jpg, webp, gif, hdr, sgi, pcx, tga, qoi, ppm, htmlz, txtz, pmlz,\n");
+            fprintf(stderr, "supported targets: pdf, txt, png, json, jsonl, yaml, toml, xml, vcf, srt, vtt, lrc, sub, ass, ssa, sami, scc, ttml, csv, tsv, html, md, docx, epub, bmp, tiff, jpg, webp, gif, hdr, sgi, pcx, tga, qoi, ppm, htmlz, txtz, pmlz,\n");
     printf("                       hwpx\n");
             return 2;
         }
