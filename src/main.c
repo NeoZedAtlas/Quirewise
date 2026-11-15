@@ -31,7 +31,7 @@ static void print_help(const char *name)
     printf("                       ass, ssa, sami, scc, ttml, csv, tsv, html, md, docx,\n");
     printf("                       epub, bmp, tiff, jpg, webp, tga, qoi, ppm,\n");
     printf("                       gif, hdr, sgi, pcx, htmlz, txtz, pmlz,\n");
-    printf("                       hwpx\n");
+    printf("                       opml, ipynb, hwpx\n");
     printf("      --check          verify inputs can be read; writes nothing\n");
     printf("      --quiet          suppress success output\n");
     printf("      --page MODE      raster page box: image (default) or a4\n");
@@ -128,6 +128,8 @@ static const CliTarget cli_targets[] = {
     { "sami", QW_FORMAT_SAMI, "sami" },
     { "scc", QW_FORMAT_SCC, "scc" },
     { "ttml", QW_FORMAT_TTML, "ttml" },
+    { "opml", QW_FORMAT_OPML, "opml" },
+    { "ipynb", QW_FORMAT_IPYNB, "ipynb" },
     /* Worksheet text writers (quirewise-spreadsheet). */
     { "csv", QW_FORMAT_CSV, "csv" },
     { "tsv", QW_FORMAT_TSV, "tsv" },
@@ -291,7 +293,7 @@ static int cli_run(const char *input, const char *output,
         if (!target) {
             fprintf(stderr, "error: unsupported target format '%s'\n",
                     target_name ? target_name : "");
-            fprintf(stderr, "supported targets: pdf, txt, png, json, jsonl, yaml, toml, xml, vcf, srt, vtt, lrc, sub, ass, ssa, sami, scc, ttml, csv, tsv, html, md, docx, epub, bmp, tiff, jpg, webp, gif, hdr, sgi, pcx, tga, qoi, ppm, htmlz, txtz, pmlz,\n");
+            fprintf(stderr, "supported targets: pdf, txt, png, json, jsonl, yaml, toml, xml, vcf, srt, vtt, lrc, sub, ass, ssa, sami, scc, ttml, csv, tsv, html, md, docx, epub, bmp, tiff, jpg, webp, gif, hdr, sgi, pcx, tga, qoi, ppm, htmlz, txtz, pmlz, opml, ipynb,\n");
     printf("                       hwpx\n");
             return 2;
         }
