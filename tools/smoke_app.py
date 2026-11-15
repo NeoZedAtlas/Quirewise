@@ -373,6 +373,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "#?RADIANCE"),
     ("pptx-html", "libraries/quirewise-document/tests/data/image-slide.pptx",
      "to:html", "data:image/png;base64"),
+    ("fodt-image", "libraries/quirewise-document/tests/data/image-data.fodt",
+     "to:html", "data:image/png;base64"),
     ("odp-notes", "libraries/quirewise-document/tests/data/notes-slide.odp",
      "to:html", "Speaker notes"),
     ("odp-html", "libraries/quirewise-document/tests/data/image-slide.odp",
