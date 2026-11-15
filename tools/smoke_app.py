@@ -389,6 +389,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "odt-header"),
     ("msg-html", "libraries/quirewise-document/tests/data/sample.msg",
      "to:html", "Outlook MSG sample"),
+    ("msg-attach", "libraries/quirewise-document/tests/data/sample.msg",
+     "to:html", "MSG attachment payload"),
     ("msg-html-body", "libraries/quirewise-document/tests/data/sample.msg",
      "to:html", "Outlook HTML body"),
     ("msg-pdf", "libraries/quirewise-document/tests/data/sample.msg",
