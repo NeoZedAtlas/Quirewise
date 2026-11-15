@@ -18,7 +18,7 @@
 | Office 文本 | DOCX/DOCM/DOTX/DOTM、ODT/OTT/FODT | →PDF（data URI 图片会嵌入并绘制）、→HTML、→Markdown、→DOCX、→EPUB；DOCX 页眉/页脚文本按 `docx-header`/`docx-footer` 段落插入；ODT 主页面页眉/页脚文本按 `odt-header`/`odt-footer` 插入 | 版式模型（`qw_docx_parse`、`qw_odt_parse`） | 旧版 .doc、宏语义、页眉页脚版式/页码字段、浮动环绕、VML/EMF/WMF、纵向合并 |
 | 演示文稿 | PPTX/PPTM/POTX/POTM/PPSX/PPSM、ODP/OTP/FODP | →PDF（文字 + PPTX 内嵌图片）、→HTML、→Markdown、→DOCX、→EPUB | 幻灯片文字/版式 HTML；PPTX/ODP 图片解析为 data URI（ODP 含 FODP office:binary-data 内嵌图）；PPTX 备注页文本以 notes 段落追加 | 形状位置、图表、动画、母版；图片裁剪/效果不还原，ODP 图片按 svg:width 缩放 |
 | HWPX | HWPX | →PDF（段落/简单表格）、→HTML、→Markdown、→DOCX、→EPUB、→HWPX（最小 OWPML 包） | 版式 HTML | 旧版 HWP、样式、图片、加密部件 |
-| 邮件 | EML | →PDF（正文；附件只列名称）、→HTML、→Markdown、→DOCX、→EPUB | MIME 解析、附件数据 | MSG、签名语义、RFC 2231 文件名 |
+| 邮件 | EML | →PDF（正文 + 内嵌图片附件）、→HTML、→Markdown、→DOCX、→EPUB | MIME 解析；文本附件内联为 `attachment-text`，图片附件按 PNG data URI 嵌入并绘制 | MSG、签名语义、RFC 2231 文件名；其他二进制附件仍只列元数据 |
 | XPS | XPS/OpenXPS | — | 页面 XML 读取 | →PDF（缺少 XPS→版式/PDF 适配层） |
 | 电子书 | EPUB/KEPUB、MOBI/AZW3/AZW、FB2、PMLZ、TXTZ、HTMLZ | →PDF、→HTML、→Markdown、→DOCX、→EPUB、→HTMLZ、→TXTZ、→PMLZ | 段落/章节模型 | DRM、HUFF/CDIC 压缩的 MOBI、CHM/LIT/LRF/PDB/RB/SNB/TCR；EPUB 中表格按行扁平化为“ | ”分隔文本、列表/预格式化为段落、图片保留 alt 文本，SVG/canvas/媒体等仍整章跳过（全部跳过时返回 `unsupported`） |
 | 词典 | MDict MDX（词条）+ MDD（资源包），引擎 2.0 | MDX→PDF（词条版式）、MDX→TXT（键 + 去标签释义）、MDX→HTML/Markdown/DOCX/EPUB、MDD `--check` 结构校验 | 词条/资源枚举、MDD 资源按名查找、HTML/纯文本整册渲染 | 引擎 1.2（LZO）、注册码加密词典（`Encrypted="1"`/`"3"`）、MDD 图片嵌入、`@@@LINK`/`entry://` 链接解析、StarDict/DSL/KDIC 等其它词典格式 |
