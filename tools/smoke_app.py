@@ -391,6 +391,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "<td>A</td>"),
     ("msg-rtf", "libraries/quirewise-document/tests/data/rtf-sample.msg",
      "to:html", "Hello RTF body."),
+    ("epub-formatting", "libraries/quirewise-document/tests/data/formatting.epub",
+     "to:html", "<ul><li>"),
     ("odp-crop", "libraries/quirewise-document/tests/data/crop-slide.odp",
      "to:html", "data:image/png;base64"),
     ("html-docx-rowspan", "libraries/quirewise-document/tests/data/rowspan.html",
