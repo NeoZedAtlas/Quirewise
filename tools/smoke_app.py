@@ -422,7 +422,7 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
     ("md-table-escaped", "libraries/quirewise-text/tests/data/md-table-escaped.md",
      "to:html", "a | b"),
     ("ass-speaker", "libraries/quirewise-subtitle/tests/data/speaker.ass",
-     "to:ass", ",Default,Alice,0,0,0,,"),
+     "to:ass", ",Default,Alice,10,20,30,Fade,"),
     ("md-strikethrough", "libraries/quirewise-text/tests/data/strike.md",
      "to:html", "<del>gone</del>"),
     ("md-autolink", "libraries/quirewise-text/tests/data/autolink.md",
