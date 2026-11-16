@@ -395,6 +395,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "附件.txt"),
     ("eml-rfc2231", "libraries/quirewise-document/tests/data/rfc2231.eml",
      "to:html", "中文.txt"),
+    ("xlsx-ods-write", "libraries/quirewise-spreadsheet/tests/data/multi-sheet.xlsx",
+     "to:ods", "content.xml"),
     ("xlsx-write", "libraries/quirewise-spreadsheet/tests/data/multi-sheet.xlsx",
      "to:xlsx", "xl/worksheets/sheet1.xml"),
     ("xls-sst-continue", "libraries/quirewise-spreadsheet/tests/data/large-sst.xls",
