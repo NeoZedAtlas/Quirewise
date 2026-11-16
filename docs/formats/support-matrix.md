@@ -30,7 +30,7 @@
 | 相机 RAW | DNG/TIFF-CFA、CR3、RAF、X3F、CRW、MRW | — | 文件签名/结构探测 | **像素解码恒返回 `UNSUPPORTED`**（发布包不含 LibRaw 或自研去马赛克） |
 | 矢量 | SVG/SVGZ | →PDF（自研子集；`<text>` 等未支持特性返回 `unsupported`） | 子集解析 + RGBA 栅格化 | EPS/PS/AI |
 | CAD | DXF（ASCII/binary）、DWG R13–R2018 | →PDF（A4 栅格）、→TXT（文本清单） | 文档模型、RGBA/SVG 渲染（SVG 文本可读） | DWG 图层句柄/块/ATTRIB、MTEXT/HATCH/ACIS/3D/代理对象、精确 NURBS、CJK 字形 |
-| 漫画归档 | CBZ、CBT | →PDF（图像页；坏页告警，`--check` 失败） | 归档页序/页字节 | CBR/CB7（RAR 仅解析头、7z 未接入 comic 路由）、其它归档 |
+| 漫画归档 | CBZ、CBT、CB7 | →PDF（图像页；坏页告警，`--check` 失败） | 归档页序/页字节 | CBR（RAR 仅解析头）、其它归档 |
 | 图像目录 | 目录 | — | 非递归枚举（`quirewise-image` 的 image_folder） | CLI 目录输入 |
 | 标准音频 | WAV/RIFX/RF64/BW64/Wave64、AIFF/AIFC、CAF、AU、DSF/DFF/DSS、VOC、FLAC、MP1/2/3、AAC、AMR、AC-3/E-AC-3、DTS、TTA、TAK、WavPack、APE、Musepack、WMA/ASF、M4A/MP4、Matroska/WebM、Ogg/Opus | `--check` 容器/包解析 | 包读取、加密音乐解密（NCM/QMC/KGM/KWM） | 解码到 PCM、重采样、编码/封装、播放 |
 | 视频、字体、3D | MP4 视频、TTF/OTF 等、STL/GLTF | — | — | 没有对应库 |
