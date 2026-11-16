@@ -401,6 +401,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "<figcaption>Red square</figcaption>"),
     ("hwpx-headings", "libraries/quirewise-document/tests/data/headings.hwpx",
      "to:html", "<h1>Heading one</h1>"),
+    ("hwpx-page-break-pdf", "libraries/quirewise-document/tests/data/page-break.hwpx",
+     "to:pdf", "/Count 2"),
     ("hwpx-page-break", "libraries/quirewise-document/tests/data/page-break.hwpx",
      "to:html", "page-break-before:always"),
     ("hwpx-line-spacing", "libraries/quirewise-document/tests/data/paragraph-style.hwpx",
