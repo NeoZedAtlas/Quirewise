@@ -88,10 +88,11 @@
       ]
     },
     "core/spreadsheet_document.h": {
-      "sha256": "be8837f2c6e826450fbacca44b9872cb493c5647fb3b6ea02c6d58b1b70299fe",
+      "sha256": "719225f2f9a21bf4ea25ed52e7a55b8a307605db53c4acb683215bed26b6acab",
       "repositories": [
         "quirewise-audio",
         "quirewise-data",
+        "quirewise-document",
         "quirewise-ebook",
         "quirewise-page",
         "quirewise-spreadsheet",
