@@ -421,6 +421,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:md", "| :---: | ---: |"),
     ("md-table-escaped", "libraries/quirewise-text/tests/data/md-table-escaped.md",
      "to:html", "a | b"),
+    ("md-setext", "libraries/quirewise-text/tests/data/setext.md",
+     "to:html", "<h1>Setext One</h1>"),
     ("md-table", "libraries/quirewise-text/tests/data/md-table.md",
      "to:html", "<th align=\"center\">"),
     ("html-table-align", "libraries/quirewise-text/tests/data/table-align.html",
