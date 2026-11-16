@@ -397,6 +397,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:md", "![xps image](data:image/png;base64,"),
     ("xps-html", "libraries/quirewise-document/tests/data/sample.xps",
      "to:html", "XPS page text"),
+    ("epub-ordered-list", "libraries/quirewise-document/tests/data/ordered-list.epub",
+     "to:html", "<ol><li>First step"),
     ("epub-table-spans", "libraries/quirewise-document/tests/data/table-spans.epub",
      "to:html", "colspan="), 
     ("epub-nested-list", "libraries/quirewise-document/tests/data/nested-list.epub",
