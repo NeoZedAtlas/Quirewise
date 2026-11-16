@@ -401,6 +401,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "<figcaption>Red square</figcaption>"),
     ("hwpx-headings", "libraries/quirewise-document/tests/data/headings.hwpx",
      "to:html", "<h1>Heading one</h1>"),
+    ("hwpx-line-spacing", "libraries/quirewise-document/tests/data/paragraph-style.hwpx",
+     "to:html", "line-height:160%"),
     ("hwpx-para-style", "libraries/quirewise-document/tests/data/paragraph-style.hwpx",
      "to:html", "text-indent:16px"),
     ("hwpx-styles", "libraries/quirewise-document/tests/data/styled.hwpx",
