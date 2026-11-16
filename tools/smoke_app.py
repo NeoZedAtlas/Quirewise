@@ -417,6 +417,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:pdf", "/Title <FEFF"),
     ("pdf-outline-nested", "libraries/quirewise-document/tests/data/headings.hwpx",
      "to:pdf", "/First"),
+    ("html-table-align", "libraries/quirewise-text/tests/data/table-align.html",
+     "to:md", "| :---: | ---: |"),
     ("pdf-heading-outline", "libraries/quirewise-document/tests/data/headings.hwpx",
      "to:pdf", "/Title (Heading one)"),
     ("hwpx-footnotes", "libraries/quirewise-document/tests/data/footnotes.hwpx",
