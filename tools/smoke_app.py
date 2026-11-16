@@ -399,6 +399,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "XPS page text"),
     ("epub-figure", "libraries/quirewise-document/tests/data/figure.epub",
      "to:html", "<figcaption>Red square</figcaption>"),
+    ("hwpx-para-style", "libraries/quirewise-document/tests/data/paragraph-style.hwpx",
+     "to:html", "text-indent:16px"),
     ("hwpx-styles", "libraries/quirewise-document/tests/data/styled.hwpx",
      "to:html", "color:#FF0000"),
     ("hwpx-position", "libraries/quirewise-document/tests/data/positioned-image.hwpx",
