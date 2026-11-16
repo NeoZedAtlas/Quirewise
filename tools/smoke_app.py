@@ -425,6 +425,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "line-height:160%"),
     ("hwpx-para-style", "libraries/quirewise-document/tests/data/paragraph-style.hwpx",
      "to:html", "text-indent:16px"),
+    ("hwpx-spacing", "libraries/quirewise-document/tests/data/styled.hwpx",
+     "to:html", "letter-spacing:0.20em"),
     ("hwpx-supsub", "libraries/quirewise-document/tests/data/styled.hwpx",
      "to:html", "<sup>Super</sup>"),
     ("hwpx-underline", "libraries/quirewise-document/tests/data/styled.hwpx",
