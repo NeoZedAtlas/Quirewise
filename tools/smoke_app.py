@@ -441,6 +441,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "text-align:center"),
     ("hwpx-flip", "libraries/quirewise-document/tests/data/flipped-image.hwpx",
      "to:html", "width=\"192\""),
+    ("hwpx-cell-align", "libraries/quirewise-document/tests/data/cell-align.hwpx",
+     "to:html", "writing-mode:vertical-rl"),
     ("hwpx-cell-border", "libraries/quirewise-document/tests/data/cell-border.hwpx",
      "to:html", "border:2px solid #336699"),
     ("hwpx-cell-background", "libraries/quirewise-document/tests/data/cell-background.hwpx",
