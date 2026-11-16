@@ -391,6 +391,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "<td>A</td>"),
     ("msg-rtf", "libraries/quirewise-document/tests/data/rtf-sample.msg",
      "to:html", "Hello RTF body."),
+    ("mdx-engine12", "libraries/quirewise-ebook/tests/data/engine12.mdx",
+     "to:txt", "Quirewise sample definition for alpha"),
     ("xps-md-image", "libraries/quirewise-document/tests/data/image.xps",
      "to:md", "![xps image](data:image/png;base64,"),
     ("xps-html", "libraries/quirewise-document/tests/data/sample.xps",
