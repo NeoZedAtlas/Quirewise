@@ -419,6 +419,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:pdf", "/First"),
     ("html-table-style-align", "libraries/quirewise-text/tests/data/table-style-align.html",
      "to:md", "| :---: | ---: |"),
+    ("md-table-escaped", "libraries/quirewise-text/tests/data/md-table-escaped.md",
+     "to:html", "a | b"),
     ("md-table", "libraries/quirewise-text/tests/data/md-table.md",
      "to:html", "<th align=\"center\">"),
     ("html-table-align", "libraries/quirewise-text/tests/data/table-align.html",
