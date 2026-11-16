@@ -385,6 +385,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:png", "PNG", ["--image-crop", "8,8,8,8"]),
     ("image-resize", "libraries/quirewise-document/tests/data/vml-red.png",
      "to:png", "PNG", ["--image-resize", "24x12"]),
+    ("html-docx-rowspan", "libraries/quirewise-document/tests/data/rowspan.html",
+     "to:docx", "w:val=\"restart\""),
     ("html-docx-table", "libraries/quirewise-document/tests/data/table.html",
      "to:docx", "w:gridSpan"),
     ("docx-link", "libraries/quirewise-document/tests/data/link.odt",
