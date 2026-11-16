@@ -379,6 +379,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "data:image/png;base64"),
     ("odp-notes", "libraries/quirewise-document/tests/data/notes-slide.odp",
      "to:html", "Speaker notes"),
+    ("xlsx-merge", "libraries/quirewise-spreadsheet/tests/data/merged.xlsx",
+     "to:html", 'rowspan="2"'),
     ("odp-image-size", "libraries/quirewise-document/tests/data/image-slide.odp",
      "to:html", 'width="142"'),
     ("odt-sized-image", "libraries/quirewise-document/tests/data/sized-image.odt",
