@@ -42,6 +42,7 @@ static void print_help(const char *name)
     printf("      --mdd FILE       companion MDD resources for MDX dictionaries\n");
     printf("      --image-crop L,T,R,B  crop raster output by pixels\n");
     printf("      --image-resize WxH  resize raster output (0 keeps the aspect ratio)\n");
+    printf("      --sheet N        one-based worksheet for CSV/TSV output\n");
     printf("      --help           show this help\n");
     printf("      --version        show the application version\n");
     printf("      --libraries      list the libraries selected at configure time\n");
@@ -296,6 +297,7 @@ static int cli_run(const char *input, const char *output,
     pipeline_options.image_crop_bottom = app_options->image_crop_bottom;
     pipeline_options.image_resize_width = app_options->image_resize_width;
     pipeline_options.image_resize_height = app_options->image_resize_height;
+    pipeline_options.sheet_index = app_options->sheet_index;
 
     if (!check) {
         target = target_name ? cli_find_target(target_name)
@@ -472,7 +474,7 @@ static int quirewise_main(int argc, char **argv)
     const char *output = NULL;
     const char *out_dir = NULL;
     const char *target_name = NULL;
-    QwAppOptions app_options = { 1, 0, NULL, NULL, 0u, NULL, 0, 0, 0, 0, 0, 0 };
+    QwAppOptions app_options = { 1, 0, NULL, NULL, 0u, NULL, 0, 0, 0, 0, 0, 0, 0 };
     int check = 0;
     int quiet = 0;
     int index;
@@ -565,6 +567,17 @@ static int quirewise_main(int argc, char **argv)
                 return 2;
             }
             app_options.pdf_password = argv[++index];
+            continue;
+        }
+        if (strcmp(argument, "--sheet") == 0) {
+            unsigned sheet = 0u;
+            if (index + 1 >= argc || !cli_parse_u32(argv[index + 1], &sheet) ||
+                sheet == 0u) {
+                fprintf(stderr, "error: --sheet expects a one-based sheet number\n");
+                return 2;
+            }
+            app_options.sheet_index = sheet - 1u;
+            ++index;
             continue;
         }
         if (strcmp(argument, "--image-crop") == 0) {

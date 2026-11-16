@@ -18,6 +18,7 @@ typedef struct QwAppOptions {
     unsigned image_crop_bottom;
     unsigned image_resize_width;
     unsigned image_resize_height;
+    unsigned sheet_index;
 } QwAppOptions;
 
 #endif
