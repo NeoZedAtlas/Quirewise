@@ -9,6 +9,7 @@
 >
 > 三者都以当前 HEAD 的代码为准；历史文档中依赖 Ghostscript、veraPDF、FFmpeg、LibRaw、
 > MuPDF 等外部后端的路线不在发布包内。
+> 外部依赖与暂不支持项的逐条结论见 [unsupported-rationale.md](unsupported-rationale.md)。
 
 ## 1. 输入类别总览
 
