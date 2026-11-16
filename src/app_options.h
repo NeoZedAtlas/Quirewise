@@ -12,6 +12,12 @@ typedef struct QwAppOptions {
     const char *pdf_password;
     size_t audio_track;
     const char *mdd_path;
+    unsigned image_crop_left;
+    unsigned image_crop_top;
+    unsigned image_crop_right;
+    unsigned image_crop_bottom;
+    unsigned image_resize_width;
+    unsigned image_resize_height;
 } QwAppOptions;
 
 #endif

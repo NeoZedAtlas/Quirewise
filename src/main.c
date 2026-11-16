@@ -40,6 +40,8 @@ static void print_help(const char *name)
     printf("      --pdf-password TEXT      user password for encrypted PDF input\n");
     printf("      --audio-track N  one-based audio track for --check\n");
     printf("      --mdd FILE       companion MDD resources for MDX dictionaries\n");
+    printf("      --image-crop L,T,R,B  crop raster output by pixels\n");
+    printf("      --image-resize WxH  resize raster output (0 keeps the aspect ratio)\n");
     printf("      --help           show this help\n");
     printf("      --version        show the application version\n");
     printf("      --libraries      list the libraries selected at configure time\n");
@@ -288,6 +290,12 @@ static int cli_run(const char *input, const char *output,
     pipeline_options.pdf_password = app_options->pdf_password;
     pipeline_options.audio_track = app_options->audio_track;
     pipeline_options.mdd_path = app_options->mdd_path;
+    pipeline_options.image_crop_left = app_options->image_crop_left;
+    pipeline_options.image_crop_top = app_options->image_crop_top;
+    pipeline_options.image_crop_right = app_options->image_crop_right;
+    pipeline_options.image_crop_bottom = app_options->image_crop_bottom;
+    pipeline_options.image_resize_width = app_options->image_resize_width;
+    pipeline_options.image_resize_height = app_options->image_resize_height;
 
     if (!check) {
         target = target_name ? cli_find_target(target_name)
@@ -396,6 +404,53 @@ static int cli_parse_page_rule(const char *text, int *out)
     return 0;
 }
 
+static int cli_parse_u32(const char *text, unsigned *out)
+{
+    unsigned long value = 0u;
+    size_t index = 0u;
+    if (!text || !text[0]) return 0;
+    for (; text[index]; ++index) {
+        if (text[index] < '0' || text[index] > '9') return 0;
+        value = value * 10ul + (unsigned long)(text[index] - '0');
+        if (value > 100000ul) return 0;
+    }
+    *out = (unsigned)value;
+    return 1;
+}
+
+static int cli_parse_crop(const char *text, unsigned values[4])
+{
+    size_t index;
+    for (index = 0u; index < 4u; ++index) {
+        const char *end = strchr(text, ',');
+        char part[16];
+        size_t length = end ? (size_t)(end - text) : strlen(text);
+        if (!length || length >= sizeof(part)) return 0;
+        memcpy(part, text, length);
+        part[length] = '\0';
+        if (!cli_parse_u32(part, &values[index])) return 0;
+        if (!end) {
+            return index == 3u;
+        }
+        text = end + 1;
+    }
+    return 1;
+}
+
+static int cli_parse_resize(const char *text, unsigned *width, unsigned *height)
+{
+    const char *separator = strchr(text, 'x');
+    char part[16];
+    size_t length;
+    if (!separator) return 0;
+    length = (size_t)(separator - text);
+    if (!length || length >= sizeof(part)) return 0;
+    memcpy(part, text, length);
+    part[length] = '\0';
+    if (!cli_parse_u32(part, width)) return 0;
+    return cli_parse_u32(separator + 1, height);
+}
+
 static int cli_parse_track(const char *text, size_t *out)
 {
     size_t value = 0u;
@@ -417,7 +472,7 @@ static int quirewise_main(int argc, char **argv)
     const char *output = NULL;
     const char *out_dir = NULL;
     const char *target_name = NULL;
-    QwAppOptions app_options = { 1, 0, NULL, NULL, 0u, NULL };
+    QwAppOptions app_options = { 1, 0, NULL, NULL, 0u, NULL, 0, 0, 0, 0, 0, 0 };
     int check = 0;
     int quiet = 0;
     int index;
@@ -510,6 +565,31 @@ static int quirewise_main(int argc, char **argv)
                 return 2;
             }
             app_options.pdf_password = argv[++index];
+            continue;
+        }
+        if (strcmp(argument, "--image-crop") == 0) {
+            unsigned values[4];
+            if (index + 1 >= argc ||
+                !cli_parse_crop(argv[index + 1], values)) {
+                fprintf(stderr, "error: --image-crop expects L,T,R,B\n");
+                return 2;
+            }
+            app_options.image_crop_left = values[0];
+            app_options.image_crop_top = values[1];
+            app_options.image_crop_right = values[2];
+            app_options.image_crop_bottom = values[3];
+            ++index;
+            continue;
+        }
+        if (strcmp(argument, "--image-resize") == 0) {
+            if (index + 1 >= argc ||
+                !cli_parse_resize(argv[index + 1],
+                                  &app_options.image_resize_width,
+                                  &app_options.image_resize_height)) {
+                fprintf(stderr, "error: --image-resize expects WxH\n");
+                return 2;
+            }
+            ++index;
             continue;
         }
         if (strcmp(argument, "--mdd") == 0) {
