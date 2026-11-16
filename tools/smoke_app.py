@@ -385,6 +385,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:png", "PNG", ["--image-crop", "8,8,8,8"]),
     ("image-resize", "libraries/quirewise-document/tests/data/vml-red.png",
      "to:png", "PNG", ["--image-resize", "24x12"]),
+    ("msg-rtf-image", "libraries/quirewise-document/tests/data/rtf-image.msg",
+     "to:html", "data:image/png;base64"),
     ("msg-rtf-table", "libraries/quirewise-document/tests/data/rtf-table.msg",
      "to:html", "<td>A</td>"),
     ("msg-rtf", "libraries/quirewise-document/tests/data/rtf-sample.msg",
