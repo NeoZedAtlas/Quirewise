@@ -507,6 +507,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
     ("xls-montecarlo", "libraries/quirewise-spreadsheet/tests/data/MonteCarlo.xls",
      "convert", "Monte Carlo"),
     ("cbz", "app/testfile/ebook/cbz/sample.cbz", "convert", None),
+    ("cbr", "libraries/quirewise-comic/tests/data/sample.cbr", "to:pdf",
+     "%PDF-1.4"),
     ("cb7", "libraries/quirewise-comic/tests/data/sample.cb7", "to:pdf",
      "%PDF-1.4"),
     ("cbt", "app/testfile/ebook/cbt/sample.cbt", "convert", None),
