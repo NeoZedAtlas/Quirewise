@@ -397,6 +397,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:md", "![xps image](data:image/png;base64,"),
     ("xps-html", "libraries/quirewise-document/tests/data/sample.xps",
      "to:html", "XPS page text"),
+    ("epub-blockquote", "libraries/quirewise-document/tests/data/blockquote.epub",
+     "to:html", "<blockquote><p>"),
     ("htmlz-css", "libraries/quirewise-document/tests/data/image.htmlz",
      "to:html", "<style>body"),
     ("htmlz-image", "libraries/quirewise-document/tests/data/image.htmlz",
