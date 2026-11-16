@@ -401,6 +401,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "<figcaption>Red square</figcaption>"),
     ("hwpx-headings", "libraries/quirewise-document/tests/data/headings.hwpx",
      "to:html", "<h1>Heading one</h1>"),
+    ("odt-outline", "libraries/quirewise-document/tests/data/outline.odt",
+     "to:pdf", "/Title (Chapter One)"),
     ("docx-outline", "libraries/quirewise-document/tests/data/outline.docx",
      "to:pdf", "/Title (Chapter One)"),
     ("pdf-metadata-zh", "libraries/quirewise-document/tests/data/meta-zh.html",
