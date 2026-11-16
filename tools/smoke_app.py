@@ -379,6 +379,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "data:image/png;base64"),
     ("odp-notes", "libraries/quirewise-document/tests/data/notes-slide.odp",
      "to:html", "Speaker notes"),
+    ("epub-docx-image", "libraries/quirewise-document/tests/data/image.epub",
+     "to:docx", "word/media/image0.png"),
     ("eml-rfc2231-cont", "libraries/quirewise-document/tests/data/rfc2231.eml",
      "to:html", "附件.txt"),
     ("eml-rfc2231", "libraries/quirewise-document/tests/data/rfc2231.eml",
