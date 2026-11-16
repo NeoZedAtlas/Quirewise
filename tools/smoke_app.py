@@ -421,6 +421,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:md", "| :---: | ---: |"),
     ("md-table-escaped", "libraries/quirewise-text/tests/data/md-table-escaped.md",
      "to:html", "a | b"),
+    ("md-task-list", "libraries/quirewise-text/tests/data/task-list.md",
+     "to:html", "disabled checked"),
     ("md-fence-language", "libraries/quirewise-text/tests/data/fence-language.md",
      "to:html", "class=\"language-c\""),
     ("md-setext", "libraries/quirewise-text/tests/data/setext.md",

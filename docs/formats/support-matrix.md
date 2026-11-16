@@ -10,7 +10,7 @@
 > 三者都以当前 HEAD 的代码为准；历史文档中依赖 Ghostscript、veraPDF、FFmpeg、LibRaw、
 > MuPDF 等外部后端的路线不在发布包内。
 > 外部依赖与暂不支持项的逐条结论见 [unsupported-rationale.md](unsupported-rationale.md)。
-> HTML→Markdown 保留表格列对齐（`align` 或 `style=text-align` → `:---:`/`---:`/`:---`）；Markdown 管道表格（含对齐分隔行与转义 `\|`）→ HTML `<table>`，Setext 标题（`===`/`---`）→ h1/h2，围栏代码 info string → `language-*` 类。
+> HTML→Markdown 保留表格列对齐（`align` 或 `style=text-align` → `:---:`/`---:`/`:---`）；Markdown 管道表格（含对齐分隔行与转义 `\|`）→ HTML `<table>`，Setext 标题（`===`/`---`）→ h1/h2，围栏代码 info string → `language-*` 类，任务列表 `- [x]` → 禁用复选框。
 
 ## 1. 输入类别总览
 
