@@ -417,6 +417,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "<span class=\"odt-endnote\">Endnote body.</span>"),
     ("odt-footnote", "libraries/quirewise-document/tests/data/footnote.odt",
      "to:html", "<sup>[1]</sup>"),
+    ("docx-header-style", "libraries/quirewise-document/tests/data/styled-header.docx",
+     "to:html", "<strong><em>Styled header</em></strong>"),
     ("docx-endnotes", "libraries/quirewise-document/tests/data/endnotes.docx",
      "to:html", "<sup>[3]</sup>"),
     ("docx-footnotes", "libraries/quirewise-document/tests/data/footnotes.docx",
