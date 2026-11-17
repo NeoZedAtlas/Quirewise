@@ -1,0 +1,767 @@
+{
+  "total_functions": 455,
+  "documented": 190,
+  "doxygen": 67,
+  "undocumented": 265,
+  "headers": [
+    {
+      "header": "libraries\\quirewise-archive\\include\\quirewise\\archive.h",
+      "functions": 10,
+      "documented": 4,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_archive_abi_version",
+        "qw_zip_archive_close",
+        "qw_zip_archive_entry_count",
+        "qw_zip_archive_get_entry",
+        "qw_archive_buffer_free",
+        "qw_archive_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-archive\\include\\quirewise\\rar.h",
+      "functions": 1,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": []
+    },
+    {
+      "header": "libraries\\quirewise-archive\\include\\quirewise\\seven_zip.h",
+      "functions": 2,
+      "documented": 2,
+      "doxygen": 0,
+      "undocumented": []
+    },
+    {
+      "header": "libraries\\quirewise-audio\\include\\quirewise\\audio.h",
+      "functions": 5,
+      "documented": 2,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_audio_reader_get_info",
+        "qw_audio_reader_close",
+        "qw_audio_codec_name"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-audio\\include\\quirewise\\encrypted_music.h",
+      "functions": 6,
+      "documented": 2,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_encrypted_music_abi_version",
+        "qw_encrypted_music_format_from_path",
+        "qw_encrypted_music_buffer_free",
+        "qw_encrypted_music_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-charset\\include\\quirewise\\charset.h",
+      "functions": 2,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_charset_abi_version"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-comic\\include\\quirewise\\comic.h",
+      "functions": 7,
+      "documented": 2,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_comic_archive_format",
+        "qw_comic_archive_page_count",
+        "qw_comic_archive_page_info",
+        "qw_comic_page_data_free",
+        "qw_comic_archive_close"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-compression\\include\\quirewise\\compression.h",
+      "functions": 19,
+      "documented": 15,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_compression_crc32",
+        "qw_compression_adler32",
+        "qw_compression_zlib_stored_bound",
+        "qw_compression_zlib_bound"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-crypto\\include\\quirewise\\crypto.h",
+      "functions": 20,
+      "documented": 13,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_crypto_sha384",
+        "qw_crypto_sha512",
+        "qw_crypto_aes128_ecb_decrypt",
+        "qw_crypto_aes256_ecb_decrypt",
+        "qw_crypto_pdg_deslike_transform16",
+        "qw_crypto_pdg_deslike_schedule_clear",
+        "qw_crypto_3des_ofb64_crypt"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-data\\include\\quirewise\\data.h",
+      "functions": 13,
+      "documented": 4,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_data_document_free",
+        "qw_data_document_format",
+        "qw_data_document_root",
+        "qw_data_value_kind",
+        "qw_data_value_count",
+        "qw_data_value_boolean",
+        "qw_data_array_at",
+        "qw_data_object_at",
+        "qw_data_object_find"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-data\\include\\quirewise\\docbook.h",
+      "functions": 4,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_docbook_abi_version",
+        "qw_docbook_document_free",
+        "qw_docbook_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-data\\include\\quirewise\\opml.h",
+      "functions": 4,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_opml_abi_version",
+        "qw_opml_document_free",
+        "qw_opml_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-data\\include\\quirewise\\xml.h",
+      "functions": 39,
+      "documented": 2,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_xml_abi_version",
+        "qw_xml_parse_with_options",
+        "qw_xml_drop",
+        "qw_xml_node_kind",
+        "qw_xml_root",
+        "qw_xml_down",
+        "qw_xml_next",
+        "qw_xml_prev",
+        "qw_xml_up",
+        "qw_xml_is_tag",
+        "qw_xml_tag",
+        "qw_xml_qualified_tag",
+        "qw_xml_local_name",
+        "qw_xml_namespace_uri",
+        "qw_xml_text",
+        "qw_xml_comment",
+        "qw_xml_pi_target",
+        "qw_xml_pi_data",
+        "qw_xml_att",
+        "qw_xml_attribute_count",
+        "qw_xml_attribute_name",
+        "qw_xml_attribute_local_name",
+        "qw_xml_attribute_namespace_uri",
+        "qw_xml_attribute_value",
+        "qw_xml_att_ns",
+        "qw_xml_att_alt",
+        "qw_xml_att_eq",
+        "qw_xml_find",
+        "qw_xml_find_next",
+        "qw_xml_find_down",
+        "qw_xml_find_match",
+        "qw_xml_find_next_match",
+        "qw_xml_find_down_match",
+        "qw_xml_find_dfs",
+        "qw_xml_find_dfs_top",
+        "qw_xml_find_next_dfs",
+        "qw_xml_find_next_dfs_top"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-document\\include\\quirewise\\convert.h",
+      "functions": 10,
+      "documented": 10,
+      "doxygen": 10,
+      "undocumented": []
+    },
+    {
+      "header": "libraries\\quirewise-document\\include\\quirewise\\docx.h",
+      "functions": 5,
+      "documented": 3,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_docx_document_get_page_layout",
+        "qw_docx_document_free"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-document\\include\\quirewise\\email.h",
+      "functions": 6,
+      "documented": 2,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_email_document_html",
+        "qw_email_document_attachment_count",
+        "qw_email_document_get_attachment",
+        "qw_email_document_free"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-document\\include\\quirewise\\hwpx.h",
+      "functions": 7,
+      "documented": 3,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_hwpx_document_section_count",
+        "qw_hwpx_document_omitted_object_count",
+        "qw_hwpx_document_free",
+        "qw_hwpx_buffer_free"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-document\\include\\quirewise\\odf_presentation.h",
+      "functions": 4,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_odp_parse",
+        "qw_odp_document_slide_count",
+        "qw_odp_document_free"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-document\\include\\quirewise\\odt.h",
+      "functions": 3,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_odt_parse",
+        "qw_odt_document_free"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-document\\include\\quirewise\\pdf.h",
+      "functions": 14,
+      "documented": 10,
+      "doxygen": 8,
+      "undocumented": [
+        "qw_pdf_bookmark_at",
+        "qw_pdf_document_title",
+        "qw_pdf_document_author",
+        "qw_pdf_open_structure"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-document\\include\\quirewise\\pptx.h",
+      "functions": 3,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_pptx_parse",
+        "qw_pptx_document_free"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-document\\include\\quirewise\\xps.h",
+      "functions": 5,
+      "documented": 2,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_xps_document_page_count",
+        "qw_xps_data_free",
+        "qw_xps_document_close"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-ebook\\include\\quirewise\\epub.h",
+      "functions": 6,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_epub_document_free",
+        "qw_epub_section_count",
+        "qw_epub_section_at",
+        "qw_epub_paragraph_at",
+        "qw_epub_run_at"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-ebook\\include\\quirewise\\fb2.h",
+      "functions": 3,
+      "documented": 0,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_fb2_parse",
+        "qw_fb2_document_html",
+        "qw_fb2_document_free"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-ebook\\include\\quirewise\\htmlz.h",
+      "functions": 6,
+      "documented": 2,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_htmlz_abi_version",
+        "qw_htmlz_document_free",
+        "qw_htmlz_buffer_free",
+        "qw_htmlz_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-ebook\\include\\quirewise\\mdd.h",
+      "functions": 7,
+      "documented": 3,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_mdd_parse",
+        "qw_mdd_document_free",
+        "qw_mdd_document_title",
+        "qw_mdd_document_resource_count"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-ebook\\include\\quirewise\\mdx.h",
+      "functions": 11,
+      "documented": 6,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_mdx_document_free",
+        "qw_mdx_document_description",
+        "qw_mdx_document_encoding",
+        "qw_mdx_document_entry_count",
+        "qw_mdx_document_text"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-ebook\\include\\quirewise\\mobi.h",
+      "functions": 5,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_mobi_parse",
+        "qw_mobi_document_kind",
+        "qw_mobi_document_text",
+        "qw_mobi_document_free"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-ebook\\include\\quirewise\\pml.h",
+      "functions": 4,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_pml_abi_version",
+        "qw_pml_document_free",
+        "qw_pml_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-ebook\\include\\quirewise\\text_archive.h",
+      "functions": 6,
+      "documented": 2,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_text_archive_abi_version",
+        "qw_text_archive_document_free",
+        "qw_text_archive_buffer_free",
+        "qw_text_archive_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-image\\include\\quirewise\\image.h",
+      "functions": 8,
+      "documented": 8,
+      "doxygen": 8,
+      "undocumented": []
+    },
+    {
+      "header": "libraries\\quirewise-image\\include\\quirewise\\image_folder.h",
+      "functions": 5,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_image_folder_abi_version",
+        "qw_image_folder_is_directory",
+        "qw_image_folder_free",
+        "qw_image_folder_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-image\\include\\quirewise\\image_processing.h",
+      "functions": 11,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_image_processing_abi_version",
+        "qw_gray_image_adopt",
+        "qw_gray_image_release",
+        "qw_gray_image_normalize_illumination",
+        "qw_gray_image_deskew",
+        "qw_gray_image_crop",
+        "qw_gray_image_correct_perspective",
+        "qw_gray_image_dewarp",
+        "qw_gray_image_split_copy",
+        "qw_image_processing_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-page\\include\\quirewise\\caj.h",
+      "functions": 13,
+      "documented": 4,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_caj_document_page_count",
+        "qw_caj_document_page_info",
+        "qw_caj_document_figure_info",
+        "qw_caj_classic_outline_count",
+        "qw_caj_classic_outline_get",
+        "qw_caj_classic_outlines_free",
+        "qw_caj_decrypt_kdh_pdf",
+        "qw_caj_pdf_data_free",
+        "qw_caj_document_close"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-page\\include\\quirewise\\ceb.h",
+      "functions": 2,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_ceb_pdf_free"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-page\\include\\quirewise\\djvu.h",
+      "functions": 9,
+      "documented": 4,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_djvu_abi_version",
+        "qw_djvu_get_page_info",
+        "qw_djvu_image_free",
+        "qw_djvu_text_free",
+        "qw_djvu_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-page\\include\\quirewise\\page_status.h",
+      "functions": 0,
+      "documented": 0,
+      "doxygen": 0,
+      "undocumented": []
+    },
+    {
+      "header": "libraries\\quirewise-page\\include\\quirewise\\uvz_parser.h",
+      "functions": 6,
+      "documented": 2,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_uvz_document_page_count",
+        "qw_uvz_document_page_info",
+        "qw_uvz_page_data_free",
+        "qw_uvz_document_close"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-pdg\\include\\pdg.h",
+      "functions": 21,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "pdg_render_to_ccitt",
+        "pdg_abi_version",
+        "pdg_context_create",
+        "pdg_context_free",
+        "pdg_decode_memory",
+        "pdg_decrypt_memory",
+        "pdg_decode_memory_ctx",
+        "pdg_decrypt_memory_ctx",
+        "pdg_decode_memory_batch",
+        "pdg_decrypt_memory_batch",
+        "pdg_render_memory_ctx",
+        "pdg_render_memory_batch",
+        "pdg_decode_file",
+        "pdg_decrypt_file",
+        "pdg_buffer_free",
+        "pdg_image_free",
+        "pdg_error_string",
+        "pdg_output_extension",
+        "pdg_output_kind_name",
+        "pdg_output_requires_external_decoder"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-pdg\\include\\pdz.h",
+      "functions": 30,
+      "documented": 23,
+      "doxygen": 23,
+      "undocumented": [
+        "pdz_abi_version",
+        "pdz_parse",
+        "pdz_validate",
+        "pdz_member_scope_name",
+        "pdz_inforule_member_pages",
+        "pdz_buffer_free",
+        "pdz_cipher_name"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-pdg\\include\\pdz_pdf.h",
+      "functions": 15,
+      "documented": 12,
+      "doxygen": 12,
+      "undocumented": [
+        "pdz_pdf_from_images",
+        "pdz_pdf_page_rule_name",
+        "pdz_pdf_route_name"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-pipeline\\include\\quirewise\\pipeline.h",
+      "functions": 4,
+      "documented": 4,
+      "doxygen": 4,
+      "undocumented": []
+    },
+    {
+      "header": "libraries\\quirewise-runtime\\include\\quirewise\\document.h",
+      "functions": 0,
+      "documented": 0,
+      "doxygen": 0,
+      "undocumented": []
+    },
+    {
+      "header": "libraries\\quirewise-runtime\\include\\quirewise\\format.h",
+      "functions": 0,
+      "documented": 0,
+      "doxygen": 0,
+      "undocumented": []
+    },
+    {
+      "header": "libraries\\quirewise-runtime\\include\\quirewise\\runtime.h",
+      "functions": 4,
+      "documented": 2,
+      "doxygen": 2,
+      "undocumented": [
+        "qw_runtime_abi_version",
+        "qw_runtime_buffer_alloc"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-runtime\\include\\quirewise\\status.h",
+      "functions": 0,
+      "documented": 0,
+      "doxygen": 0,
+      "undocumented": []
+    },
+    {
+      "header": "libraries\\quirewise-spreadsheet\\include\\quirewise\\spreadsheet.h",
+      "functions": 12,
+      "documented": 4,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_spreadsheet_document_free",
+        "qw_spreadsheet_document_format",
+        "qw_spreadsheet_sheet_count",
+        "qw_spreadsheet_sheet_at",
+        "qw_spreadsheet_sheet_name",
+        "qw_spreadsheet_cell_count",
+        "qw_spreadsheet_cell_at",
+        "qw_spreadsheet_sheet_merge_at"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-subtitle\\include\\quirewise\\subtitle.h",
+      "functions": 7,
+      "documented": 4,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_subtitle_get_info",
+        "qw_subtitle_free",
+        "qw_subtitle_format_name"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-text\\include\\quirewise\\asciidoc.h",
+      "functions": 4,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_asciidoc_abi_version",
+        "qw_asciidoc_document_free",
+        "qw_asciidoc_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-text\\include\\quirewise\\html_grid.h",
+      "functions": 2,
+      "documented": 2,
+      "doxygen": 0,
+      "undocumented": []
+    },
+    {
+      "header": "libraries\\quirewise-text\\include\\quirewise\\latex.h",
+      "functions": 4,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_latex_abi_version",
+        "qw_latex_document_free",
+        "qw_latex_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-text\\include\\quirewise\\man.h",
+      "functions": 4,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_man_abi_version",
+        "qw_man_document_free",
+        "qw_man_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-text\\include\\quirewise\\markdown.h",
+      "functions": 6,
+      "documented": 2,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_markdown_abi_version",
+        "qw_markdown_document_free",
+        "qw_markdown_text_free",
+        "qw_markdown_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-text\\include\\quirewise\\mediawiki.h",
+      "functions": 4,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_mediawiki_abi_version",
+        "qw_mediawiki_document_free",
+        "qw_mediawiki_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-text\\include\\quirewise\\org.h",
+      "functions": 4,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_org_abi_version",
+        "qw_org_document_free",
+        "qw_org_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-text\\include\\quirewise\\plain_text.h",
+      "functions": 4,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_plain_text_probe",
+        "qw_plain_text_parse",
+        "qw_plain_text_document_free"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-text\\include\\quirewise\\rst.h",
+      "functions": 4,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_rst_abi_version",
+        "qw_rst_document_free",
+        "qw_rst_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-text\\include\\quirewise\\rtf.h",
+      "functions": 4,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_rtf_abi_version",
+        "qw_rtf_document_free",
+        "qw_rtf_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-text\\include\\quirewise\\textile.h",
+      "functions": 4,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_textile_abi_version",
+        "qw_textile_document_free",
+        "qw_textile_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-text\\include\\quirewise\\typst.h",
+      "functions": 4,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_typst_abi_version",
+        "qw_typst_document_free",
+        "qw_typst_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-vector\\include\\quirewise\\cad.h",
+      "functions": 15,
+      "documented": 4,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_cad_image_free",
+        "qw_cad_document_free",
+        "qw_cad_abi_version",
+        "qw_cad_format",
+        "qw_cad_entity_count",
+        "qw_cad_layer_count",
+        "qw_cad_bounds",
+        "qw_cad_text_count",
+        "qw_cad_text_at",
+        "qw_cad_buffer_free",
+        "qw_cad_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-vector\\include\\quirewise\\svg.h",
+      "functions": 4,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_svg_abi_version",
+        "qw_svg_image_free",
+        "qw_svg_status_string"
+      ]
+    },
+    {
+      "header": "libraries\\quirewise-vector\\include\\quirewise\\svgz.h",
+      "functions": 4,
+      "documented": 1,
+      "doxygen": 0,
+      "undocumented": [
+        "qw_svgz_abi_version",
+        "qw_svgz_document_free",
+        "qw_svgz_status_string"
+      ]
+    }
+  ]
+}
