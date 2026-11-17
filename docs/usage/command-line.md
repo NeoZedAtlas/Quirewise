@@ -10,6 +10,7 @@
 quirewise INPUT [INPUT ...] [-o FILE] [--to FORMAT] [--check] [--quiet]
           [--out-dir DIR] [--page image|a4] [--pages RULE]
           [--archive-password TEXT] [--pdf-password TEXT] [--mdd FILE]
+          [--font-file FILE]
           [--image-crop L,T,R,B] [--image-resize WxH] [--sheet N]
           [--audio-track N]
 
@@ -45,6 +46,7 @@ quirewise --version | --libraries | --help
 | `--archive-password TEXT` | CBZ/CBT/CB7 等 ZIP/7z 归档密码（`--zip-password` 为别名） |
 | `--pdf-password TEXT` | 加密 PDF 的用户口令 |
 | `--mdd FILE` | MDX 词条的配套 MDD 资源包，用于按名内嵌图片 |
+| `--font-file FILE` | 把该 TrueType 字体嵌入 PDF 输出（CIDFontType2 + Identity-H + ToUnicode）；缺省仍用 Helvetica/STSong-Light |
 | `--image-crop L,T,R,B` | 编码图像输出前按像素裁剪 |
 | `--image-resize WxH` | 编码图像输出前缩放；`0` 保持宽高比 |
 | `--sheet N` | CSV/TSV 输出的从 1 开始的工作表序号；默认第 1 张 |
@@ -109,6 +111,7 @@ quirewise notes.txt summary.md --out-dir out
 quirewise book.pdz --pages body+att -o book.pdf
 quirewise encrypted.pdf --pdf-password secret --to txt -o plain.txt
 quirewise dictionary.mdx --mdd resources.mdd -o dictionary.pdf
+quirewise report.html --font-file NotoSansCJK-Regular.ttf -o report.pdf
 quirewise drawing.dxf --to txt -o drawing.txt
 quirewise track.flac --check --audio-track 1
 quirewise report.xlsx --to xlsx -o copy.xlsx

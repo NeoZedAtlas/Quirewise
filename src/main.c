@@ -40,6 +40,7 @@ static void print_help(const char *name)
     printf("      --pdf-password TEXT      user password for encrypted PDF input\n");
     printf("      --audio-track N  one-based audio track for --check\n");
     printf("      --mdd FILE       companion MDD resources for MDX dictionaries\n");
+    printf("      --font-file FILE embed this TrueType font in PDF output\n");
     printf("      --image-crop L,T,R,B  crop raster output by pixels\n");
     printf("      --image-resize WxH  resize raster output (0 keeps the aspect ratio)\n");
     printf("      --sheet N        one-based worksheet for CSV/TSV output\n");
@@ -293,6 +294,7 @@ static int cli_run(const char *input, const char *output,
     pipeline_options.pdf_password = app_options->pdf_password;
     pipeline_options.audio_track = app_options->audio_track;
     pipeline_options.mdd_path = app_options->mdd_path;
+    pipeline_options.pdf_font_path = app_options->pdf_font_path;
     pipeline_options.image_crop_left = app_options->image_crop_left;
     pipeline_options.image_crop_top = app_options->image_crop_top;
     pipeline_options.image_crop_right = app_options->image_crop_right;
@@ -613,6 +615,14 @@ static int quirewise_main(int argc, char **argv)
                 return 2;
             }
             app_options.mdd_path = argv[++index];
+            continue;
+        }
+        if (strcmp(argument, "--font-file") == 0) {
+            if (index + 1 >= argc) {
+                fprintf(stderr, "error: --font-file requires a file path\n");
+                return 2;
+            }
+            app_options.pdf_font_path = argv[++index];
             continue;
         }
         if (strcmp(argument, "--audio-track") == 0) {
