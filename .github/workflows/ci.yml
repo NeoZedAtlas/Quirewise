@@ -40,20 +40,15 @@ jobs:
       - name: Install Ninja
         run: sudo apt-get update && sudo apt-get install -y ninja-build
 
-      - name: Check the workspace token
-        env:
-          QUIREWISE_REPOS_TOKEN: ${{ secrets.QUIREWISE_REPOS_TOKEN }}
-        run: |
-          if [ -z "${QUIREWISE_REPOS_TOKEN:-}" ]; then
-            echo "::error::QUIREWISE_REPOS_TOKEN is not configured. The workspace fetches the private Quirewise/quirewise-pdg repository, so an Actions secret holding a token with read access to it is required."
-            exit 1
-          fi
-
       - name: Check out the pinned library repositories
         working-directory: workspace/app
         env:
           QUIREWISE_REPOS_TOKEN: ${{ secrets.QUIREWISE_REPOS_TOKEN }}
-        run: python tools/fetch_workspace.py --workspace ..
+        run: |
+          python tools/fetch_workspace.py --workspace .. || {
+            echo "::error::The workspace fetch failed. When Quirewise/quirewise-pdg is private, set the QUIREWISE_REPOS_TOKEN secret to a token with read access to it."
+            exit 1
+          }
 
       - name: Build, test and audit
         working-directory: workspace
@@ -103,16 +98,6 @@ jobs:
             mingw-w64-x86_64-cmake
             mingw-w64-x86_64-ninja
 
-      - name: Check the workspace token
-        shell: pwsh
-        env:
-          QUIREWISE_REPOS_TOKEN: ${{ secrets.QUIREWISE_REPOS_TOKEN }}
-        run: |
-          if (-not $env:QUIREWISE_REPOS_TOKEN) {
-            Write-Host "::error::QUIREWISE_REPOS_TOKEN is not configured. The workspace fetches the private Quirewise/quirewise-pdg repository, so an Actions secret holding a token with read access to it is required."
-            exit 1
-          }
-
       - name: Check out the pinned library repositories
         working-directory: workspace/app
         shell: pwsh
@@ -121,6 +106,10 @@ jobs:
         run: |
           $env:Path = "C:\msys64\mingw64\bin;$env:Path"
           python tools/fetch_workspace.py --workspace ..
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "::error::The workspace fetch failed. When Quirewise/quirewise-pdg is private, set the QUIREWISE_REPOS_TOKEN secret to a token with read access to it."
+            exit 1
+          }
 
       - name: Build, test and audit
         working-directory: workspace
@@ -161,20 +150,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ninja-build
 
-      - name: Check the workspace token
-        env:
-          QUIREWISE_REPOS_TOKEN: ${{ secrets.QUIREWISE_REPOS_TOKEN }}
-        run: |
-          if [ -z "${QUIREWISE_REPOS_TOKEN:-}" ]; then
-            echo "::error::QUIREWISE_REPOS_TOKEN is not configured. The workspace fetches the private Quirewise/quirewise-pdg repository, so an Actions secret holding a token with read access to it is required."
-            exit 1
-          fi
-
       - name: Check out the pinned library repositories
         working-directory: workspace/app
         env:
           QUIREWISE_REPOS_TOKEN: ${{ secrets.QUIREWISE_REPOS_TOKEN }}
-        run: python tools/fetch_workspace.py --workspace ..
+        run: |
+          python tools/fetch_workspace.py --workspace .. || {
+            echo "::error::The workspace fetch failed. When Quirewise/quirewise-pdg is private, set the QUIREWISE_REPOS_TOKEN secret to a token with read access to it."
+            exit 1
+          }
 
       # The PDF engine lives in quirewise-document; rebuilding the dependency
       # chain without tests keeps this job short while still installing every
