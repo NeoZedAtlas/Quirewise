@@ -14,6 +14,7 @@ typedef struct QwAppOptions {
     const char *mdd_path;
     const char *pdf_font_path;
     int pdf_office_reflow;
+    int pdfa_level;
     unsigned image_crop_left;
     unsigned image_crop_top;
     unsigned image_crop_right;

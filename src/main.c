@@ -42,6 +42,7 @@ static void print_help(const char *name)
     printf("      --mdd FILE       companion MDD resources for MDX dictionaries\n");
     printf("      --font-file FILE embed this TrueType font in PDF output\n");
     printf("      --pdf-reflow     PDF -> DOCX/EPUB as editable text, not page images\n");
+    printf("      --pdfa           write PDF/A-1b (requires --font-file)\n");
     printf("      --image-crop L,T,R,B  crop raster output by pixels\n");
     printf("      --image-resize WxH  resize raster output (0 keeps the aspect ratio)\n");
     printf("      --sheet N        one-based worksheet for CSV/TSV output\n");
@@ -297,6 +298,7 @@ static int cli_run(const char *input, const char *output,
     pipeline_options.mdd_path = app_options->mdd_path;
     pipeline_options.pdf_font_path = app_options->pdf_font_path;
     pipeline_options.pdf_office_reflow = app_options->pdf_office_reflow;
+    pipeline_options.pdfa_level = app_options->pdfa_level;
     pipeline_options.image_crop_left = app_options->image_crop_left;
     pipeline_options.image_crop_top = app_options->image_crop_top;
     pipeline_options.image_crop_right = app_options->image_crop_right;
@@ -621,6 +623,10 @@ static int quirewise_main(int argc, char **argv)
         }
         if (strcmp(argument, "--pdf-reflow") == 0) {
             app_options.pdf_office_reflow = 1;
+            continue;
+        }
+        if (strcmp(argument, "--pdfa") == 0) {
+            app_options.pdfa_level = QW_PDFA_1B;
             continue;
         }
         if (strcmp(argument, "--font-file") == 0) {
