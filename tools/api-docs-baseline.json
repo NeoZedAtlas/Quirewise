@@ -1,8 +1,8 @@
 {
   "total_functions": 455,
-  "documented": 190,
-  "doxygen": 67,
-  "undocumented": 265,
+  "documented": 261,
+  "doxygen": 141,
+  "undocumented": 194,
   "headers": [
     {
       "header": "libraries\\quirewise-archive\\include\\quirewise\\archive.h",
@@ -107,19 +107,9 @@
     {
       "header": "libraries\\quirewise-data\\include\\quirewise\\data.h",
       "functions": 13,
-      "documented": 4,
-      "doxygen": 0,
-      "undocumented": [
-        "qw_data_document_free",
-        "qw_data_document_format",
-        "qw_data_document_root",
-        "qw_data_value_kind",
-        "qw_data_value_count",
-        "qw_data_value_boolean",
-        "qw_data_array_at",
-        "qw_data_object_at",
-        "qw_data_object_find"
-      ]
+      "documented": 13,
+      "doxygen": 9,
+      "undocumented": []
     },
     {
       "header": "libraries\\quirewise-data\\include\\quirewise\\docbook.h",
@@ -146,47 +136,9 @@
     {
       "header": "libraries\\quirewise-data\\include\\quirewise\\xml.h",
       "functions": 39,
-      "documented": 2,
-      "doxygen": 0,
-      "undocumented": [
-        "qw_xml_abi_version",
-        "qw_xml_parse_with_options",
-        "qw_xml_drop",
-        "qw_xml_node_kind",
-        "qw_xml_root",
-        "qw_xml_down",
-        "qw_xml_next",
-        "qw_xml_prev",
-        "qw_xml_up",
-        "qw_xml_is_tag",
-        "qw_xml_tag",
-        "qw_xml_qualified_tag",
-        "qw_xml_local_name",
-        "qw_xml_namespace_uri",
-        "qw_xml_text",
-        "qw_xml_comment",
-        "qw_xml_pi_target",
-        "qw_xml_pi_data",
-        "qw_xml_att",
-        "qw_xml_attribute_count",
-        "qw_xml_attribute_name",
-        "qw_xml_attribute_local_name",
-        "qw_xml_attribute_namespace_uri",
-        "qw_xml_attribute_value",
-        "qw_xml_att_ns",
-        "qw_xml_att_alt",
-        "qw_xml_att_eq",
-        "qw_xml_find",
-        "qw_xml_find_next",
-        "qw_xml_find_down",
-        "qw_xml_find_match",
-        "qw_xml_find_next_match",
-        "qw_xml_find_down_match",
-        "qw_xml_find_dfs",
-        "qw_xml_find_dfs_top",
-        "qw_xml_find_next_dfs",
-        "qw_xml_find_next_dfs_top"
-      ]
+      "documented": 39,
+      "doxygen": 39,
+      "undocumented": []
     },
     {
       "header": "libraries\\quirewise-document\\include\\quirewise\\convert.h",
@@ -401,37 +353,20 @@
     {
       "header": "libraries\\quirewise-image\\include\\quirewise\\image_processing.h",
       "functions": 11,
-      "documented": 1,
-      "doxygen": 0,
+      "documented": 8,
+      "doxygen": 8,
       "undocumented": [
-        "qw_image_processing_abi_version",
-        "qw_gray_image_adopt",
-        "qw_gray_image_release",
         "qw_gray_image_normalize_illumination",
-        "qw_gray_image_deskew",
-        "qw_gray_image_crop",
         "qw_gray_image_correct_perspective",
-        "qw_gray_image_dewarp",
-        "qw_gray_image_split_copy",
-        "qw_image_processing_status_string"
+        "qw_gray_image_split_copy"
       ]
     },
     {
       "header": "libraries\\quirewise-page\\include\\quirewise\\caj.h",
       "functions": 13,
-      "documented": 4,
-      "doxygen": 0,
-      "undocumented": [
-        "qw_caj_document_page_count",
-        "qw_caj_document_page_info",
-        "qw_caj_document_figure_info",
-        "qw_caj_classic_outline_count",
-        "qw_caj_classic_outline_get",
-        "qw_caj_classic_outlines_free",
-        "qw_caj_decrypt_kdh_pdf",
-        "qw_caj_pdf_data_free",
-        "qw_caj_document_close"
-      ]
+      "documented": 13,
+      "doxygen": 9,
+      "undocumented": []
     },
     {
       "header": "libraries\\quirewise-page\\include\\quirewise\\ceb.h",
@@ -725,20 +660,11 @@
     {
       "header": "libraries\\quirewise-vector\\include\\quirewise\\cad.h",
       "functions": 15,
-      "documented": 4,
-      "doxygen": 0,
+      "documented": 13,
+      "doxygen": 9,
       "undocumented": [
         "qw_cad_image_free",
-        "qw_cad_document_free",
-        "qw_cad_abi_version",
-        "qw_cad_format",
-        "qw_cad_entity_count",
-        "qw_cad_layer_count",
-        "qw_cad_bounds",
-        "qw_cad_text_count",
-        "qw_cad_text_at",
-        "qw_cad_buffer_free",
-        "qw_cad_status_string"
+        "qw_cad_document_free"
       ]
     },
     {
