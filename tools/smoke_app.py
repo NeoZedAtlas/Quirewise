@@ -413,6 +413,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "transform:rotate(90deg)"),
     ("odp-text-rotation", "libraries/quirewise-document/tests/data/rotated-text.odp",
      "to:html", "transform:rotate(90deg)"),
+    ("odp-position", "libraries/quirewise-document/tests/data/position-slide.odp",
+     "to:html", "margin-left:28px;margin-top:57px;"),
     ("odp-rotation", "libraries/quirewise-document/tests/data/rotated-slide.odp",
      "to:html", "transform:rotate(90deg)"),
     ("pptx-rotation", "libraries/quirewise-document/tests/data/rotated-slide.pptx",
