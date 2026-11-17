@@ -57,7 +57,7 @@
   跳过 UTF-8 BOM。
 - **图片 → PDF**：PNG/JPEG/GIF/BMP/WebP/TIFF 等由 `qw_image_probe` 探测，
   解码为 Gray8/RGB24 后写入单页 PDF；新增公开的
-  `qw_raster_pages_to_pdf` 支持多页栅格（未压缩图像 XObject）。
+  `qw_raster_pages_to_pdf` 支持多页栅格（图像 XObject 在更小时按 Flate 压缩）。
 - **表格 → PDF**：XLSX/XLSM/XLTX/XLS/XLT/ODS/OTS/FODS 解析后按全部工作表
   渲染为 HTML 表格再转 PDF；CSV/TSV 保持原有路径。
 - **页面族 → PDF（app 侧路由）**：

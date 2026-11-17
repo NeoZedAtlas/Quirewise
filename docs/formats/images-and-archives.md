@@ -38,7 +38,7 @@ LibRaw。
 `quirewise-image` 公开 `qw_image_encode`、`qw_image_encode_format_name` 与
 `qw_image_buffer_free`，可从 Gray8/RGB24 像素写出：
 
-- PNG（stored zlib）
+- PNG（deflate 压缩 IDAT）
 - BMP（24 位）
 - baseline TIFF（未压缩）
 - baseline JPEG（JFIF 4:4:4，质量 85）
