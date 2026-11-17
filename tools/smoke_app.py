@@ -405,6 +405,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "<figcaption>Red square</figcaption>"),
     ("hwpx-headings", "libraries/quirewise-document/tests/data/headings.hwpx",
      "to:html", "<h1>Heading one</h1>"),
+    ("pptx-picture-position", "libraries/quirewise-document/tests/data/image-slide.pptx",
+     "to:html", "class=\"picture\" style=\"margin-left:96px;margin-top:144px;\""),
     ("pptx-position", "libraries/quirewise-document/tests/data/image-slide.pptx",
      "to:html", "margin-left:96px;margin-top:384px;"),
     ("pptx-text-rotation", "libraries/quirewise-document/tests/data/rotated-text-slide.pptx",
