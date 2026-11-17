@@ -398,7 +398,7 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
     ("xps-html", "libraries/quirewise-document/tests/data/sample.xps",
      "to:html", "XPS page text"),
     ("epub-footnote", "libraries/quirewise-document/tests/data/footnote.epub",
-     "to:html", "<a href=\"#fn1\">1</a>"),
+     "to:html", "<p class=\"epub-footnote\" id=\"fn1\">"),
     ("epub-hr", "libraries/quirewise-document/tests/data/hr.epub",
      "to:html", "<hr/>"),
     ("epub-figure", "libraries/quirewise-document/tests/data/figure.epub",
