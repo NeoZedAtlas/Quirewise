@@ -411,6 +411,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:pdf", "0053006C00690064006500200031"),
     ("odt-outline", "libraries/quirewise-document/tests/data/outline.odt",
      "to:pdf", "/Title (Chapter One)"),
+    ("odt-footnote", "libraries/quirewise-document/tests/data/footnote.odt",
+     "to:html", "<sup>[1]</sup>"),
     ("docx-footnotes", "libraries/quirewise-document/tests/data/footnotes.docx",
      "to:html", "<sup>[2]</sup>"),
     ("docx-indent", "libraries/quirewise-document/tests/data/indent.docx",
