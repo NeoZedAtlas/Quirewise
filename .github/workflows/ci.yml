@@ -40,6 +40,15 @@ jobs:
       - name: Install Ninja
         run: sudo apt-get update && sudo apt-get install -y ninja-build
 
+      - name: Check the workspace token
+        env:
+          QUIREWISE_REPOS_TOKEN: ${{ secrets.QUIREWISE_REPOS_TOKEN }}
+        run: |
+          if [ -z "${QUIREWISE_REPOS_TOKEN:-}" ]; then
+            echo "::error::QUIREWISE_REPOS_TOKEN is not configured. The workspace fetches the private Quirewise/quirewise-pdg repository, so an Actions secret holding a token with read access to it is required."
+            exit 1
+          fi
+
       - name: Check out the pinned library repositories
         working-directory: workspace/app
         env:
@@ -94,6 +103,16 @@ jobs:
             mingw-w64-x86_64-cmake
             mingw-w64-x86_64-ninja
 
+      - name: Check the workspace token
+        shell: pwsh
+        env:
+          QUIREWISE_REPOS_TOKEN: ${{ secrets.QUIREWISE_REPOS_TOKEN }}
+        run: |
+          if (-not $env:QUIREWISE_REPOS_TOKEN) {
+            Write-Host "::error::QUIREWISE_REPOS_TOKEN is not configured. The workspace fetches the private Quirewise/quirewise-pdg repository, so an Actions secret holding a token with read access to it is required."
+            exit 1
+          }
+
       - name: Check out the pinned library repositories
         working-directory: workspace/app
         shell: pwsh
@@ -141,6 +160,15 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y ninja-build
+
+      - name: Check the workspace token
+        env:
+          QUIREWISE_REPOS_TOKEN: ${{ secrets.QUIREWISE_REPOS_TOKEN }}
+        run: |
+          if [ -z "${QUIREWISE_REPOS_TOKEN:-}" ]; then
+            echo "::error::QUIREWISE_REPOS_TOKEN is not configured. The workspace fetches the private Quirewise/quirewise-pdg repository, so an Actions secret holding a token with read access to it is required."
+            exit 1
+          fi
 
       - name: Check out the pinned library repositories
         working-directory: workspace/app
