@@ -1,6 +1,6 @@
 # Repository migration map
 
-All 17 libraries are independent Git repositories under `../libraries/`. Each one
+All 18 libraries are independent Git repositories under `../libraries/`. Each one
 configures, builds, installs, installs its public headers and CMake package, and
 is consumed by the external consumer template on Windows/MinGW and Ubuntu.
 
@@ -23,6 +23,7 @@ is consumed by the external consumer template on Windows/MinGW and Ubuntu.
 | quirewise-subtitle | timed text | subtitle-parser | independent package, CTest/consumer pass |
 | quirewise-vector | SVG and SVGZ | svg, svgz-parser | independent package, CTest/consumer pass |
 | quirewise-comic | comic archives | comic-archive-parser | independent package, CTest/consumer pass |
+| quirewise-pipeline | conversion composition, text/office writers | new | independent package, CTest/consumer pass |
 
 The application repository never compiles a nested copy of these repositories.
 It consumes installed CMake packages through `QUIREWISE_LINK_*` options. The
@@ -35,7 +36,7 @@ Release-wide acceptance is reproduced with:
 python tools/run_acceptance.py --workspace ..
 ```
 
-The command builds and installs all 17 libraries in dependency order, runs their
+The command builds and installs all 18 libraries in dependency order, runs their
 CTest suites, builds the external consumer against the installed prefix, builds
 the application shell, and runs the static boundary gates. See
 [README.md](README.md) for the individual build instructions.

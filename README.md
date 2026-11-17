@@ -9,19 +9,21 @@ The typical workflow is:
 ```text
 documents / ebooks / pages / spreadsheets / subtitles / CAD / images
                               -> PDF
-PDF                           -> TXT (text extraction) or PNG (first page)
+PDF                           -> TXT / HTML / Markdown (text layer)
+                              -> PNG / JPEG / BMP / TIFF / WebP (first page, 144 dpi)
+                              -> DOCX / EPUB (page images, 120 dpi, layout-preserving)
 ```
 
 ## What it can convert
 
 | Family | Inputs (CLI-reachable) |
 |---|---|
-| Office documents | DOCX/DOCM/DOTX/DOTM, ODT/OTT/FODT, PPTX/PPTM/POTX/POTM/PPSX/PPSM, ODP/OTP/FODP, HWPX, EML |
+| Office documents | DOCX/DOCM/DOTX/DOTM, ODT/OTT/FODT, PPTX/PPTM/POTX/POTM/PPSX/PPSM, ODP/OTP/FODP, HWPX, EML/MSG |
 | Ebooks | EPUB/KEPUB, MOBI 7, AZW3/MOBI 8/AZW, FB2, PMLZ, TXTZ, HTMLZ |
-| Dictionaries | MDict MDX entries, with the MDD resource file as check-only input |
+| Dictionaries | MDict MDX entries; `--mdd` embeds MDD resources and `--check` validates an MDD |
 | Text/web | TXT, Markdown, HTML, RTF |
-| Pages/scans | PDF, DjVu, PDG/PDZ, UVZ, CAJ, CEB |
-| Comics | CBZ, CBT |
+| Pages/scans | PDF, DjVu, PDG/PDZ, UVZ, CAJ, CEB, XPS/OpenXPS |
+| Comics | CBZ, CBT, CB7, CBR (stored entries) |
 | Spreadsheets | XLSX/XLSM/XLTX, BIFF8 XLS/XLT, ODS/OTS/FODS, CSV/TSV |
 | Structured data | JSON, JSONL, YAML, TOML, XML, vCard, OPML, iPynb |
 | Subtitles | SRT, WebVTT, LRC, MicroDVD, TTML, ASS/SSA, SAMI, SCC |
@@ -29,27 +31,31 @@ PDF                           -> TXT (text extraction) or PNG (first page)
 | Images | JPEG, PNG, GIF, BMP, TIFF, WebP, JP2/J2K, PSD, TGA, PNM, QOI, ICO, DICOM and more |
 | Audio | container/packet **check only** (`--check`), no decode or transcode |
 
-PDF, DOCX/ODT/HTML/EPUB/FB2, PPTX/ODP, HWPX, EML, MOBI/AZW3, HTMLZ/TXTZ/PMLZ,
+PDF, DOCX/ODT/HTML/EPUB/FB2, PPTX/ODP, HWPX, EML/MSG, MOBI/AZW3, HTMLZ/TXTZ/PMLZ,
 MDict MDX, RTF, spreadsheets, subtitles, structured data, images,
-DjVu/PDZ/UVZ/CAJ/CEB, CBZ/CBT, DXF/DWG and SVG/SVGZ convert to PDF. PDF also
-converts to TXT (no OCR) and PNG (first page). DXF/DWG `--to txt` emits the
-drawing text inventory, and MDX `--to txt` emits one key line plus its
-tag-stripped article per entry.
+DjVu/PDZ/UVZ/CAJ/CEB/XPS, CBZ/CBT/CB7/CBR (stored entries), DXF/DWG and SVG/SVGZ
+convert to PDF. PDF also converts to TXT/HTML/Markdown (no OCR), to PNG/JPEG/BMP/
+TIFF/WebP (first page, 144 dpi), and to DOCX/EPUB (page images, 120 dpi). DXF/DWG
+`--to txt` emits the drawing text inventory, and MDX `--to txt` emits one key line
+plus its tag-stripped article per entry.
 
 Besides those source-specific routes, the CLI converts inside three text
 families: structured data (JSON, JSON Lines, YAML, TOML, vCard, XML), subtitles
-(SRT, WebVTT, LRC, MicroDVD, ASS, SSA, SAMI, SCC) and worksheets (CSV, TSV, plus
-every spreadsheet reader to CSV/TSV). Data writers cover the six listed
-syntaxes; OPML and iPynb stay read-only, while XML only round-trips the ordered
-XML document shape.
+(SRT, WebVTT, LRC, MicroDVD, TTML, ASS, SSA, SAMI, SCC) and worksheets
+(XLSX/ODS with all sheets and merged ranges, plus CSV/TSV with `--sheet`). Data
+writers cover the six listed syntaxes; Markdown/TXT can also be exported to OPML
+or IPYNB, while XML only round-trips the ordered XML document shape.
 
-Layout inputs can also be written as HTML, Markdown, DOCX or EPUB. The DOCX and
-EPUB outputs are deliberately minimal packages (WordprocessingML paragraphs;
-one XHTML chapter plus OPF/NCX), and PDF→DOCX/EPUB reconstructs the text layer
-only — layout, images and styles are not rebuilt.
+Layout inputs can also be written as HTML, Markdown, DOCX, EPUB, HTMLZ, TXTZ,
+PMLZ or HWPX. DOCX/EPUB outputs are deliberately minimal packages, not a full
+Office round-trip. PDF→DOCX/EPUB embeds each page as a 120 dpi JPEG (at most 24
+pages), so the visual layout survives but the text is not editable; PDF→HTML and
+PDF→Markdown still rebuild the text layer only. Decodable images can be
+re-encoded to PNG/BMP/TIFF/JPEG/WebP/TGA/QOI/PPM/GIF/HDR/SGI/PCX, optionally
+cropped or resized.
 
 See the [format capability matrix](docs/formats/support-matrix.md) for the
-three-state (supported / partial / unsupported) detail.
+three-state (CLI-reachable / library-only / unsupported) detail.
 
 ## Requirements
 
@@ -109,9 +115,9 @@ quirewise INPUT [INPUT ...] [options]
       --out-dir DIR         put default output names under DIR
       --to FORMAT           pdf (default), txt, png, json, jsonl, yaml, toml,
                             xml, vcf, srt, vtt, lrc, sub, ass, ssa, sami, scc,
-                            csv, tsv, html, md, docx, epub, bmp, tiff, jpg, webp,
-                            gif, hdr, sgi, pcx, tga, qoi, ppm, htmlz, txtz, pmlz,
-                            hwpx
+                            ttml, csv, tsv, xlsx, ods, html, md, docx, epub, bmp,
+                            tiff, jpg, webp, gif, hdr, sgi, pcx, tga, qoi, ppm,
+                            htmlz, txtz, pmlz, hwpx, opml, ipynb
       --check               verify inputs can be read; write nothing
       --quiet               suppress success output
       --page MODE           raster page box: image (default) or a4
@@ -127,7 +133,10 @@ Behavior:
 
 - Outputs are **never overwritten**. A failed write removes the partial file.
 - The `-o` extension must match `--to` (`\.pdf`, `\.txt`, `\.png`, `\.json`,
-  `\.yaml`, `\.srt`, `\.vtt`, `\.csv`, `\.html`, `\.md`, `\.docx`, `\.epub`, `\.bmp`, `\.tiff`, `\.jpg`, `\.webp`, `\.gif`, `\.hdr`, `\.sgi`, `\.pcx`, `\.tga`, `\.qoi`, `\.ppm`, `\.htmlz`, `\.txtz`, `\.pmlz`, `\.hwpx`, …).
+  `\.yaml`, `\.srt`, `\.vtt`, `\.ttml`, `\.csv`, `\.tsv`, `\.xlsx`, `\.ods`,
+  `\.html`, `\.md`, `\.docx`, `\.epub`, `\.bmp`, `\.tiff`, `\.jpg`, `\.webp`,
+  `\.gif`, `\.hdr`, `\.sgi`, `\.pcx`, `\.tga`, `\.qoi`, `\.ppm`, `\.htmlz`,
+  `\.txtz`, `\.pmlz`, `\.hwpx`, `\.opml`, `\.ipynb`, …).
 - `--to` cannot be combined with `--check`; `-o` cannot be used with multiple
   inputs or with `--check`.
 - Exit code `0` is success, `1` is a conversion/read failure, `2` is a usage

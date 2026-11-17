@@ -1,6 +1,6 @@
 # PDF 引擎架构
 
-> 状态：单一引擎（2026-11-08 完成收敛）。本文记录最终边界与已完成的迁移。
+> 状态：单一引擎（2026-11-08 完成收敛，2026-11-17 校对）。本文记录最终边界与已完成的迁移。
 
 ## 最终结构
 
@@ -29,7 +29,7 @@ xref/ObjStm/页码解析器。
 
 ## 行为说明
 
-- 加密：document 支持 V1/V2 RC4、V4 `/AESV2`、V5 `/AESV3`（空用户口令）；
+- 加密：document 支持 V1/V2 RC4、V4 `/AESV2`、V5 `/AESV3`；调用方可提供用户口令，
   结构模式下未知口令不影响页数/几何；
 - 页面盒：非法 `/MediaBox`/`/CropBox` 回退默认值而不是拒绝整份文档；
 - 文本：每个字体优先使用 `/ToUnicode` CMap，缺失时回退 UCS-2/单字节；
@@ -61,10 +61,10 @@ PDG 包本身对 `pdg_render_memory` 的 `PDG_OUTPUT_PDF` 仍返回
 
 ## 回归与门禁
 
-- document：41 项 CTest（xref/ObjStm/加密/ToUnicode/图像/合并/公开 API）；
-- page：8 项 CTest（DjVu 解码、CEB 校验、容器模糊冒烟）；
-- pdg：7 项 CTest（PDZ 容器/PDF writer/0x1A 解码辅助/模糊冒烟）；
-- 外部消费者 17 项、公共头独立编译、依赖图与边界审计、81 步验收矩阵。
+- document 的 CTest 覆盖 xref/ObjStm/加密/ToUnicode/图像/合并/公开 API；
+- page 的 CTest 覆盖 DjVu 解码、CEB 校验和容器模糊冒烟；
+- pdg 的 CTest 覆盖 PDZ 容器、PDF writer、0x1A 解码辅助和模糊冒烟；
+- 外部消费者 18 项包、63 个公共头独立编译、依赖图与边界审计、85 步验收矩阵。
 
 ## 非目标
 

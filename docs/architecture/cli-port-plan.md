@@ -1,9 +1,10 @@
 # 统一 CLI 移植计划（C1–C4）
 
-> 状态（2026-11-14）：C1–C3 已落地；本页最初的"仅声明"表已按实现更新。C4 的验收与文档已对齐当前 CLI：
-> `app.smoke` 覆盖 HTML→PDF→TXT、`--check`、拒绝覆盖、PDZ/UVZ PDF 页载荷与
-> `pdg_type 0x1A` 合并。剩余项见 C2/C3 的“剩余”小节（密钥、扫描预处理、
-> 目录输入）。
+> 状态（2026-11-17）：本页保留为 C1–C4 的历史移植记录，**不是当前能力清单**。
+> 当前 CLI 已覆盖 206 例 smoke、85 步验收、PDF→DOCX/EPUB、HTMLZ/TXTZ/PMLZ、图像
+> 编码、表格 XLSX/ODS 写出等能力；最新路线见
+> [命令行使用](../usage/command-line.md) 与 [格式能力总览](../formats/support-matrix.md)。
+> 密钥、扫描预处理和目录输入仍未接线。
 
 ## 背景
 

@@ -1,8 +1,7 @@
 # 图像、矢量图与归档
 
-> 状态（2026-11-14）：本页按当前实现重写。旧版本描述的是迁移前的产品（stb_image、libwebp、
-> libjxl、libavif、LibRaw、7-Zip SDK 等外部后端），这些路线已全部移除或从未进入发布包。
-> 当前发布包只有第一方实现，未实现的入口稳定返回 `UNSUPPORTED`。
+> 状态（2026-11-17）：本页按当前第一方实现重写。图像编码写出、CBR/CB7 漫画路由和
+> 受限 7z 解包都已进入发布包；未实现入口稳定返回 `UNSUPPORTED`。
 
 ## 1. 图像输入
 
@@ -36,13 +35,27 @@ LibRaw。
 
 ## 3. 图像输出
 
-发布包**没有公开的图像编码接口**。`quirewise-image` 的公共 API 只有探测、格式名和
-解码；`document` 包内置的 PNG 编码器只服务于 "PDF → 单页 PNG" 这一个 CLI 路线
-（144 dpi，首页）。
+`quirewise-image` 公开 `qw_image_encode`、`qw_image_encode_format_name` 与
+`qw_image_buffer_free`，可从 Gray8/RGB24 像素写出：
 
-历史文档中"可写出 PNG、JPEG、BMP、TIFF、WebP、GIF、APNG、MNG、PSD/PSB、JP2、DDS、
-PFM、QOI、WBMP、PPM/PAM、XBM、ICO/CUR、TGA、PCX、Sun Raster、SGI、XPM、MIFF、ICNS、
-AVIF/HEIC/JXL"的列表与当前 API 不符；这些写出器不在发布范围内。
+- PNG（stored zlib）
+- BMP（24 位）
+- baseline TIFF（未压缩）
+- baseline JPEG（JFIF 4:4:4，质量 85）
+- lossless WebP（VP8L，无变换/LZ77）
+- TGA（未压缩）
+- QOI（literal-only）
+- 二进制 PPM（P6）
+- GIF（单帧，标准 LZW 子块）
+- Radiance HDR（RGBE）
+- 未压缩 SGI RGB
+- 8 位 RLE PCX
+
+CLI 的 `--to png|bmp|tiff|jpg|webp|tga|qoi|ppm|gif|hdr|sgi|pcx` 对任意可解码输入走同一编码器；
+`--image-crop L,T,R,B` 和 `--image-resize WxH` 在编码前作用于像素。写出器不保留 EXIF/ICC/动画，
+GIF 只写单帧，WebP 只写静态 VP8L。
+
+AVIF/HEIC/JXL/APNG/MNG/PSD/JP2 等历史文档中列出的其它图像写出器仍不在发布范围内。
 
 ## 4. 矢量与打印图形
 
@@ -52,7 +65,8 @@ AVIF/HEIC/JXL"的列表与当前 API 不符；这些写出器不在发布范围�
 | EPS / PS / legacy AI | 无实现 | 历史文档声称的 PDF 互转已不在发布包内 |
 | EMF/WMF/CGM/CDR/VSD/FODG | 无实现 | 未进入发布包 |
 
-SVG/SVGZ 已接入 CLI：`.svg/.svgz` 可用 `--to pdf`（以及 `--check`）栅格化为单页 PDF；`--page image|a4` 控制页面框。仅支持自研子集，含 `<text>` 等未支持特性时返回 `UNSUPPORTED`。
+SVG/SVGZ 已接入 CLI：`.svg/.svgz` 可用 `--to pdf`（以及 `--check`）栅格化为单页 PDF；
+`--page image|a4` 控制页面框。仅支持自研子集，含 `<text>` 等未支持特性时返回 `UNSUPPORTED`。
 
 ## 5. 漫画与归档
 
@@ -60,8 +74,8 @@ SVG/SVGZ 已接入 CLI：`.svg/.svgz` 可用 `--to pdf`（以及 `--check`）栅
 |---|---|---|
 | CBZ | 自研 ZIP reader 读取图像成员，按自然数顺序逐页；支持 Stored/Deflate、ZIP64、CRC 和传统 ZipCrypto | WinZip AES 等加密方法不支持 |
 | CBT | 自研 USTAR reader（GNU longname/PAX path）；内容交给图像解码器 | 稀疏 TAR、超大展开不支持 |
-| CBR/RAR | 归档包只解析 RAR4/RAR5 头与条目元数据，**不解压**；comic 路由只接受 ZIP/USTAR | 因此 CBR 在发布包内不可用 |
-| CB7/7z | `quirewise-archive` 提供 7z 头解析与受限解包（Copy/LZMA/LZMA2/Delta/BCJ） | comic 路由未接 7z；加密、PPMd、BZip2、多 folder 不支持 |
+| CBR | 归档包解析 RAR4/RAR5 头与条目元数据；comic 路由接受 **stored** 条目并按页解码 | 压缩 RAR 条目、加密 RAR 不支持 |
+| CB7 | 7z 容器经受限解包（Copy/LZMA/LZMA2/Delta/BCJ）后按图像成员逐页 | 加密、PPMd、BZip2、多 folder 不支持 |
 | 图像目录 | `quirewise-image` 可非递归枚举支持格式的目录 | CLI 没有目录输入 |
 
-归档成员按"文件名 + 支持格式"筛选；页面输出不保留条目名、压缩方式或源元数据。
+归档成员按“文件名 + 支持格式”筛选；页面输出不保留条目名、压缩方式或源元数据。

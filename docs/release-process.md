@@ -5,7 +5,7 @@
 
 ## 1. 前置条件
 
-- 19 个仓库（`app`、`external-consumer-template`、17 个 `libraries/quirewise-*`）
+- 20 个仓库（`app`、`external-consumer-template`、18 个 `libraries/quirewise-*`）
   已提交且工作区干净。SBOM、`repository-heads.json` 与 `release-lock.json` 都记录
   提交号，脏工作区会让证据自相矛盾。
 - Windows 与 WSL/Linux 都能找到 `cmake`、`ninja`、`python`、`nm`（Windows 用
@@ -31,7 +31,7 @@ python app/tools/run_acceptance.py --workspace . --jobs 8 --shared \
   --summary .tmp/acceptance/linux-shared/summary.json
 ```
 
-四套平台矩阵默认都是 81 步；sanitizer 矩阵同样按 81 步运行。`failed` 必须为空。
+四套平台矩阵默认都是 85 步；sanitizer 矩阵同样按 85 步运行。`failed` 必须为空。
 
 可选的 sanitizer 矩阵（仅 Linux/WSL）：
 
