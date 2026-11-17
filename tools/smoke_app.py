@@ -443,6 +443,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "title=\"Example\""),
     ("md-strikethrough", "libraries/quirewise-text/tests/data/strike.md",
      "to:html", "<del>gone</del>"),
+    ("html-figure-to-md", "libraries/quirewise-text/tests/data/figure.html",
+     "to:md", "*A caption*"),
     ("html-q-cite-to-md", "libraries/quirewise-text/tests/data/q-cite.html",
      "to:md", "<q>short</q>"),
     ("html-u-mark-to-md", "libraries/quirewise-text/tests/data/u-mark.html",
