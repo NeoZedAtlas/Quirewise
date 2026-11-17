@@ -429,6 +429,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:ass", ",Default,Alice,10,20,30,Fade,"),
     ("md-strikethrough", "libraries/quirewise-text/tests/data/strike.md",
      "to:html", "<del>gone</del>"),
+    ("html-hr-to-md", "libraries/quirewise-text/tests/data/hr.html",
+     "to:md", "---"),
     ("md-autolink", "libraries/quirewise-text/tests/data/autolink.md",
      "to:html", "<a href=\"https://example.com\">"),
     ("md-task-list", "libraries/quirewise-text/tests/data/task-list.md",
