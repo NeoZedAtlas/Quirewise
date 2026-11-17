@@ -527,6 +527,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "width=\"192\""),
     ("hwpx-hyperlink", "libraries/quirewise-document/tests/data/hyperlink.hwpx",
      "to:html", "<a href=\"https://example.com\">Example</a>"),
+    ("hwpx-sections", "libraries/quirewise-document/tests/data/two-sections.hwpx",
+     "to:html", "page-break-before:always"),
     ("hwpx-page-margins", "libraries/quirewise-document/tests/data/page-margins.hwpx",
      "to:html", "padding:48px 96px 48px 96px;"),
     ("hwpx-columns", "libraries/quirewise-document/tests/data/columns.hwpx",
