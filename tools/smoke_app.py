@@ -437,6 +437,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "a | b"),
     ("ass-speaker", "libraries/quirewise-subtitle/tests/data/speaker.ass",
      "to:ass", ",Default,Alice,10,20,30,Fade,"),
+    ("md-inline-br", "libraries/quirewise-text/tests/data/inline-br.md",
+     "to:html", "Hello<br/>world"),
     ("md-image", "libraries/quirewise-text/tests/data/image.md",
      "to:html", "<img src=\"x.png\" alt=\"diagram\">"),
     ("md-link-title", "libraries/quirewise-text/tests/data/link-title.md",

@@ -10,7 +10,7 @@
 > 三者都以当前 HEAD 的代码为准；历史文档中依赖 Ghostscript、veraPDF、FFmpeg、LibRaw、
 > MuPDF 等外部后端的路线不在发布包内。
 > 外部依赖与暂不支持项的逐条结论见 [unsupported-rationale.md](unsupported-rationale.md)。
-> HTML→Markdown（含 `<hr>`→`---`、`<dl>/<dt>/<dd>`→`term`/`: detail`、图片 `title` 属性保留、`<sup>/<sub>` 原样保留、`<del>/<s>/<strike>` → `~~…~~`、`<u>/<mark>` 原样保留、`<q>/<cite>` 原样保留、`<figure>/<figcaption>` → 图片 + 斜体题注） 保留表格列对齐（`align` 或 `style=text-align` → `:---:`/`---:`/`:---`）；Markdown 管道表格（含对齐分隔行与转义 `\|`）→ HTML `<table>`，Setext 标题（`===`/`---`）→ h1/h2，围栏代码 info string → `language-*` 类，任务列表 `- [x]` → 禁用复选框，尖括号自动链接 `<https://…>` → `<a>`、行内链接 `"title"` → `title` 属性、图片 `![alt](src)` → `<img>`，删除线 `~~text~~` → `<del>`。
+> HTML→Markdown（含 `<hr>`→`---`、`<dl>/<dt>/<dd>`→`term`/`: detail`、图片 `title` 属性保留、`<sup>/<sub>` 原样保留、`<del>/<s>/<strike>` → `~~…~~`、`<u>/<mark>` 原样保留、`<q>/<cite>` 原样保留、`<figure>/<figcaption>` → 图片 + 斜体题注） 保留表格列对齐（`align` 或 `style=text-align` → `:---:`/`---:`/`:---`）；Markdown 管道表格（含对齐分隔行与转义 `\|`）→ HTML `<table>`，Setext 标题（`===`/`---`）→ h1/h2，围栏代码 info string → `language-*` 类，任务列表 `- [x]` → 禁用复选框，尖括号自动链接 `<https://…>` → `<a>`、行内链接 `"title"` → `title` 属性、图片 `![alt](src)` → `<img>`、内联 `<br>` → `<br/>`，删除线 `~~text~~` → `<del>`。
 
 ## 1. 输入类别总览
 
