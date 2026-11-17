@@ -3,6 +3,7 @@ name: acceptance
 on:
   push:
     branches: [master, main]
+    tags: ["v*"]
   pull_request:
   workflow_dispatch:
   schedule:
