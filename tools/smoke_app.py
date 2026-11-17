@@ -495,6 +495,8 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
      "to:html", "<th align=\"center\">"),
     ("html-table-align", "libraries/quirewise-text/tests/data/table-align.html",
      "to:md", "| :---: | ---: |"),
+    ("pdf-outline-xyz", "libraries/quirewise-document/tests/data/headings.hwpx",
+     "to:pdf", "/XYZ"),
     ("pdf-heading-outline", "libraries/quirewise-document/tests/data/headings.hwpx",
      "to:pdf", "/Title (Heading one)"),
     ("hwpx-footnotes", "libraries/quirewise-document/tests/data/footnotes.hwpx",
