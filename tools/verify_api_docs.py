@@ -24,56 +24,76 @@ DOXYGEN_RE = re.compile(r"/\*[!*]")
 DOC_END_RE = re.compile(r"\*/")
 
 
-def declaration_lines(lines: list[str]) -> list[tuple[int, str]]:
-    """Yield (index, name) for entry points declared outside comments."""
+def comment_spans(text: str) -> list[tuple[int, int]]:
+    """Return (start, end) offsets of /* ... */ comment blocks."""
+    spans: list[tuple[int, int]] = []
+    cursor = 0
+    while True:
+        start = text.find("/*", cursor)
+        if start < 0:
+            break
+        end = text.find("*/", start + 2)
+        if end < 0:
+            spans.append((start, len(text)))
+            break
+        spans.append((start, end + 2))
+        cursor = end + 2
+    return spans
+
+
+def declaration_start(text: str, position: int) -> int:
+    """Return the offset where the declaration containing position starts."""
+    last_sep = max(text.rfind(";", 0, position),
+                   text.rfind("{", 0, position),
+                   text.rfind("}", 0, position))
+    last_comment = text.rfind("*/", 0, position)
+    cursor = last_comment + 2 if last_comment > last_sep else last_sep + 1
+    while cursor < position and text[cursor].isspace():
+        cursor += 1
+    return cursor
+
+
+def declaration_entries(text: str) -> list[tuple[int, str]]:
+    """Yield (offset, name) for entry points declared outside comments."""
+    spans = comment_spans(text)
     found: list[tuple[int, str]] = []
-    in_comment = False
-    for index, line in enumerate(lines):
-        stripped = line.strip()
-        if in_comment:
-            if DOC_END_RE.search(line):
-                in_comment = False
+    for match in FUNCTION_RE.finditer(text):
+        offset = match.start()
+        if any(start <= offset < end for start, end in spans):
             continue
-        if stripped.startswith("/*") and "*/" not in stripped:
-            in_comment = True
+        line_start = text.rfind("\n", 0, offset) + 1
+        line = text[line_start:offset]
+        if "#define" in line:
             continue
-        if stripped.startswith("*") or stripped.startswith("//"):
-            continue
-        if stripped.startswith("#define"):
-            continue
-        for match in FUNCTION_RE.finditer(line):
-            found.append((index, match.group(1)))
+        found.append((offset, match.group(1)))
     return found
 
 
-def doc_kind(lines: list[str], index: int) -> str:
-    """Return "doxygen", "comment" or "none" for the declaration at ``index``."""
-    cursor = index - 1
-    while cursor >= 0 and not lines[cursor].strip():
-        cursor -= 1
-    if cursor < 0 or not DOC_END_RE.search(lines[cursor]):
+def doc_kind(text: str, offset: int) -> str:
+    """Return "doxygen", "comment" or "none" for the declaration at offset."""
+    start = declaration_start(text, offset)
+    before = text[:start].rstrip()
+    if not before.endswith("*/"):
         return "none"
-    while cursor >= 0:
-        if DOXYGEN_RE.search(lines[cursor]):
-            return "doxygen"
-        if DOC_START_RE.search(lines[cursor]):
-            return "comment"
-        cursor -= 1
-    return "none"
+    comment_start = before.rfind("/*")
+    if comment_start < 0:
+        return "none"
+    if before[comment_start:comment_start + 3] in ("/*!", "/**"):
+        return "doxygen"
+    return "comment"
 
 
 def scan_header(path: Path) -> dict:
     text = path.read_text(encoding="utf-8", errors="replace")
-    lines = text.splitlines()
     seen: set[str] = set()
     undocumented: list[str] = []
     documented = 0
     doxygen = 0
-    for index, name in declaration_lines(lines):
+    for offset, name in declaration_entries(text):
         if name in seen:
             continue
         seen.add(name)
-        kind = doc_kind(lines, index)
+        kind = doc_kind(text, offset)
         if kind == "none":
             undocumented.append(name)
         else:
