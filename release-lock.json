@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_utc": "2026-11-21T12:30:00Z",
+  "generated_utc": "2026-11-21T12:40:00Z",
   "note": "Pin of the sibling repositories consumed by the Quirewise release.",
   "repositories": [
     {
@@ -60,7 +60,7 @@
     },
     {
       "path": "libraries/quirewise-pdg",
-      "url": "https://github.com/Quirewise/quirewise-pdg.git",
+      "url": "https://github.com/NeoZedAtlas/quirewise-pdg.git",
       "commit": "d8e11558224d78d9cb5509da480aac1bbe162d01"
     },
     {
