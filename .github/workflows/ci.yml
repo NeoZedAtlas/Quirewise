@@ -1,4 +1,4 @@
-name: acceptance
+﻿name: acceptance
 
 on:
   push:
