@@ -707,6 +707,7 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
 
 def check_format_matrix(exe: pathlib.Path, workspace: pathlib.Path,
                         root: pathlib.Path) -> None:
+    skipped = []
     for index, entry in enumerate(FORMAT_MATRIX):
         label, relative, mode, token = entry[:4]
         extra = list(entry[4]) if len(entry) > 4 else []
@@ -714,6 +715,14 @@ def check_format_matrix(exe: pathlib.Path, workspace: pathlib.Path,
                  for arg in extra]
         source = workspace / relative
         if not source.is_file():
+            # testfile/_license-review is gitignored (the fixtures are
+            # third-party license-review documents), so a clean checkout has
+            # no copy. Skip those cases loudly instead of failing CI, and keep
+            # every other fixture mandatory.
+            if "/_license-review/" in relative or \
+                    "_license-review/" in relative:
+                skipped.append(label)
+                continue
             return fail(f"format matrix is missing fixture: {relative}")
         case_dir = root / f"matrix-{index:02d}-{label}"
         case_dir.mkdir()
@@ -758,7 +767,11 @@ def check_format_matrix(exe: pathlib.Path, workspace: pathlib.Path,
             if (not text.is_file() or
                     token.encode("utf-8") not in text.read_bytes()):
                 return fail(f"{label} PDF text lost {token!r}")
-    print(f"format matrix OK ({len(FORMAT_MATRIX)} cases)")
+    if skipped:
+        print(f"format matrix skipped {len(skipped)} case(s) without "
+              f"license-review fixtures: {', '.join(skipped)}")
+    print(f"format matrix OK ({len(FORMAT_MATRIX) - len(skipped)} cases run of "
+          f"{len(FORMAT_MATRIX)})")
 
 
 def main() -> int:
