@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_utc": "2026-11-21T09:15:55Z",
+  "generated_utc": "2026-11-21T09:51:17Z",
   "note": "Pin of the sibling repositories consumed by the Quirewise release.",
   "repositories": [
     {
@@ -41,7 +41,7 @@
     {
       "path": "libraries/quirewise-document",
       "url": "https://github.com/Quirewise/quirewise-document.git",
-      "commit": "4967a98aca6dfb98fc1b0fd5b50476d4eda3d03c"
+      "commit": "23760d02497f2c4c56a0e52ab977c68bba07edf4"
     },
     {
       "path": "libraries/quirewise-ebook",
