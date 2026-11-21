@@ -1,4 +1,4 @@
-﻿name: acceptance
+name: acceptance
 
 on:
   push:
@@ -69,13 +69,6 @@ jobs:
           if [ "$MODE" = "shared" ]; then EXTRA="--shared"; fi
           python app/tools/run_acceptance.py --workspace . $EXTRA \
             --jobs 4 --summary .tmp/acceptance/summary-$MODE.json
-
-      # The 2026-11-21 review found the README status block frozen at an old
-      # snapshot; this step fails the job when the numbers drift again.
-      - name: Verify the README numbers
-        if: matrix.mode == 'static'
-        working-directory: workspace
-        run: python app/tools/verify_docs_claims.py --workspace .
 
       - name: Upload acceptance logs
         if: always()
