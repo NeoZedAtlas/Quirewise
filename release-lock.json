@@ -1,102 +1,102 @@
 {
   "schema": 1,
-  "generated_utc": "2026-11-17T12:03:17Z",
+  "generated_utc": "2026-11-21T05:39:55Z",
   "note": "Pin of the sibling repositories consumed by the Quirewise release.",
   "repositories": [
     {
       "path": "libraries/quirewise-archive",
       "url": "https://github.com/Quirewise/quirewise-archive.git",
-      "commit": "1ea2ebb15cc9eeb6b66d88c5ee93328b184ae570"
+      "commit": "f7bed236b35bf8bd3d99f78037545e749ee0641e"
     },
     {
       "path": "libraries/quirewise-audio",
       "url": "https://github.com/Quirewise/quirewise-audio.git",
-      "commit": "4e6d33596f76bee632d5430b47acbc4a6a76673e"
+      "commit": "89651b736be60a34ca8273c8de824cbfb979bfe1"
     },
     {
       "path": "libraries/quirewise-charset",
       "url": "https://github.com/Quirewise/quirewise-charset.git",
-      "commit": "8fb989d21d06bd14c0841d70780dd95b1ea49679"
+      "commit": "2b14bdd9685e4591f7412fafad0179593118f854"
     },
     {
       "path": "libraries/quirewise-comic",
       "url": "https://github.com/Quirewise/quirewise-comic.git",
-      "commit": "63f41aed09401d0d09d463561261a90c0863364e"
+      "commit": "9c55dbe087d738f7aea6ccb960c83168c2d42e4e"
     },
     {
       "path": "libraries/quirewise-compression",
       "url": "https://github.com/Quirewise/quirewise-compression.git",
-      "commit": "8c66e0e91d72c3bc6d135a7866c6861d0dc5212b"
+      "commit": "a0862e6d7fe04947f8ab6a17afb6077990614849"
     },
     {
       "path": "libraries/quirewise-crypto",
       "url": "https://github.com/Quirewise/quirewise-crypto.git",
-      "commit": "001db1846374d251fee1fbc578e963cb16e89980"
+      "commit": "e291b4c8f1bff3aac17503b7993f451c6bc1e0c3"
     },
     {
       "path": "libraries/quirewise-data",
       "url": "https://github.com/Quirewise/quirewise-data.git",
-      "commit": "d1aa93840a4f3f403b2c00b00e9aa96c1f4e2154"
+      "commit": "c3de64d9b99d9370b9c532ac2b4f6cb7292a7d7a"
     },
     {
       "path": "libraries/quirewise-document",
       "url": "https://github.com/Quirewise/quirewise-document.git",
-      "commit": "64af2f9977409254bebaf500fd3537691cdc6c07"
+      "commit": "49d537a53ff408eea90560f1093260235fe2cf7e"
     },
     {
       "path": "libraries/quirewise-ebook",
       "url": "https://github.com/Quirewise/quirewise-ebook.git",
-      "commit": "7e191c3dffa7b247d9723792e147f9c43e9503bb"
+      "commit": "c8123041d984b34453c3aa26084bba87249b8cb7"
     },
     {
       "path": "libraries/quirewise-image",
       "url": "https://github.com/Quirewise/quirewise-image.git",
-      "commit": "8f5ea970bea7b67117ed89f7b2baa1678703a890"
+      "commit": "796d22223fced2402b6bb911fd4e8c5c7e967295"
     },
     {
       "path": "libraries/quirewise-page",
       "url": "https://github.com/Quirewise/quirewise-page.git",
-      "commit": "548a528d428c6232d99c6950748ff68d600c39c2"
+      "commit": "cfc820c974e41db18e701ab332ee9d6c6829d3da"
     },
     {
       "path": "libraries/quirewise-pdg",
       "url": "https://github.com/Quirewise/quirewise-pdg.git",
-      "commit": "cff0602f7e9901739c666c16a4dfa3d43a6cd5f9"
+      "commit": "d8e11558224d78d9cb5509da480aac1bbe162d01"
     },
     {
       "path": "libraries/quirewise-pipeline",
       "url": "https://github.com/Quirewise/quirewise-pipeline.git",
-      "commit": "cdcba43a173c5cd16203674f4eb5d8964a01878b"
+      "commit": "e51ef1c47d5277229f0509d90c4ba1c270d70d12"
     },
     {
       "path": "libraries/quirewise-runtime",
       "url": "https://github.com/Quirewise/quirewise-runtime.git",
-      "commit": "2277382fb127fac729284417bea6194287dec317"
+      "commit": "4d3df85aa2e0553b5d17af5daff6c1057baea930"
     },
     {
       "path": "libraries/quirewise-spreadsheet",
       "url": "https://github.com/Quirewise/quirewise-spreadsheet.git",
-      "commit": "b6427c21f66c5d959cbeefe0e9715ebf688703b9"
+      "commit": "e14984f9971b843d096313d666bca55bba015fda"
     },
     {
       "path": "libraries/quirewise-subtitle",
       "url": "https://github.com/Quirewise/quirewise-subtitle.git",
-      "commit": "3b3d13202f78a8b3e0a978b9d4a0fff7a0bc7832"
+      "commit": "1ce1dc7e74dbc1d6478508a936a4e83efdb03f7c"
     },
     {
       "path": "libraries/quirewise-text",
       "url": "https://github.com/Quirewise/quirewise-text.git",
-      "commit": "65a8a234f96cf41491fdcc853cc8cea673f53d13"
+      "commit": "d44e4abc947c72799379ed18b8fc7eceaf5c21ea"
     },
     {
       "path": "libraries/quirewise-vector",
       "url": "https://github.com/Quirewise/quirewise-vector.git",
-      "commit": "370aa2a7b8dd7e5cba9edfe6ba98e13defb250ec"
+      "commit": "36dee50572af22106148a20ce84995387d0964f2"
     },
     {
       "path": "external-consumer-template",
       "url": "https://github.com/Quirewise/external-consumer-template.git",
-      "commit": "e0daae13c0062ea0a91f04a01476756130843c1d"
+      "commit": "d8d14beee857bfcb028dee73cbad953478b1144e"
     }
   ]
 }

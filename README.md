@@ -288,9 +288,9 @@ carry the same MIT grant.
 
 ## Continuous integration
 
-`.github/workflows/ci.yml` clones the eighteen library repositories and the
-consumer template next to this repository, then runs the same acceptance
-runner used locally:
+`.github/workflows/ci.yml` checks out the library repositories and the consumer
+template at the commits pinned in `release-lock.json`
+(`tools/fetch_workspace.py`), then runs the acceptance runner:
 
 ```text
 python app/tools/run_acceptance.py --workspace . --jobs 4 --summary ci-summary.json
@@ -299,3 +299,11 @@ python app/tools/run_acceptance.py --workspace . --jobs 4 --summary ci-summary.j
 The job builds every library, runs each `ctest` suite, builds the app and the
 consumer template, runs the dependency/ownership/release gates, and uploads
 the JSON summary as a workflow artifact.
+
+The same path can be exercised locally:
+
+```text
+python app/tools/ci_local.py                # clone the lock, static build
+python app/tools/ci_local.py --skip-fetch   # verify the current workspace
+python app/tools/ci_local.py --shared --jobs 8
+```
