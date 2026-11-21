@@ -11,6 +11,7 @@ import argparse
 import base64
 import json
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -30,11 +31,34 @@ def git_command(token: str | None, *args: str) -> list[str]:
     return command
 
 
+def run_git(token: str | None, *args: str) -> int:
+    """Run git, retrying anonymously when a supplied token is rejected.
+
+    A stale or under-scoped token must not break repositories that are readable
+    without credentials, which is how GitHub-hosted CI resolves public siblings.
+    """
+    code = run(git_command(token, *args))
+    if code == 0 or not token:
+        return code
+    print("retrying the git command without credentials", file=sys.stderr)
+    return run(git_command(None, *args))
+
+
+def clone(url: str, repo: Path, token: str | None) -> int:
+    code = run(git_command(token, "clone", "--no-checkout", url, str(repo)))
+    if code == 0 or not token:
+        return code
+    print("retrying the clone without credentials", file=sys.stderr)
+    # A rejected clone can leave a partial directory behind.
+    shutil.rmtree(repo, ignore_errors=True)
+    return run(git_command(None, "clone", "--no-checkout", url, str(repo)))
+
+
 def checkout(repo: Path, url: str, commit: str, token: str | None) -> bool:
     fresh = not (repo / ".git").exists()
     if fresh:
         print(f"clone {url} -> {repo}")
-        if run(git_command(token, "clone", "--no-checkout", url, str(repo))) != 0:
+        if clone(url, repo, token) != 0:
             return False
     else:
         # A fresh --no-checkout clone has an empty working tree, which git
@@ -46,10 +70,10 @@ def checkout(repo: Path, url: str, commit: str, token: str | None) -> bool:
             print(f"error: {repo} has uncommitted changes", file=sys.stderr)
             return False
     print(f"checkout {commit[:12]} in {repo}")
-    if run(git_command(token, "-C", str(repo), "fetch", "--quiet", "origin", commit)) != 0:
+    if run_git(token, "-C", str(repo), "fetch", "--quiet", "origin", commit) != 0:
         # Servers that disallow fetching an arbitrary commit fall back to a
         # normal fetch before retrying the exact object.
-        if run(git_command(token, "-C", str(repo), "fetch", "--quiet", "--tags", "origin")) != 0:
+        if run_git(token, "-C", str(repo), "fetch", "--quiet", "--tags", "origin") != 0:
             return False
         if run(["git", "-C", str(repo), "cat-file", "-e", f"{commit}^{{commit}}"]) != 0:
             return False
