@@ -210,7 +210,7 @@ jobs:
             -DCMAKE_C_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer" \
             -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address,undefined"
           cmake --build .tmp/asan --parallel 4
-          ASAN_OPTIONS=detect_leaks=0:abort_on_error=1 \
+          ASAN_OPTIONS=detect_leaks=1:abort_on_error=1 \
           UBSAN_OPTIONS=print_stacktrace=1:halt_on_error=1 \
             ctest --test-dir .tmp/asan --output-on-failure
 
