@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_utc": "2026-11-21T12:03:21Z",
+  "generated_utc": "2026-11-21T14:01:16Z",
   "note": "Pin of the sibling repositories consumed by the Quirewise release.",
   "repositories": [
     {
@@ -41,12 +41,12 @@
     {
       "path": "libraries/quirewise-document",
       "url": "https://github.com/Quirewise/quirewise-document.git",
-      "commit": "d7c87c7a8dd68a00a876d31f0ef4a23f6c7df972"
+      "commit": "4e8ff013b787f96b4b1d64ad7f653043ab8d4063"
     },
     {
       "path": "libraries/quirewise-ebook",
       "url": "https://github.com/Quirewise/quirewise-ebook.git",
-      "commit": "c8123041d984b34453c3aa26084bba87249b8cb7"
+      "commit": "efd36ea52875ff8f48b48cdd39761a75f548ea2d"
     },
     {
       "path": "libraries/quirewise-image",
@@ -96,7 +96,7 @@
     {
       "path": "external-consumer-template",
       "url": "https://github.com/Quirewise/external-consumer-template.git",
-      "commit": "d8d14beee857bfcb028dee73cbad953478b1144e"
+      "commit": "d6cf2552a29cf8e0a0233b213b2114862b9b19d8"
     }
   ]
 }
