@@ -55,6 +55,9 @@ jobs:
               echo '```'
               echo "A stale QUIREWISE_REPOS_TOKEN also breaks otherwise public clones; unset the secret when every sibling repository is public."
             } >> "$GITHUB_STEP_SUMMARY"
+            while IFS= read -r line; do
+              echo "::error::fetch: $line"
+            done < <(tail -n 10 fetch-workspace.log)
             exit 1
           fi
 
@@ -121,6 +124,7 @@ jobs:
             Get-Content fetch-workspace.log -Tail 40 | Add-Content -Path $env:GITHUB_STEP_SUMMARY
             Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value '```'
             Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value "A stale QUIREWISE_REPOS_TOKEN also breaks otherwise public clones; unset the secret when every sibling repository is public."
+            Get-Content fetch-workspace.log -Tail 10 | ForEach-Object { Write-Host "::error::fetch: $_" }
             exit 1
           }
 
@@ -178,6 +182,9 @@ jobs:
               echo '```'
               echo "A stale QUIREWISE_REPOS_TOKEN also breaks otherwise public clones; unset the secret when every sibling repository is public."
             } >> "$GITHUB_STEP_SUMMARY"
+            while IFS= read -r line; do
+              echo "::error::fetch: $line"
+            done < <(tail -n 10 fetch-workspace.log)
             exit 1
           fi
 
