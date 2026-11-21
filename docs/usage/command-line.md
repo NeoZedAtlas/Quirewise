@@ -48,7 +48,7 @@ quirewise --version | --libraries | --help
 | `--mdd FILE` | MDX 词条的配套 MDD 资源包，用于按名内嵌图片 |
 | `--font-file FILE` | 把该 TrueType 字体嵌入 PDF 输出（CIDFontType2 + Identity-H + ToUnicode）；缺省仍用 Helvetica/STSong-Light |
 | `--pdf-reflow` | PDF→DOCX/EPUB 输出可编辑文本段落而非整页图片（不重建版面） |
-| `--pdfa` | 输出 PDF/A-1b（XMP + sRGB OutputIntent + 嵌入字体，需配合 `--font-file`） |
+| `--pdfa [1b|2b|3b]` | 输出 PDF/A（默认 1b；XMP + sRGB OutputIntent + 嵌入字体，需配合 `--font-file`） |
 | `--image-crop L,T,R,B` | 编码图像输出前按像素裁剪 |
 | `--image-resize WxH` | 编码图像输出前缩放；`0` 保持宽高比 |
 | `--sheet N` | CSV/TSV 输出的从 1 开始的工作表序号；默认第 1 张 |
@@ -135,7 +135,7 @@ quirewise report.xlsx -o report.pdf --check      # 错误：--check 不写输出
 
 ## 6. 明确不可达（返回 `unsupported` 或用法错误）
 
-- PDF/A-1b 结构输出已支持（--pdfa + --font-file；未做 veraPDF 外部一致性验证）、OCR、可编辑的 PDF 版式/表格重建；PDF 书签/元数据可读写。
+- PDF/A-1b/2b/3b 结构输出已支持（--pdfa [1b|2b|3b] + --font-file；未做 veraPDF 外部一致性验证）、OCR、可编辑的 PDF 版式/表格重建；PDF 书签/元数据可读写。
 - 旧版 `.doc`/`.wps`/`.pages`、CHM/LIT/LRF/PDB/RB/SNB/TCR、DocBook 的统一转换入口。
 - DRM、HUFF/CDIC 压缩的 MOBI、注册码加密词典（`Encrypted="1"`/`"3"`）。
 - AVIF/HEIC/JPEG XL/PCD/相机 RAW 解码；EPS/PS/AI、EMF/WMF/CGM/CDR/VSD。

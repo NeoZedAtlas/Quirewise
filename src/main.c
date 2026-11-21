@@ -42,7 +42,7 @@ static void print_help(const char *name)
     printf("      --mdd FILE       companion MDD resources for MDX dictionaries\n");
     printf("      --font-file FILE embed this TrueType font in PDF output\n");
     printf("      --pdf-reflow     PDF -> DOCX/EPUB as editable text, not page images\n");
-    printf("      --pdfa           write PDF/A-1b (requires --font-file)\n");
+    printf("      --pdfa [1b|2b|3b] write PDF/A (default 1b; requires --font-file)\n");
     printf("      --image-crop L,T,R,B  crop raster output by pixels\n");
     printf("      --image-resize WxH  resize raster output (0 keeps the aspect ratio)\n");
     printf("      --sheet N        one-based worksheet for CSV/TSV output\n");
@@ -627,6 +627,13 @@ static int quirewise_main(int argc, char **argv)
         }
         if (strcmp(argument, "--pdfa") == 0) {
             app_options.pdfa_level = QW_PDFA_1B;
+            if (index + 1 < argc && strcmp(argv[index + 1], "2b") == 0) {
+                app_options.pdfa_level = QW_PDFA_2B;
+                ++index;
+            } else if (index + 1 < argc && strcmp(argv[index + 1], "3b") == 0) {
+                app_options.pdfa_level = QW_PDFA_3B;
+                ++index;
+            }
             continue;
         }
         if (strcmp(argument, "--font-file") == 0) {
