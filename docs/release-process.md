@@ -9,9 +9,14 @@
   已提交且工作区干净。SBOM、`repository-heads.json` 与 `release-lock.json` 都记录
   提交号，脏工作区会让证据自相矛盾。
 - Windows 与 WSL/Linux 都能找到 `cmake`、`ninja`、`python`、`nm`（Windows 用
-  MinGW 的 `nm.exe`）。
-- 私有仓库 `Quirewise/quirewise-pdg` 的可读 token 只对 CI 需要；本机矩阵不依赖
-  GitHub。
+  MinGW 的 `nm.exe`）。未装 Ninja 的 Linux 主机可省略，`run_acceptance.py` 会退回
+  默认 Makefile 生成器。
+- 19 个库仓库与 `external-consumer-template` 目前都是公开仓库（2026-11-21 用
+  `git ls-remote` 不带凭据验证），因此 `QUIREWISE_REPOS_TOKEN` 已不是 workspace
+  fetch 的必要条件；只有仓库重新变为私有、或 Actions 触到匿名限流时才需要配置。
+- CI 的 sanitizer job 用默认构建目录 `.tmp/acceptance/linux-static/install`
+  作为 `CMAKE_PREFIX_PATH`（2026-11-21 修正，此前误写为不存在的
+  `.tmp/acceptance/static/install`）。
 
 ## 2. 重建四套平台矩阵（另可选 sanitizer 矩阵）
 
@@ -106,7 +111,7 @@ python app/tools/release_self_audit.py --workspace . `
 1. 四套矩阵全绿，`release_self_audit.py` 在**不**带 `--allow-pending-signoff` 时
    返回 0；
 2. `reviewer-signoff.md` 已存在且报告包含其 SHA-256；
-3. CI 已实际执行（目前仍缺私有仓库 token/可见性）。
+3. CI 已实际执行且 `Build, test and audit` 步骤通过（见第 8 节）。
 
 tag 名沿用 `v0.2.1-rc1` 风格，在每个仓库的同一提交上创建并推送：
 
@@ -115,3 +120,24 @@ git -C app tag -a v0.2.1-rc1 -m "Quirewise v0.2.1-rc1"
 git -C app push origin v0.2.1-rc1
 # 其余 18 个仓库同理
 ```
+
+## 8. 观察 GitHub Actions
+
+公开仓库的 run 列表与 job 步骤无需 token 即可读取：
+
+```sh
+curl -s -H "User-Agent: quirewise" \
+  "https://api.github.com/repos/Quirewise/Quirewise/actions/runs?per_page=5" |
+  python -c "import json,sys; [print(r['run_number'], r['head_sha'][:7], r['conclusion']) for r in json.load(sys.stdin)['workflow_runs']]"
+
+curl -s -H "User-Agent: quirewise" \
+  "https://api.github.com/repos/Quirewise/Quirewise/actions/runs/<run_id>/jobs" |
+  python -c "import json,sys; [print(j['name'], j['conclusion'], [s['name'] for s in j['steps'] if s['conclusion']=='failure']) for j in json.load(sys.stdin)['jobs']]"
+```
+
+2026-11-21 的观察：推送 `app@3775a7c`、`app@c4ab034` 触发的 run #61、#62 都在
+“Check out the pinned library repositories” 步骤失败——当时 `quirewise-subtitle` 的
+修复提交尚未推送，`release-lock.json` 指向的提交在远端不存在。全部本地提交推送后才应
+重新触发（任意 `app` 提交即可），并且在 `Build, test and audit` 与 sanitizer job 通过前
+不得打 tag。
+
