@@ -174,7 +174,7 @@ jobs:
         run: |
           cmake -S libraries/quirewise-document -B .tmp/asan -G Ninja \
             -DCMAKE_BUILD_TYPE=Debug \
-            -DCMAKE_PREFIX_PATH="$PWD/.tmp/acceptance/static/install" \
+            -DCMAKE_PREFIX_PATH="$PWD/.tmp/acceptance/linux-static/install" \
             -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF \
             -DCMAKE_C_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer" \
             -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address,undefined"
