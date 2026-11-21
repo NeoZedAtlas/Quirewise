@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """Build and validate the whole Quirewise workspace from tracked sources.
 
 The runner is intentionally self-contained so the same commands can be used
@@ -65,7 +65,7 @@ APP_LINK_OPTIONS = [
 class Runner:
     def __init__(self, workspace: Path, build_root: Path, install_root: Path,
                  shared: bool, jobs: int, keep: bool, skip_tests: bool,
-                 sanitize: bool = False):
+                 sanitize: bool = False, leak_check: bool = False):
         self.workspace = workspace
         self.build_root = build_root
         self.install_root = install_root
@@ -74,6 +74,7 @@ class Runner:
         self.keep = keep
         self.skip_tests = skip_tests
         self.sanitize = sanitize
+        self.leak_check = leak_check
         self.generator = "Ninja" if shutil.which("ninja") else ""
         self.logs = build_root / "logs"
         self.results: list[dict] = []
@@ -85,7 +86,8 @@ class Runner:
             env["LD_LIBRARY_PATH"] = (str(self.install_root / "lib") + ":"
                                       + env.get("LD_LIBRARY_PATH", ""))
         if self.sanitize:
-            env["ASAN_OPTIONS"] = "detect_leaks=0:abort_on_error=1"
+            env["ASAN_OPTIONS"] = ("detect_leaks=1" if self.leak_check
+                                   else "detect_leaks=0") + ":abort_on_error=1"
             env["UBSAN_OPTIONS"] = "halt_on_error=1:print_stacktrace=1"
         return env
 
@@ -317,6 +319,8 @@ def main() -> int:
     parser.add_argument("--skip-tests", action="store_true")
     parser.add_argument("--sanitize", action="store_true",
                         help="build and test with ASan+UBSan (Linux/WSL only)")
+    parser.add_argument("--leak-check", action="store_true",
+                        help="with --sanitize, keep LeakSanitizer enabled")
     parser.add_argument("--summary", type=Path)
     args = parser.parse_args()
     if args.sanitize and os.name == "nt":
@@ -339,7 +343,8 @@ def main() -> int:
     install_root.mkdir(parents=True, exist_ok=True)
 
     runner = Runner(workspace, build_root, install_root, args.shared,
-                    args.jobs, args.keep, args.skip_tests, args.sanitize)
+                    args.jobs, args.keep, args.skip_tests, args.sanitize,
+                    args.leak_check)
     ok = runner.build_libraries()
     if ok:
         ok = runner.install_licenses()
