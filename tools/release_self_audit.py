@@ -74,6 +74,10 @@ def main() -> int:
     licenses = [root / "LICENSE"] + [repo / "LICENSE" for repo in repos]
     bodies = {path.read_bytes() for path in licenses if path.is_file()}
     checks["license_files"] = sum(1 for path in licenses if path.is_file())
+    # The acceptance runner installs one LICENSE per repository plus the
+    # workspace-level grant, so the expected count follows the repository list
+    # instead of a hard-coded number that goes stale when a library is added.
+    checks["expected_licenses"] = len(licenses)
     checks["license_identical_mit"] = (
         len(bodies) == 1 and next(iter(bodies)).startswith(b"MIT License"))
     checks["installed_licenses_static"] = sum(
@@ -211,8 +215,8 @@ def main() -> int:
     ok = (
         checks["repositories_clean"]
         and checks["license_identical_mit"]
-        and checks["installed_licenses_static"] == 20
-        and checks["installed_licenses_shared"] == 20
+        and checks["installed_licenses_static"] == checks["expected_licenses"]
+        and checks["installed_licenses_shared"] == checks["expected_licenses"]
         and all(item["ok"] for item in checks["summaries"].values())
         and (checks["sanitizer"]["ok"] or not args.require_sanitizer)
         and (checks["remote_heads"]["ok"] or not args.require_pushed)
