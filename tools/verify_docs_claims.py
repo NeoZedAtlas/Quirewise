@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 """Check that the numbers quoted in README.md still match the build.
 
 The 2026-11-21 review found the README status block frozen at the 2026-11-17
@@ -85,8 +85,18 @@ def main() -> int:
     workspace = args.workspace.resolve()
     readme = (args.readme or workspace / "README.md").resolve()
     tools = workspace / "app" / "tools"
-    logs = (args.logs or workspace / ".tmp" / "acceptance" / "windows-static" / "logs").resolve()
-    prefix = (args.prefix or workspace / ".tmp" / "acceptance" / "windows-static" / "install").resolve()
+    summary_path = args.summary
+    if summary_path is None:
+        candidates = sorted((workspace / ".tmp" / "acceptance").glob("*/summary-*.json"))
+        summary_path = candidates[-1] if candidates else None
+    summary_data = None
+    if summary_path and Path(summary_path).is_file():
+        summary_data = json.loads(Path(summary_path).read_text(encoding="utf-8"))
+    default_root = (Path(summary_path).parent if summary_path
+                    else workspace / ".tmp" / "acceptance" / "windows-static")
+    logs = (args.logs or default_root / "logs").resolve()
+    prefix = Path(args.prefix) if args.prefix else Path(
+        (summary_data or {}).get("install_root") or default_root / "install").resolve()
     if not readme.is_file():
         print(f"error: missing {readme}", file=sys.stderr)
         return 2
@@ -125,14 +135,7 @@ def main() -> int:
     else:
         checks.append(("public headers", "skipped (input missing)", None))
 
-    summary_path = args.summary
-    if summary_path is None:
-        candidates = sorted((workspace / ".tmp" / "acceptance").glob("*/summary-*.json"))
-        summary_path = candidates[-1] if candidates else None
-    steps = None
-    if summary_path and Path(summary_path).is_file():
-        data = json.loads(Path(summary_path).read_text(encoding="utf-8"))
-        steps = len(data.get("steps", []))
+    steps = len(summary_data.get("steps", [])) if summary_data else None
     check("matrix steps", r"\*\*(\d+)/(\d+) steps\*\*", steps)
 
     failed = 0
