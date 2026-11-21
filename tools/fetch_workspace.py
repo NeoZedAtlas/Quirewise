@@ -113,7 +113,9 @@ def main() -> int:
     if not lock_path.is_file():
         print(f"error: missing lock file {lock_path}", file=sys.stderr)
         return 2
-    lock = json.loads(lock_path.read_text(encoding="utf-8"))
+    # utf-8-sig so a lock file saved by an editor that adds a BOM still parses;
+    # a BOM otherwise breaks every CI run at this line.
+    lock = json.loads(lock_path.read_text(encoding="utf-8-sig"))
     failures = []
     for entry in lock["repositories"]:
         repo = workspace / entry["path"]

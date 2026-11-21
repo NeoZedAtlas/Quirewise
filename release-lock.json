@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_utc": "2026-11-21T12:03:21Z",
+  "generated_utc": "2026-11-21T12:30:00Z",
   "note": "Pin of the sibling repositories consumed by the Quirewise release.",
   "repositories": [
     {
@@ -40,7 +40,7 @@
     },
     {
       "path": "libraries/quirewise-document",
-      "url": "https://github.com/Quirewise/quirewise-document.git",
+      "url": "https://github.com/NeoZedAtlas/quirewise-document.git",
       "commit": "d7c87c7a8dd68a00a876d31f0ef4a23f6c7df972"
     },
     {
