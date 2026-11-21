@@ -696,6 +696,12 @@ FORMAT_MATRIX: list[tuple[str, str, str, str | None]] = [
     ("dwg", "app/testfile/cad/line_2007.dwg", "check", None),
     ("pdf-txt", "app/testfile/pdf/basic/lorem-ipsum.pdf", "totxt", "Lorem"),
     ("pdf-png", "app/testfile/pdf/basic/lorem-ipsum.pdf", "topng", None),
+    # PDF/A needs an embedded font; veraPDF accepts the result for 1b/2b/3b
+    # (2026-11-21), so the CLI route and the structure are covered here.
+    ("pdfa-1b", "app/testfile/text/html/lorem-ipsum.htm", "to:pdf",
+     "/GTS_PDFA1",
+     ["--pdfa", "1b", "--font-file",
+      "app/testfile/font/ttf/FileeTest-TrueType.ttf"]),
 ]
 
 
