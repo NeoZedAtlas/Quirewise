@@ -100,6 +100,15 @@ def check_signoff(release: Path) -> tuple[bool, str]:
                                else "reviewer-signoff.md is missing")
 
 
+def check_docs(workspace: Path, static_prefix: Path) -> tuple[bool, str]:
+    app = workspace / "app"
+    code = run_tool(app, str(app / "tools" / "verify_docs_claims.py"),
+                    "--workspace", str(workspace),
+                    "--prefix", str(static_prefix))
+    return code == 0, ("README claims match the build" if code == 0 else
+                       "README claims are stale: run verify_docs_claims.py")
+
+
 def check_ci(release: Path, app_head: str) -> tuple[bool, str]:
     path = release / "ci-run.json"
     if not path.is_file():
@@ -175,6 +184,7 @@ def main() -> int:
          if args.offline_preview else
          (lambda: check_remote(workspace, release / "remote-heads.json"))),
         ("matrices", lambda: check_matrices(release)),
+        ("docs", lambda: check_docs(workspace, static_prefix)),
         ("signoff", lambda: check_signoff(release)),
         ("ci", lambda: check_ci(release, git(app, "rev-parse", "HEAD").stdout.strip())),
         ("audit", lambda: check_audit(workspace, release, static_prefix,
