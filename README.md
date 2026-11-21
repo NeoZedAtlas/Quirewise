@@ -1,5 +1,7 @@
 # Quirewise application
 
+[![CI](https://github.com/Quirewise/Quirewise/actions/workflows/ci.yml/badge.svg)](https://github.com/Quirewise/Quirewise/actions/workflows/ci.yml)
+
 Quirewise is a pure-C11 document conversion toolchain with no third-party
 runtime. The `app` repository is the CLI and composition layer; every format
 reader lives in an independent, installable library repository.
@@ -11,7 +13,7 @@ documents / ebooks / pages / spreadsheets / subtitles / CAD / images
                               -> PDF
 PDF                           -> TXT / HTML / Markdown (text layer)
                               -> PNG / JPEG / BMP / TIFF / WebP (first page, 144 dpi)
-                              -> DOCX / EPUB (page images, 120 dpi, layout-preserving)
+                              -> DOCX / EPUB (editable text by default; --pdf-pages for page images)
 ```
 
 ## What it can convert
@@ -35,7 +37,7 @@ PDF, DOCX/ODT/HTML/EPUB/FB2, PPTX/ODP, HWPX, EML/MSG, MOBI/AZW3, HTMLZ/TXTZ/PMLZ
 MDict MDX, RTF, spreadsheets, subtitles, structured data, images,
 DjVu/PDZ/UVZ/CAJ/CEB/XPS, CBZ/CBT/CB7/CBR (stored entries), DXF/DWG and SVG/SVGZ
 convert to PDF. PDF also converts to TXT/HTML/Markdown (no OCR), to PNG/JPEG/BMP/
-TIFF/WebP (first page, 144 dpi), and to DOCX/EPUB (page images, 120 dpi). DXF/DWG
+TIFF/WebP (first page, 144 dpi), and to DOCX/EPUB (editable text by default; `--pdf-pages` emits page images). DXF/DWG
 `--to txt` emits the drawing text inventory, and MDX `--to txt` emits one key line
 plus its tag-stripped article per entry.
 
@@ -283,3 +285,17 @@ The same check is available as a CMake target with
 
 MIT. See [LICENSE](LICENSE). Every library and the external consumer template
 carry the same MIT grant.
+
+## Continuous integration
+
+`.github/workflows/ci.yml` clones the eighteen library repositories and the
+consumer template next to this repository, then runs the same acceptance
+runner used locally:
+
+```text
+python app/tools/run_acceptance.py --workspace . --jobs 4 --summary ci-summary.json
+```
+
+The job builds every library, runs each `ctest` suite, builds the app and the
+consumer template, runs the dependency/ownership/release gates, and uploads
+the JSON summary as a workflow artifact.
