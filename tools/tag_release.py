@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """Create and (optionally) push the release tag for one candidate version.
 
 The release process (app/docs/release-process.md) only allows a tag once every
@@ -10,7 +10,9 @@ gate has passed, so the checks are part of the tool rather than a checklist:
 4. the release directory holds five green matrix summaries (four platforms
    plus the sanitizer matrix);
 5. ``reviewer-signoff.md`` exists and ``release_self_audit.py`` passes without
-   ``--allow-pending-signoff``.
+   ``--allow-pending-signoff``;
+6. ``ci-run.json`` in the release directory records a green Actions run on the
+   current app HEAD (``conclusion == "success"`` and a matching ``head_sha``).
 
 Without ``--apply`` the tool only reports the tag it would create, which makes
 it safe to run during preparation. ``--push`` is required to publish the tags;
@@ -98,6 +100,22 @@ def check_signoff(release: Path) -> tuple[bool, str]:
                                else "reviewer-signoff.md is missing")
 
 
+def check_ci(release: Path, app_head: str) -> tuple[bool, str]:
+    path = release / "ci-run.json"
+    if not path.is_file():
+        return False, "no ci-run.json: record the successful Actions run first"
+    data = json.loads(path.read_text(encoding="utf-8-sig"))
+    if data.get("conclusion") != "success":
+        return False, (f"recorded CI run {data.get('run_number')} concluded "
+                       f"{data.get('conclusion')}")
+    head = str(data.get("head_sha") or "")
+    if head != app_head:
+        return False, (f"recorded CI run ran on {head[:12] or 'unknown'}, not "
+                       f"the current app HEAD {app_head[:12]}")
+    return True, (f"CI run {data.get('run_number')} is green on "
+                  f"{data.get('repository', 'an unknown repository')}")
+
+
 def check_audit(workspace: Path, release: Path, static_prefix: Path,
                 shared_prefix: Path, report: Path) -> tuple[bool, str]:
     app = workspace / "app"
@@ -158,6 +176,7 @@ def main() -> int:
          (lambda: check_remote(workspace, release / "remote-heads.json"))),
         ("matrices", lambda: check_matrices(release)),
         ("signoff", lambda: check_signoff(release)),
+        ("ci", lambda: check_ci(release, git(app, "rev-parse", "HEAD").stdout.strip())),
         ("audit", lambda: check_audit(workspace, release, static_prefix,
                                       shared_prefix, report)),
     ]
